@@ -1,0 +1,61 @@
+<style>
+</style>
+
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="86" height="36" fill="currentColor" class="bi bi-search" viewBox="0 0 6 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="white"></path> </svg>
+  <span><input type="text" id="search" name="search" value="" placeholder="" /></span>
+  <div class="spacer"></div>
+  <div class="card highlight-card card-small">
+    {{ title }}
+  </div>
+  <div class="spacer"></div>
+    <div class="toolbar-right">
+      <app-login></app-login>
+    <!-- <h1>Log in</h1>
+    <h1>/</h1>
+    <h1>Sign up</h1> -->
+    </div>
+</div>
+
+
+<div class="content" role="main">
+    <div class="poster">
+        <img src="assets/poster1_1.jpg" alt="Poster" />
+        <div class="title">
+        <h2>Avatar 2</h2>
+        <app-star-rating [(rating)]="rating"></app-star-rating>
+    </div>
+
+    <div class="tabs">
+        <button class="tab" [ngClass]="{'active': selectedTab === 'summary'}" (click)="selectTab('summary')">Summary</button>
+        <button class="tab" [ngClass]="{'active': selectedTab === 'new'}" (click)="selectTab('new')">New</button>
+        <button class="tab" [ngClass]="{'active': selectedTab === 'hot'}" (click)="selectTab('hot')">Hot</button>
+      </div>
+      
+      <div class="container">
+        <ng-container *ngIf="selectedTab === 'summary'">
+            <p>
+            Set more than a decade after the previous episode, Avatar: The Way of Water tells the story of the Sully family, 
+            the troubles they face, the efforts they make to protect each other, the battles they fight to survive, and the 
+            tragedies they endure.
+        </p>
+        </ng-container>
+        <ng-container *ngIf="selectedTab === 'new'">
+          <div class="comment" *ngFor="let comment of comments">
+            <div calss="comment-left">{{ comment.topic }}: {{ comment.content}}</div>  
+            <div class="comment-right">{{ comment.date }}|{{ comment.author }}</div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="selectedTab === 'hot'">
+            <div class="comment" *ngFor="let comment of comments">
+                <div calss="comment-left">{{ comment.topic }}: {{ comment.content}}</div>  
+                <div class="comment-right">{{ comment.date }}|{{ comment.author }}</div>
+              </div>
+        </ng-container>
+      </div>
+      
+          
+  </div>
+
+<router-outlet></router-outlet>
