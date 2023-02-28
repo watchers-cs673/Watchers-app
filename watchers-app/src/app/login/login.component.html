@@ -1,4 +1,12 @@
-<h1 (click)="showModal()">Log in/Sign up</h1>
+<ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+    <button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+      Log out
+    </button>
+  </ng-container>
+
+  <ng-template #loggedOut>
+    <button (click)="auth.loginWithRedirect()">Log in</button>
+  </ng-template>
 <div class="modal-background" *ngIf="showModalFlag" (click)="hideModal()">
     <div class="modal" (click)="$event.stopPropagation()">
         <div class="title">Log in</div>
