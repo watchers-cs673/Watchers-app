@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
   title = 'watchers';
+  showProfile = false;
   images = [
     {src: 'https://picsum.photos/900/500?random=1', alt: 'Image 1', link: '/discussion'},
     {src: 'https://picsum.photos/900/500?random=2', alt: 'Image 2', link: '/discussion'},
@@ -22,15 +24,15 @@ export class HomeComponent {
   ];
   currentIndex = 1;
 
-  nextImage() {
+  public nextImage() {
     this.currentIndex = (this.currentIndex + 1) % this.images.length;
   }
 
-  prevImage() {
+  public prevImage() {
     this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
   }
 
-  imageClicked(index: number) {
+  public imageClicked(index: number) {
     this.currentIndex = index;
   }
 

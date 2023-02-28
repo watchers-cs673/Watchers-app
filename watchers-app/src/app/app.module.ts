@@ -7,6 +7,7 @@ import { DiscussionComponent } from './discussion/discussion.component';
 import { HomeComponent } from './home/home.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { LoginComponent } from './login/login.component';
     DiscussionComponent,
     HomeComponent,
     StarRatingComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
