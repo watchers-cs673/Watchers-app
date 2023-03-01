@@ -9,6 +9,39 @@
 <!-- Toolbar -->
   <h1 class="header">{{userName}}</h1>
   <div class="spacer"></div>
-  <h2>Followers: {{userData.followers}} Posts: {{userData.posts}} Following: {{userData.following}}</h2>
+  <h3>
+    <span>Followers: {{userData.followers}}</span>
+    <span class="spacer-line">Posts: {{userData.posts}}</span>
+    <span>Following: {{userData.following}}</span>
+</h3>
+<div class="top-five-list">
+    <h2>My Top 5</h2>
+    <ul>
+        <li>The Shining</li>
+        <li>Spirited Away</li>
+        <li>Amelie</li>
+        <li>Forest Gump</li>
+        <li>Rosemary's Baby</li>
+    </ul>
 </div>
-
+<table>
+    <tr>
+        <th class="table-title">My Reviews</th>
+    </tr>
+    <tr>
+      <th>Movie</th>
+      <th>My Rating</th> 
+      <th>Review</th>
+    </tr>
+    <tr>
+      <td>The Godfather</td>
+      <td>4.2/5</td> 
+      <td>It was good</td>
+    </tr>
+    <tr>
+      <td>Texas Chainsaw Massacre</td>
+      <td>4.5/5</td> 
+      <td>Cool movie</td>
+    </tr>
+  </table>
+</div>
