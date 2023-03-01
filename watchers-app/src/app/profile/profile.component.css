@@ -32,6 +32,7 @@
     font-weight: 600;
     font-size: 50px;
     text-decoration: none;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   }
 
   a {
@@ -41,7 +42,35 @@
     text-decoration: none;
   }
 
-  h1, h2 {
+  h1, h3 {
     display: flex !important;
     justify-content: center !important;
+  }
+
+  table {
+    width: 90%;
+    background-color: bisque;
+    color: rgb(138, 45, 45);
+    margin: 50px auto;
+    padding: 10px;
+  }
+  th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+  }
+
+  .spacer-line {
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+
+  .top-five-list {
+    width: 90%;
+    margin: auto;
+  }
+
+  ul {
+    list-style-type: none !important;
+    padding-left: 0px;
   }
