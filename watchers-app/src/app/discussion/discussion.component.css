@@ -108,7 +108,7 @@
 
   .card.highlight-card {
     background-color: #000000;
-    color: rgb(198, 15, 15);
+    color: rgb(66,158,157);
     font-weight: 600;
     border: none;
     width: auto;
@@ -129,7 +129,7 @@
   }
 
   input#search {
-    width:155px; 
+    width:155px;
     margin:0px 0px 0px 0px;
     height:32px;
     border-radius:20px;
@@ -182,10 +182,10 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 30px;
-    
+
   }
 
-  
+
 
   .active {
     font-size: 30px;
@@ -203,10 +203,10 @@
     font-size: 30px;
     color: white;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
+
   }
 
-  
+
 
   .comment-left {
     flex: 1;
