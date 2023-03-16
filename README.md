@@ -12,4 +12,4 @@ Refer to [here](watchers-app/README.md) for info about the Angular deployment.
 
 ## User data deployment
 
-Refer to [here](src/watchers-app/user-data/README.md) for info about the user information database.
+Refer to [here](watchers-app/src/user-data/README.md) for info about the user information database.
