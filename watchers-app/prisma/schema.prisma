@@ -11,16 +11,18 @@ datasource db {
 }
 
 model User {
-  userId       String    @id @default(auto()) @map("_id") @db.ObjectId
-  username     String    @unique
-  email        String    @unique
-  passwordHash String
-  displayName  String?
-  posts        Post[]
-  likes        Like[]
-  comments     Comment[]
-  follower     Follows[] @relation("following")
-  following    Follows[] @relation("follower")
+  userId            String    @id @default(auto()) @map("_id") @db.ObjectId
+  username          String    @unique
+  email             String    @unique
+  passwordHash      String
+  uniqueUserAuthKey String
+  displayName       String?
+  posts             Post[]
+  likes             Like[]
+  comments          Comment[]
+  follower          Follows[] @relation("following")
+  following         Follows[] @relation("follower")
+  // activeTokens      UserTokenData[]
 }
 
 model Post {
