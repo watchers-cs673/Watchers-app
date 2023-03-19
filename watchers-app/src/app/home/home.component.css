@@ -184,6 +184,10 @@
     color: burlywood;
   }
 
+  .search {
+    cursor: pointer;
+  }
+
   /* movie-list */
 
   .photo-list {
