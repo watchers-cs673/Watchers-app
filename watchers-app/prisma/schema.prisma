@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId            String    @id @default(auto()) @map("_id") @db.ObjectId
+  username          String    @unique
+  email             String    @unique
+  passwordHash      String
+  uniqueUserAuthKey String
+  displayName       String?
+  posts             Post[]
+  likes             Like[]
+  comments          Comment[]
+  follower          Follows[] @relation("following")
+  following         Follows[] @relation("follower")
+  // activeTokens      UserTokenData[]
+}
+
+model Post {
+  postId            String @id @default(auto()) @map("_id") @db.ObjectId
+  author            User   @relation(fields: [authorId], references: [userId])
+  authorId          String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
+  postBody          String
+  referencedMovieId String
+  postLikes         Like[]
+}
+
+model Like {
+  likeID         String   @id @default(auto()) @map("_id") @db.ObjectId
+  liking         User     @relation(fields: [likingUserId], references: [userId])
+  likedPostId    String   @db.ObjectId
+  liked          Post     @relation(fields: [likedPostId], references: [postId])
+  likingUserId   String   @db.ObjectId
+  commentLike    Comment? @relation(fields: [likedCommentId], references: [commentId])
+  likedCommentId String?  @map("commentCommentId") @db.ObjectId
+}
+
+model Comment {
+  commentId    String @id @default(auto()) @map("_id") @db.ObjectId
+  commenter    User   @relation(fields: [commenterId], references: [userId])
+  commenterId  String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
+  commentBody  String
+  commentLikes Like[]
+}
+
+model Follows {
+  follower         User   @relation("follower", fields: [followerId], references: [userId])
+  followerId       String @db.ObjectId
+  following        User   @relation("following", fields: [followingId], references: [userId])
+  followingId      String @db.ObjectId
+  // @@id([followerId, followingId])
+  followRelationId String @id @default(auto()) @map("_id") @db.ObjectId
+}

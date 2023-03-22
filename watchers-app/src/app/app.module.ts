@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ProfileComponent } from './profile/profile.component';
     HomeComponent,
     StarRatingComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

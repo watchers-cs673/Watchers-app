@@ -17,9 +17,9 @@
     width: 700px;
     transform: translate(-50%, -50%);
     z-index: 9998;
-    background-color: black;
+    background-color: rgb(21, 21, 21);
     border-radius: 20px;
-    border: rgb(198, 63, 19) 10px solid;
+    border: bisque 10px solid;
   }
   
   h1 {
@@ -27,7 +27,7 @@
   }
 
   h3 {
-    color: lightcoral;
+    color: bisque;
     cursor: pointer;
   }
 
@@ -38,7 +38,7 @@
 
   .title {
     font-size: 45px;
-    color: white;
+    color: bisque;
     text-align: center;
     margin-top: 60px;
     margin-bottom: 20px;
@@ -47,10 +47,9 @@
   .info {
     width: 600px;
     height: 300px;
-    background-color: black;
     position: relative;
     left: 7%;
-    border-top:  rgb(198, 63, 19) 2px solid;
+    border-top:  bisque 2px solid;
     
   }
 

@@ -10,13 +10,13 @@ import { DOCUMENT } from '@angular/common';
 })
 export class LoginComponent {
 
-  showModalFlag = false;
+  public showModalFlag = false;
   
-  showModal() {
+  public showModal() {
     this.showModalFlag = true;
   }
   
-  hideModal() {
+  public hideModal() {
     this.showModalFlag = false;
   }
   constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) {}

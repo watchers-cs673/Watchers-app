@@ -108,7 +108,7 @@
 
   .card.highlight-card {
     background-color: #000000;
-    color: rgb(198, 15, 15);
+    color: rgb(66,158,157);
     font-weight: 600;
     border: none;
     width: auto;
@@ -119,7 +119,7 @@
   }
 
   input#search {
-    width:155px; 
+    width:155px;
     margin:0px 0px 0px 0px;
     height:32px;
     border-radius:20px;
@@ -157,7 +157,7 @@
     align-items: center;
     padding-top: 40px;
   }
-  
+
   .image {
     /* width: 385px; */
     /* height: 560px; */
@@ -172,7 +172,7 @@
     box-shadow: 0 0 18px rgba(255, 255, 255, 0.6);
     cursor: pointer;
   }
-  
+
 
   h2 {
     font-size: 40px;
@@ -182,6 +182,10 @@
   .image h3 {
     font-size: 30px;
     color: burlywood;
+  }
+
+  .search {
+    cursor: pointer;
   }
 
   /* movie-list */
@@ -197,7 +201,7 @@
     /* flex-wrap: wrap; */
 
   }
-  
+
   .photo-list img {
     transition: 0.5s;
     width: 280px;
@@ -205,14 +209,14 @@
     object-fit: cover;
     cursor: pointer;
   }
-  
+
   .photo-list img.big {
     transition: 0.5s;
     width: 500px;
     height: 160%;
     cursor: pointer;
   }
-  
+
   /* .arrow {
     position: absolute;
     top: 50%;
@@ -220,7 +224,7 @@
     font-size: 2rem;
     cursor: pointer;
   } */
-  
+
   .arrow.left img {
     left: 1rem;
     width: 60px;
