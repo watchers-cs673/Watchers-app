@@ -7,13 +7,25 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
-  showModalFlag = false;
+  public showModalFlag = false;
   
-  showModal() {
+  public showModal() {
     this.showModalFlag = true;
   }
   
-  hideModal() {
+  public hideModal() {
     this.showModalFlag = false;
+  }
+
+  public createAccount() {
+    console.log('create account');
+  }
+
+  public forgotPassword() {
+    console.log('forgot password');
+  }
+
+  public login() {
+    console.log('login')
   }
 }
