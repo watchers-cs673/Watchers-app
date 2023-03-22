@@ -1,19 +1,19 @@
 import { PrismaClient } from '@prisma/client';
-import { tokenAndTime, validateToken } from './user-authenticate';
-// import { getUserFromToken } from './user-authenticate'
+import { validateToken } from './user-authenticate';
 
-// get current user from browser auth
-
+/**
+ * post to database after verification of user identity
+ * @param user_session_token the user token from HTTP authentication header
+ * @param user_id identifies user
+ * @param post_body content to include in post
+ * @param referenced_movie_id identifies the movie of interest
+ */
 export async function userPost(
-  user_session_token: tokenAndTime,
+  user_session_token: string,
   user_id: string,
   post_body: string,
   referenced_movie_id: string
 ) {
-  // TODO: firstly, check validity of user token session cookie
-  // fetch the user id from the database on each post rather than
-  // if condition==cookie present:
-  // const poster_info = getUserInfo(user_session_token);
   if (await validateToken(user_session_token, user_id)) {
     const prisma = new PrismaClient();
     const post = await prisma.post.updateMany({
@@ -26,5 +26,6 @@ export async function userPost(
         referencedMovieId: referenced_movie_id,
       },
     });
+    // post.count
   }
 }

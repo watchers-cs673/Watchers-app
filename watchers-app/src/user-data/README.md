@@ -83,13 +83,17 @@ An approach considered was to generate a unique salt value for each user upon re
 
 The Auth0 library also provides similar functionality, although it limits the number of users that may login at one time depending on the plan paid for.
 
-The [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) library can be used to generate a user token.
+<!-- The [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) library can be used to generate a user token. -->
+
+The [jose](https://www.npmjs.com/package/jose) library provides extensive support for generating and working with JSON Web Tokens(JWT).
 
 <!-- We could store the user token in the database, and also store multiple time-sensitive tokens in order to allow multiple device use. Time of token creation could be stored with each token in the database. -->
 
-Finally, as JSON Web Tokens are a widely supported authentication token protocol it was decided to use this to create authentication tokens for users and authenticate them.
+Finally, as JSON Web Tokens (JWT) are a widely supported authentication token protocol it was decided to use this to create authentication tokens for users and authenticate them.
 
 This is also compatible with Auth0 and other services.
+
+The JWTs are signed for a limited period of time and sent in Authorization headers in HTTP for requests.
 
 ## User/Posts/Comments ID
 

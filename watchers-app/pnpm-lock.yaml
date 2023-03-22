@@ -20,6 +20,7 @@ specifiers:
   dotenv: ^16.0.3
   jasmine-core: ~4.5.0
   joi: ^17.8.3
+  jose: ^4.13.1
   jsonwebtoken: ^9.0.0
   karma: ~6.4.1
   karma-chrome-launcher: ~3.1.1
@@ -47,6 +48,7 @@ dependencies:
   bcrypt: 5.1.0
   dotenv: 16.0.3
   joi: 17.8.3
+  jose: 4.13.1
   jsonwebtoken: 9.0.0
   rxjs: 7.8.0
   tslib: 2.5.0
@@ -4435,6 +4437,10 @@ packages:
       '@sideway/address': 4.1.4
       '@sideway/formula': 3.0.1
       '@sideway/pinpoint': 2.0.0
+    dev: false
+
+  /jose/4.13.1:
+    resolution: {integrity: sha512-MSJQC5vXco5Br38mzaQKiq9mwt7lwj2eXpgpRyQYNHYt2lq1PjkWa7DLXX0WVcQLE9HhMh3jPiufS7fhJf+CLQ==}
     dev: false
 
   /js-tokens/4.0.0:
