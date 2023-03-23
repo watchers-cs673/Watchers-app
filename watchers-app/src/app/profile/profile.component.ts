@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 
 interface UserData {
     posts: number;
@@ -14,4 +15,11 @@ interface UserData {
 export class ProfileComponent {
     public userName = 'Test User';
     public userData: UserData = {posts: 2, followers: 3, following: 2};
+    constructor(public auth: AuthService) {
+      auth.user$.subscribe((data) => {
+        if(data?.email) {
+          this.userName = data.email;
+        }
+      })
+    }
 }

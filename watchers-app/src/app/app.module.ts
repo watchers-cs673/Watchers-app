@@ -9,6 +9,7 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
+import { AuthModule } from '@auth0/auth0-angular';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,13 @@ import { SearchComponent } from './search/search.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AuthModule.forRoot({
+      domain: 'dev-ts3jighkzj45hmbh.us.auth0.com',
+      clientId: 'gsH4yqrIkaQstcBdTqtsuXh4tROe74m3',
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    }),
     
   ],
   providers: [],

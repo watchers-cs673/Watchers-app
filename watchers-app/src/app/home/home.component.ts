@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-home',
@@ -7,8 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  title = 'watchers';
-  showProfile = false;
+  constructor(public auth: AuthService){}
+  public title = 'watchers';
+  public profile = this.auth.user$;
   images = [
     {src: 'https://picsum.photos/900/500?random=1', alt: 'Image 1', link: '/discussion'},
     {src: 'https://picsum.photos/900/500?random=2', alt: 'Image 2', link: '/discussion'},
