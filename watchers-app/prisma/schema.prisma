@@ -19,7 +19,7 @@ model User {
   displayName       String?
   posts             Post[]
   likes             Like[]
-  comments          Comment[]
+  comments          UserComment[]
   follower          Follows[] @relation("following")
   following         Follows[] @relation("follower")
   // activeTokens      UserTokenData[]
@@ -40,11 +40,11 @@ model Like {
   likedPostId    String   @db.ObjectId
   liked          Post     @relation(fields: [likedPostId], references: [postId])
   likingUserId   String   @db.ObjectId
-  commentLike    Comment? @relation(fields: [likedCommentId], references: [commentId])
+  commentLike    UserComment? @relation(fields: [likedCommentId], references: [commentId])
   likedCommentId String?  @map("commentCommentId") @db.ObjectId
 }
 
-model Comment {
+model UserComment {
   commentId    String @id @default(auto()) @map("_id") @db.ObjectId
   commenter    User   @relation(fields: [commenterId], references: [userId])
   commenterId  String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
