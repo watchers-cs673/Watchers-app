@@ -22,5 +22,3 @@ The movie data contains the following components:
 
 Every movie data must have an unique ID, except ID, title and poster_path also should be [Not Null](https://www.w3schools.com/mysql/mysql_notnull.asp#:~:text=By%20default,%20a%20column%20can,a%20value%20to%20this%20field.).
 The full layout of the movie data and data types can be seen in the moiveSchematic file,  [ **movieSchema.prisma**](https://github.com/watchers-cs673/Watchers-app/blob/main/watchers-app/prisma/movieSchema.prisma).
-
-> Written with [StackEdit](https://stackedit.io/).
