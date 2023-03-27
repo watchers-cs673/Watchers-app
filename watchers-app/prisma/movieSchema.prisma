@@ -20,7 +20,6 @@ model movies {
     overview             String
     popularity           String
     release_date         String
-    status               String
     vote_average         String
     vote_count           String
     credits              String
