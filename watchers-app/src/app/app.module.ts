@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
 import { AuthModule } from '@auth0/auth0-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { AuthModule } from '@auth0/auth0-angular';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     AuthModule.forRoot({
       domain: 'dev-ts3jighkzj45hmbh.us.auth0.com',
       clientId: 'gsH4yqrIkaQstcBdTqtsuXh4tROe74m3',

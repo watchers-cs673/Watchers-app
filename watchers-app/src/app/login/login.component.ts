@@ -1,6 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
+import { FormGroup, FormControl } from '@angular/forms';
+import { createUser } from 'src/user-data/create-user';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +12,17 @@ import { AuthService } from '@auth0/auth0-angular';
 export class LoginComponent {
 
   public showModalFlag = false;
+  public hasAccount = false;
+  profileForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+  });
+  loginForm = new FormGroup({
+    firstName: new FormControl(''),
+    userName: new FormControl(''),
+    password: new FormControl(''),
+  });
+
   constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) {}
   
   public showModal() {
@@ -20,8 +33,17 @@ export class LoginComponent {
     this.showModalFlag = false;
   }
 
+  public signUp() {
+    this.hasAccount=true;
+  }
+
+  public signIn() {
+    console.log("Sign In");
+  }
+
   public createAccount() {
-    console.log('create account');
+    console.log(this.loginForm);
+    createUser("sophie", "sophiemq@bu.edu", "123456")
   }
 
   public forgotPassword() {
