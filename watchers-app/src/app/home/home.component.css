@@ -26,28 +26,6 @@
     flex: 1;
   }
 
-  .toolbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    background-color: #000000;
-    color: rgb(255, 255, 255);
-    font-weight: 600;
-  }
-
-  .toolbar-right {
-    display: flex;
-    margin-right: 5%;
-  }
-
-  .toolbar-right h1 {
-    cursor: pointer;
-  }
-
   .content {
     display: flex;
     margin-top: 80px;
@@ -268,13 +246,6 @@
       right: 120px;
       transform: rotate(-5deg);
     }
-  }
-
-  .profile-btn {
-    text-decoration: none;
-    color: white !important;
-    font-size: large;
-    margin-right: 10px;
   }
 
   @media screen and (max-width: 575px) {

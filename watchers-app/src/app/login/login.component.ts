@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { FormGroup, FormControl } from '@angular/forms';
-import { createUser } from 'src/user-data/create-user';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +42,6 @@ export class LoginComponent {
 
   public createAccount() {
     console.log(this.loginForm);
-    createUser("sophie", "sophiemq@bu.edu", "123456")
   }
 
   public forgotPassword() {

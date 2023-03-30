@@ -1,19 +1,5 @@
-<h1 (click)="showModal()">Log in/Sign up</h1>
-<div class="modal-background" *ngIf="showModalFlag" (click)="hideModal()">
-    <!-- <div *ngIf="hasAccount" class="modal" (click)="$event.stopPropagation()">
-        <div class="title">Log in</div>
-        <form class="info" [formGroup]="loginForm" (ngSubmit)="signIn()">
-            <label for="user-name">UserName: </label>
-            <input id="user-name" type="text" formControlName="userName">
-          
-            <label for="pass-word">Password: </label>
-            <input id="pass-word" type="text" formControlName="password">
-
-            <button type="submit">Submit</button>
-            <button (click)="forgotPassword()">Forgot Password</button>
-            <button (click)="signUp()">Test</button>
-        </form>
-    </div> -->
+<!-- <h1 (click)="showModal()">Log in/Sign up</h1> -->
+<!-- <div class="modal-background" *ngIf="showModalFlag" (click)="hideModal()">
     <div class="modal" (click)="$event.stopPropagation()">
         <div class="title">Sign up</div>
         <form class="info" [formGroup]="loginForm" (ngSubmit)="createAccount()">
@@ -33,5 +19,14 @@
             <button type="submit">Create Account</button>
         </form>
     </div>
-  </div>
+  </div> -->
+<ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+    <button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+      Log out
+    </button>
+  </ng-container>
+
+  <ng-template #loggedOut>
+    <button (click)="auth.loginWithRedirect()" class="login-btn">Log in</button>
+</ng-template>
   
