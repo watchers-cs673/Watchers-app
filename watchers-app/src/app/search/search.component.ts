@@ -9,17 +9,27 @@ import { FormsModule } from '@angular/forms';
 export class SearchComponent implements OnInit{
   searchTerm: string = '';
   options: string[] = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
-  filteredOptions: string[] = [];
+  filteredOptions: any[] = [];
+
+  users: string[] = ['User1', 'User2', 'User3'];
 
   ngOnInit() {
-    this.filteredOptions = this.options;
+    this.filteredOptions = this.catogories;
   }
 
   filterOptions() {
-    this.filteredOptions = this.options.filter(option =>
-      option.toLowerCase().includes(this.searchTerm.toLowerCase())
+    if (this.searchTerm.startsWith('@')) { // User search
+    this.filteredOptions = this.users.filter(user =>
+      user.toLowerCase().includes(this.searchTerm.substr(1).toLowerCase())
     );
+    } else {
+      // Search for categories
+      this.filteredOptions = this.catogories.filter(category =>
+        category.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
   }
+
   catogories = [
     {src: 'assets/pic1_4.png', title: 'movie 1', link: '/discussion'},
     {src: 'assets/pic1_5.png', title: 'movie 2', link: '/discussion'},
