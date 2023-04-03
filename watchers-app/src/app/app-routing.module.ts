@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'discussion', component: DiscussionComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'search', component: SearchComponent},
-  {path:'', component: LoginComponent}
+  { path: '', component: LoginComponent}
 ];
 
 @NgModule({
