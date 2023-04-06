@@ -12,6 +12,7 @@ import { SearchComponent } from './search/search.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,23 +23,23 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     LoginComponent,
     ProfileComponent,
     SearchComponent,
-    ToolbarComponent
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     AuthModule.forRoot({
       domain: 'dev-ts3jighkzj45hmbh.us.auth0.com',
       clientId: 'gsH4yqrIkaQstcBdTqtsuXh4tROe74m3',
       authorizationParams: {
-        redirect_uri: window.location.origin
-      }
+        redirect_uri: window.location.origin,
+      },
     }),
-    
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
