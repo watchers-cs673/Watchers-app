@@ -11,15 +11,14 @@
       <img class="profile" src="assets/profile.png" routerLink="/profile">
       <a class="profile-btn" routerLink="/profile"><h1> Log out</h1></a>
   </div>
-
+  <div class="genre-buttons"></div>
   <div class="content" role="main">
-
     <div class="image-gallery">
-        <div class="image" *ngFor="let catogory of filteredCatogories">
-          <a [routerLink]="catogory.link">
-          <img [src]="catogory.src" [alt]="catogory.title" height="270">
+        <div class="image" *ngFor="let movie of filteredMovies">
+          <a [routerLink]="movie.imgPath">
+          <img [src]="movie.imgPath" [alt]="movie.name" height="300" width="200">
         </a>
-          <h3>{{ catogory.title }}</h3>
+          <h3 class="movie-title">{{ movie.name }}</h3>
         </div>
       </div>
 
