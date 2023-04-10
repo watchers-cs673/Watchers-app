@@ -36,7 +36,7 @@
 
   <div class="image-gallery">
     <div class="image" *ngFor="let catogory of catogories">
-      <a [routerLink]="catogory.link">
+      <a [routerLink]="['/search', catogory.title]">
       <img [src]="catogory.src" [alt]="catogory.title" height="270">
     </a>
       <h3>{{ catogory.title }}</h3>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MovieService } from '../services/movie-service';
@@ -14,11 +14,24 @@ export class SearchComponent {
   public catogories: any[];
   public movies: any[];
   public filteredMovies: any[];
+  public genre: string = '';
 
-  constructor(private movieService: MovieService) {
+  constructor(private movieService: MovieService, private activatedRoute: ActivatedRoute) {
     this.catogories = movieService.allMovies.map(movie => movie.genre);
     this.movies = movieService.allMovies;
+    this.genre = activatedRoute.snapshot.params["genre"];
+    if(this.genre) {
+      this.filterByGenre(this.genre);
+    }
+    else {
+      this.genre = 'All Movies'
+    }
     this.filteredMovies = this.movies;
+  }
+
+  public filterByGenre(genre: string) {
+    this.movies = this.movies.filter(movie => movie.genre==genre);
+    console.log(this.filteredMovies)
   }
 
   public onSearch() {
