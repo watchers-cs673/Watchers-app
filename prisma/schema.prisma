@@ -1,11 +1,10 @@
-// This is movie database Schema Prisma file, 
-// Detail about Prisma: https://www.prisma.io/docs/concepts/database-connectors/mysql
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
 }
 
-// Configure a datasource block in Prisma schema file to connect to a MySQL database server
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -15,16 +14,16 @@ model movies {
     id                   String        @id
     title                String
     genres               String         
-    production_companies String
+    // production_companies String
     original_language    String
     overview             String
     popularity           String
     release_date         String
+    status               String
     vote_average         String
     vote_count           String
     credits              String
-    keywords             String
+    // keywords             String        
     poster_path          String
     runtime              String
 }
-
