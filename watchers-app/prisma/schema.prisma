@@ -3,26 +3,30 @@
 
 generator client {
   provider = "prisma-client-js"
+  // previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "mongodb"
+  // provider = "mysql"
   url      = env("DATABASE_URL")
+  // schemas  = ["user-data", "movie-data"]
 }
 
 model User {
-  userId            String    @id @default(auto()) @map("_id") @db.ObjectId
-  username          String    @unique
-  email             String    @unique
+  userId            String        @id @default(auto()) @map("_id") @db.ObjectId
+  username          String        @unique
+  email             String        @unique
   passwordHash      String
   uniqueUserAuthKey String
   displayName       String?
   posts             Post[]
   likes             Like[]
   comments          UserComment[]
-  follower          Follows[] @relation("following")
-  following         Follows[] @relation("follower")
+  follower          Follows[]     @relation("following")
+  following         Follows[]     @relation("follower")
   // activeTokens      UserTokenData[]
+  // @@schema("user-data")
 }
 
 model Post {
@@ -32,16 +36,18 @@ model Post {
   postBody          String
   referencedMovieId String
   postLikes         Like[]
+  // @@schema("user-data")
 }
 
 model Like {
-  likeID         String   @id @default(auto()) @map("_id") @db.ObjectId
-  liking         User     @relation(fields: [likingUserId], references: [userId])
-  likedPostId    String   @db.ObjectId
-  liked          Post     @relation(fields: [likedPostId], references: [postId])
-  likingUserId   String   @db.ObjectId
+  likeID         String       @id @default(auto()) @map("_id") @db.ObjectId
+  liking         User         @relation(fields: [likingUserId], references: [userId])
+  likedPostId    String       @db.ObjectId
+  liked          Post         @relation(fields: [likedPostId], references: [postId])
+  likingUserId   String       @db.ObjectId
   commentLike    UserComment? @relation(fields: [likedCommentId], references: [commentId])
-  likedCommentId String?  @map("commentCommentId") @db.ObjectId
+  likedCommentId String?      @map("commentCommentId") @db.ObjectId
+  // @@schema("user-data")
 }
 
 model UserComment {
@@ -50,6 +56,7 @@ model UserComment {
   commenterId  String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
   commentBody  String
   commentLikes Like[]
+  // @@schema("user-data")
 }
 
 model Follows {
@@ -59,4 +66,23 @@ model Follows {
   followingId      String @db.ObjectId
   // @@id([followerId, followingId])
   followRelationId String @id @default(auto()) @map("_id") @db.ObjectId
+  // @@schema("user-data")
+}
+
+model movies {
+  id                String @id @map("_id")
+  title             String
+  genres            String
+  // production_companies String
+  original_language String
+  overview          String
+  popularity        String
+  release_date      String
+  status            String
+  vote_average      String
+  vote_count        String
+  credits           String
+  // keywords             String
+  poster_path       String
+  runtime           String
 }
