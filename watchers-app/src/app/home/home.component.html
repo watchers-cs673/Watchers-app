@@ -21,7 +21,7 @@
 
 
     <img *ngFor="let image of randomImages; let i = index" 
-         [src]="image.src" 
+         [src]="image.imgPath" 
          [ngClass]="{'big': i === currentIndex}"
          [routerLink]="image.link"
          (click)="imageClicked(i)">

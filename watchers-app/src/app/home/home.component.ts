@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import { MovieService } from '../services/movie-service';
 
 @Component({
   selector: 'app-home',
@@ -8,27 +9,14 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  randomImages: { src: string, link: string }[] = [];
-  constructor(public auth: AuthService,){this.getRandomImages();}
+  public images: any[];
+  randomImages: { imgPath: string, link: string }[] = [];
   public title = 'watchers';
   public profile = this.auth.user$;
-  images = [
-    {src: 'assets/trending1_3.png', alt: 'Image 1', link: '/discussion'},
-    {src: 'assets/trending1_4.png', alt: 'Image 2', link: '/discussion'},
-    {src: 'assets/trending1_5.png', alt: 'Image 3', link: '/discussion'},
-    {src: 'assets/trending1_8.png', alt: 'Image 4', link: '/discussion'},
-    {src: 'assets/trending1_9.png', alt: 'Image 5', link: '/discussion'},
-    {src: 'assets/trending2_1.png', alt: 'Image 6', link: '/discussion'},
-    {src: 'assets/trending2_2.png', alt: 'Image 7', link: '/discussion'},
-    {src: 'assets/trending2_3.png', alt: 'Image 8', link: '/discussion'},
-    {src: 'assets/trending2_4.png', alt: 'Image 9', link: '/discussion'},
-    {src: 'assets/trending2_5.png', alt: 'Image 10', link: '/discussion'},
-    {src: 'assets/trending2_6.png', alt: 'Image 11', link: '/discussion'},
-    {src: 'assets/trending2_7.png', alt: 'Image 12', link: '/discussion'},
-    {src: 'assets/trending2_8.png', alt: 'Image 13', link: '/discussion'},
-
-    // ...
-  ];
+  constructor(public auth: AuthService, private movieService: MovieService) {
+    this.images = movieService.allMovies,
+    this.getRandomImages();
+  }
 
 
   getRandomImages() {
