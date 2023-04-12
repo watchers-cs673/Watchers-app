@@ -20,7 +20,7 @@
   </div>
 
 
-    <img *ngFor="let image of images; let i = index" 
+    <img *ngFor="let image of randomImages; let i = index" 
          [src]="image.src" 
          [ngClass]="{'big': i === currentIndex}"
          [routerLink]="image.link"
