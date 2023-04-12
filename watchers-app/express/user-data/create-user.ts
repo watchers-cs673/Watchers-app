@@ -1,9 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-import { createUserAuthKey, createPasswordHash } from './user-authenticate';
+import { createUserAuthKey, createPasswordHash } from './user-authenticate.js';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export async function createUser(
+  prisma: PrismaClient,
   username: string,
   email: string,
   password: string,

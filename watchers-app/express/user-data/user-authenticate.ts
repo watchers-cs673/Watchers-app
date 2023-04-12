@@ -1,15 +1,10 @@
 import { PrismaClient, User } from '@prisma/client';
 import { hash } from 'bcrypt';
-import {
-  generateSecret,
-  jwtVerify,
-  importPKCS8,
-  SignJWT,
-} from 'jose';
+import { generateSecret, jwtVerify, importPKCS8, SignJWT } from 'jose';
 
 // it will be necessary to interface with auth0 here
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 const saltRounds = 10;
 
 interface user_public_info {
@@ -18,10 +13,10 @@ interface user_public_info {
   displayName?: string;
 }
 
-export interface tokenAndTime {
-  user_token: string;
-  login_time: number;
-}
+// export interface tokenAndTime {
+//   user_token: string;
+//   login_time: number;
+// }
 
 /**
  * User login function, goal is to return an authtoken here
@@ -30,6 +25,7 @@ export interface tokenAndTime {
  * @returns a JWT
  */
 export async function userLogin(
+  prisma: PrismaClient,
   userId: string,
   password: string
 ): Promise<string | null> {
@@ -76,6 +72,7 @@ export async function createUserAuthKey(): Promise<string> {
  * @returns
  */
 export async function validateToken(
+  prisma: PrismaClient,
   // timestamp: number,
   // authToken: string,
   user_token: string,

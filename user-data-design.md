@@ -34,7 +34,9 @@ Where `<mongodb url here>` is replaced by the MongoDB URL you just copied.
 
 #### Initialize Prisma
 
-Run `npx prisma db push` to generate the client and database automatically in MongoDB.
+Run `npx prisma generate` to generate the appropriate client files.
+
+Run `npx prisma db push` to generate the client and configure the database automatically in MongoDB.
 
 #### Build Express backend
 
@@ -42,7 +44,7 @@ Run `npm run express-build` to compile the [Express](https://expressjs.com/) typ
 
 Run the backend with `npm run express-run`.
 
-Express is used to be a backend to run the Prisma client, which communicates with the frontend Angular client over REST.
+Express is used to be a backend to run the Prisma client, which communicates with the frontend Angular client over REST. Run the frontend with `ng serve`.
 
 ## User profile data concept
 

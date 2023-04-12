@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { validateToken } from './user-authenticate';
+import { validateToken } from './user-authenticate.js';
 
 /**
  * post to database after verification of user identity
@@ -9,13 +9,14 @@ import { validateToken } from './user-authenticate';
  * @param referenced_movie_id identifies the movie of interest
  */
 export async function userPost(
+  prisma: PrismaClient,
   user_session_token: string,
   user_id: string,
   post_body: string,
   referenced_movie_id: string
-) {
-  if (await validateToken(user_session_token, user_id)) {
-    const prisma = new PrismaClient();
+): Promise<boolean> {
+  if (await validateToken(prisma, user_session_token, user_id)) {
+    // const prisma = new PrismaClient();
     const post = await prisma.post.updateMany({
       where: {
         // author: posting_User,
@@ -26,6 +27,10 @@ export async function userPost(
         referencedMovieId: referenced_movie_id,
       },
     });
+    if (!post) {
+      return false;
+    }
     // post.count
   }
+  return true;
 }

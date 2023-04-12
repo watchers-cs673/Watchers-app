@@ -1,6 +1,6 @@
 import { Follows, PrismaClient, Post, Like, UserComment } from '@prisma/client';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 // enum publicDataType {
 // };
@@ -11,17 +11,23 @@ const prisma = new PrismaClient();
  * @returns array of Post values
  */
 export async function viewPostsFromUser(
+  prisma: PrismaClient,
   user_id: string
 ): Promise<Post[] | undefined> {
-  const user = await prisma.user.findUnique({
-    where: {
-      userId: user_id,
-    },
-    select: {
-      posts: true,
-    },
-  });
-  return user?.posts;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        userId: user_id,
+      },
+      select: {
+        posts: true,
+      },
+    });
+    return user?.posts;
+  } catch (e: any) {
+    return;
+  }
+
   // const posts_array = user?.posts;
   // return JSON.stringify(posts_array);
 }
@@ -32,17 +38,22 @@ export async function viewPostsFromUser(
  * @return list of users following
  */
 export async function getUserFollowing(
+  prisma: PrismaClient,
   user_id: string
 ): Promise<Follows[] | undefined> {
-  const user = await prisma.user.findUnique({
-    where: {
-      userId: user_id,
-    },
-    select: {
-      following: true,
-    },
-  });
-  return user?.following;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        userId: user_id,
+      },
+      select: {
+        following: true,
+      },
+    });
+    return user?.following;
+  } catch (e: any) {
+    return;
+  }
 }
 
 /**
@@ -51,17 +62,22 @@ export async function getUserFollowing(
  * @returns list of users followed by
  */
 export async function getUserFollowers(
+  prisma: PrismaClient,
   user_id: string
 ): Promise<Follows[] | undefined> {
-  const user = await prisma.user.findUnique({
-    where: {
-      userId: user_id,
-    },
-    select: {
-      follower: true,
-    },
-  });
-  return user?.follower;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        userId: user_id,
+      },
+      select: {
+        follower: true,
+      },
+    });
+    return user?.follower;
+  } catch (e: any) {
+    return;
+  }
 }
 
 /**
@@ -70,21 +86,26 @@ export async function getUserFollowers(
  * @returns user display name
  */
 export async function getUserDisplayName(
+  prisma: PrismaClient,
   user_id: string
 ): Promise<string | undefined> {
-  const user = await prisma.user.findUnique({
-    where: {
-      userId: user_id,
-    },
-    select: {
-      displayName: true,
-      username: true,
-    },
-  });
-  if (user?.displayName == null) {
-    return user?.username;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        userId: user_id,
+      },
+      select: {
+        displayName: true,
+        username: true,
+      },
+    });
+    if (user?.displayName == null) {
+      return user?.username;
+    }
+    return user?.displayName;
+  } catch (e: any) {
+    return;
   }
-  return user?.displayName;
 }
 
 /**
@@ -92,16 +113,23 @@ export async function getUserDisplayName(
  * @param user_id user of interest
  * @returns user likes
  */
-export async function getUserLikes(user_id: string): Promise<Like[] | undefined> {
-  const user = await prisma.user.findUnique({
-    where: {
-      userId: user_id,
-    },
-    select: {
-      likes:true
-    },
-  });
-  return user?.likes;
+export async function getUserLikes(
+  prisma: PrismaClient,
+  user_id: string
+): Promise<Like[] | undefined> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        userId: user_id,
+      },
+      select: {
+        likes: true,
+      },
+    });
+    return user?.likes;
+  } catch (e: any) {
+    return;
+  }
 }
 
 /**
@@ -109,14 +137,21 @@ export async function getUserLikes(user_id: string): Promise<Like[] | undefined>
  * @param user_id user of interest
  * @returns user comments
  */
-export async function getUserComments(user_id: string): Promise<UserComment[] | undefined> {
-  const user = await prisma.user.findUnique({
-    where: {
-      userId: user_id,
-    },
-    select: {
-      comments:true
-    },
-  });
-  return user?.comments;
+export async function getUserComments(
+  prisma: PrismaClient,
+  user_id: string
+): Promise<UserComment[] | undefined> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        userId: user_id,
+      },
+      select: {
+        comments: true,
+      },
+    });
+    return user?.comments;
+  } catch (e: any) {
+    return;
+  }
 }
