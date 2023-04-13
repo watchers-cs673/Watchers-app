@@ -70,19 +70,19 @@ model Follows {
 }
 
 model movies {
-  id                String @id @map("_id")
-  title             String
-  genres            String
-  // production_companies String
-  original_language String
-  overview          String
-  popularity        String
-  release_date      String
-  status            String
-  vote_average      String
-  vote_count        String
-  credits           String
-  // keywords             String
-  poster_path       String
-  runtime           String
+  id                   String  @id @map("_id")
+  title                String
+  genres               String
+  production_companies String?
+  original_language    String
+  overview             String?
+  popularity           String
+  release_date         String
+  status               String
+  vote_average         String
+  vote_count           String
+  credits              String?
+  keywords             String?
+  poster_path          String
+  runtime              String?
 }
