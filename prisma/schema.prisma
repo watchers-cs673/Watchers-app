@@ -13,17 +13,17 @@ datasource db {
 model movies {
     id                   String        @id
     title                String
-    genres               String         
-    // production_companies String
+    genres               String?         
+    production_companies String?
     original_language    String
-    overview             String
+    overview             String?
     popularity           String
     release_date         String
     status               String
     vote_average         String
     vote_count           String
-    credits              String
-    // keywords             String        
+    credits              String?
+    keywords             String?        
     poster_path          String
-    runtime              String
+    runtime              String?
 }
