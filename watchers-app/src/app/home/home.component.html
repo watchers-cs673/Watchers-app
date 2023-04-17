@@ -20,11 +20,12 @@
   </div>
 
 
-    <img *ngFor="let image of randomImages; let i = index" 
-         [src]="image.imgPath" 
-         [ngClass]="{'big': i === currentIndex}"
-         [routerLink]="image.link"
-         (click)="imageClicked(i)">
+  <img *ngFor="let image of randomImages; let i = index" 
+  [src]="image.imgPath ? image.imgPath : ''" 
+  [ngClass]="{'big': i === currentIndex}"
+  [routerLink]="['/discussion', {imgPath: image.imgPath, name: image.name}]"
+  (click)="imageClicked(i)">
+
          <div class="arrow right">
     <img (click)="nextImage()" src="assets/right_arrow.png">
   </div>
