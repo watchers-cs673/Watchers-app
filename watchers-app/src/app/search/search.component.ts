@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MovieService } from '../services/movie-service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +17,7 @@ export class SearchComponent {
   public filteredMovies: any[];
   public genre: string = '';
 
-  constructor(private movieService: MovieService, private activatedRoute: ActivatedRoute) {
+  constructor(private movieService: MovieService, private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.catogories = movieService.allMovies.map(movie => movie.genre);
     this.movies = movieService.allMovies;
     this.genre = activatedRoute.snapshot.params["genre"];
@@ -27,6 +28,11 @@ export class SearchComponent {
       this.genre = 'All Movies'
     }
     this.filteredMovies = this.movies;
+  }
+
+  public getSantizeUrl(url : string) {
+    console.log(url);
+    return this.sanitizer.bypassSecurityTrustUrl(`url(`+url+')');
   }
 
   public filterByGenre(genre: string) {
@@ -40,7 +46,7 @@ export class SearchComponent {
     }
     else {
       this.filteredMovies = this.movies.filter(movie => 
-        movie.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+        movie.name && movie.name.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
   }
