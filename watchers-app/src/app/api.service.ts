@@ -26,4 +26,8 @@ export class ApiService {
   viewPostsFromUser(user_id: string) {
     return this.http.get(expressURL+'/api/get/viewpostsfromuser'+'?userid='+user_id);
   }
+
+  searchForUsername(usernamequery: string) {
+    return this.http.get(expressURL+'/api/get/search/usernamesearch'+'?usernamequery='+usernamequery);
+  }
 }
