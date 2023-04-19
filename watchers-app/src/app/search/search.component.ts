@@ -17,7 +17,7 @@ export class SearchComponent {
   public filteredMovies: any[];
   public genre: string = '';
 
-  constructor(private movieService: MovieService, private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer) {
+  constructor(private movieService: MovieService, private activatedRoute: ActivatedRoute) {
     this.catogories = movieService.allMovies.map(movie => movie.genre);
     this.movies = movieService.allMovies;
     this.genre = activatedRoute.snapshot.params["genre"];
@@ -28,11 +28,6 @@ export class SearchComponent {
       this.genre = 'All Movies'
     }
     this.filteredMovies = this.movies;
-  }
-
-  public getSantizeUrl(url : string) {
-    console.log(url);
-    return this.sanitizer.bypassSecurityTrustUrl(`url(`+url+')');
   }
 
   public filterByGenre(genre: string) {

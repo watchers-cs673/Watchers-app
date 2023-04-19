@@ -17,7 +17,7 @@
       <div class="image" *ngFor="let movie of filteredMovies">
         <a [routerLink]="['/discussion', {imgPath: movie.imgPath, name: movie.name}]">
         <!-- <div [ngStyle]="{'background-image':'url('+movie.imgPath+')'}" height="300" width="200"></div> -->
-        <!-- <img [src]=getSantizeUrl(movie.imgPath) [alt]="movie.name" height="300" width="200"> -->
+        <img [src]="movie.imgPath" [alt]="movie.name" height="300" width="200">
       </a>
         <h3 class="movie-title">{{ movie.name }}</h3>
       </div>

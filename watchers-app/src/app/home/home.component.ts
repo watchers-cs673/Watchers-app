@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { MovieService } from '../services/movie-service';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -39,13 +40,7 @@ export class HomeComponent {
     return shuffledArray;
   }
 
-  catogories = [
-    {src: 'assets/pic1_2.png', title: 'Horror', link: '/discussion'},
-    {src: 'assets/pic1_7.png', title: 'Musical', link: '/discussion'},
-    {src: 'assets/pic1_6.png', title: 'Romance', link: '/discussion'},
-    {src: 'assets/pic2_9.png', title: 'Action', link: '/discussion'},
-    {src: 'assets/pic1_1.png', title: 'Comedy', link: '/discussion'},
-  ];
+  catogories = this.movieService.getGenres();
   currentIndex = 1;
 
   public nextImage() {

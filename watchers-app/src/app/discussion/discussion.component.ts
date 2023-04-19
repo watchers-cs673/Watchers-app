@@ -1,7 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { ActivatedRoute } from '@angular/router';
+import { MovieService } from '../services/movie-service';
 
+interface Movie {
+  name: string;
+  rating: number;
+  genre: string;
+  imgPath: string;
+  runTime?: string;
+  year?: number;
+  summary?: string;
+}
 
 @Component({
   selector: 'app-discussion',
@@ -9,10 +19,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./discussion.component.css']
 })
 export class DiscussionComponent implements OnInit{
-  title = "watchers";
-  rating: number = 0;
+  public title = "watchers";
+  public rating: number = 0;
   // current tab
-  selectedTab = 'summary';
+  public selectedTab = 'summary';
+  public movie?: Movie;
+  name: string = "";
+  imgPath: string = "";
+  description: string = "";
 
   // switch tab
   selectTab(tabName: string) {
@@ -29,13 +43,18 @@ export class DiscussionComponent implements OnInit{
     // ...
   ];
 
-  name: string | null = null;
-  imgPath: string | null = null;
-  constructor(private route: ActivatedRoute) { }
+
+  constructor(private route: ActivatedRoute, private movieService: MovieService) {  
+    let movieName = this.route.snapshot.paramMap.get('name');
+    this.movie = movieService.getMovie(movieName ? movieName : "");
+  }
 
   ngOnInit(): void {
-    this.imgPath = this.route.snapshot.paramMap.get('imgPath');
-    this.name = this.route.snapshot.paramMap.get('name');
+    if(this.movie) {
+      this.imgPath = this.movie.imgPath;
+      this.name = this.movie.name;
+      this.description = this.movie.summary ? this.movie.summary : "";
+    }
   }
 
 }
