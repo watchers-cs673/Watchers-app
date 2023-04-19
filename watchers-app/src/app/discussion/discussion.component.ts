@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie-service';
+import { Observable } from 'rxjs';
 
 interface Movie {
   name: string;
@@ -18,12 +19,12 @@ interface Movie {
   templateUrl: './discussion.component.html',
   styleUrls: ['./discussion.component.css']
 })
-export class DiscussionComponent implements OnInit{
+export class DiscussionComponent {
   public title = "watchers";
   public rating: number = 0;
   // current tab
   public selectedTab = 'summary';
-  public movie?: Movie;
+  public movie$: Observable<Movie | undefined>;
   name: string = "";
   imgPath: string = "";
   description: string = "";
@@ -46,15 +47,7 @@ export class DiscussionComponent implements OnInit{
 
   constructor(private route: ActivatedRoute, private movieService: MovieService) {  
     let movieName = this.route.snapshot.paramMap.get('name');
-    this.movie = movieService.getMovie(movieName ? movieName : "");
-  }
-
-  ngOnInit(): void {
-    if(this.movie) {
-      this.imgPath = this.movie.imgPath;
-      this.name = this.movie.name;
-      this.description = this.movie.summary ? this.movie.summary : "";
-    }
+    this.movie$ = movieService.getMovie(movieName ? movieName : "");
   }
 
 }

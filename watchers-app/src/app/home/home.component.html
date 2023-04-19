@@ -16,7 +16,7 @@
   <!-- <img class="left arrow" (click)="prevImage()" src="assets/left_arrow.png"> -->
   <div class="photo-list">
     <div class="arrow left">
-    <img (click)="prevImage()" src="assets/left_arrow.png">
+    <img src="assets/left_arrow.png">
   </div>
 
 
@@ -27,7 +27,7 @@
   (click)="imageClicked(i)">
 
          <div class="arrow right">
-    <img (click)="nextImage()" src="assets/right_arrow.png">
+    <img src="assets/right_arrow.png">
   </div>
   </div>
   <!-- <img class="right arrow" (click)="nextImage()" src="assets/right_arrow.png"> -->
@@ -36,7 +36,7 @@
   <a class="search" routerLink="/search"><h2>Trending Now</h2></a>
 
   <div class="image-gallery">
-    <div class="image" *ngFor="let catogory of catogories">
+    <div class="image" *ngFor="let catogory of catogories$ | async">
       <a [routerLink]="['/search', catogory.title]">
       <img [src]="catogory.src" [alt]="catogory.title" height="270">
     </a>

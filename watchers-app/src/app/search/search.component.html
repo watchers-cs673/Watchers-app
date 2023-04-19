@@ -13,7 +13,7 @@
 </div>
 <div class="genre-buttons"></div>
 <div class="content" role="main">
-  <div class="image-gallery">
+  <div *ngIf="filteredMovies$ | async as filteredMovies" class="image-gallery">
       <div class="image" *ngFor="let movie of filteredMovies">
         <a [routerLink]="['/discussion', {imgPath: movie.imgPath, name: movie.name}]">
         <!-- <div [ngStyle]="{'background-image':'url('+movie.imgPath+')'}" height="300" width="200"></div> -->

@@ -20,12 +20,12 @@
 </div>
 
 
-<div class="content" role="main">
+<div *ngIf="movie$ | async as movie" class="content" role="main">
     <div class="poster">
-      <img [src]="imgPath" alt="Poster" />
+      <img [src]="movie.imgPath" alt="Poster" />
         <div class="title">
-        <h2>{{name}}</h2>
-        <app-star-rating [(rating)]="rating"></app-star-rating>
+        <h2>{{movie.name}}</h2>
+        <app-star-rating [(rating)]="movie.rating"></app-star-rating>
     </div>
 
     <div class="tabs">
@@ -37,7 +37,7 @@
       <div class="container">
         <ng-container *ngIf="selectedTab === 'summary'">
           <p>
-            {{description}}
+            {{movie.summary}}
         </p>
         </ng-container>
         <ng-container *ngIf="selectedTab === 'new'">
