@@ -1,5 +1,5 @@
 import { PrismaClient, User } from '@prisma/client';
-import { hash } from 'bcrypt';
+import { genSalt, hash } from 'bcrypt';
 import { generateSecret, jwtVerify, importPKCS8, SignJWT } from 'jose';
 
 // it will be necessary to interface with auth0 here
@@ -107,7 +107,9 @@ export async function validateToken(
 }
 
 export async function createPasswordHash(password: string): Promise<string> {
-  return hash(password, saltRounds);
+  const salt = await genSalt(saltRounds);
+  const hashed = await hash(password, salt);
+  return hashed;
 }
 
 /**

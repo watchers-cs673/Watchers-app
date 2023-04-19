@@ -29,9 +29,7 @@ export async function createUser(
       return false;
     });
 
-  let passwordHashResult = await createPasswordHash(password).then((value) => {
-    return value;
-  });
+  let passwordHashResult = await createPasswordHash(password);
 
   let userAuthKey = await createUserAuthKey();
 
