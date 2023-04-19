@@ -3,7 +3,6 @@
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <toolbar [showHomeLink]="true"></toolbar>
   <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="86" height="36" fill="currentColor" class="bi bi-search" viewBox="0 0 6 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="white"></path> </svg>
   <span><input type="text" id="search" name="search" value="" placeholder="" /></span>
   <div class="spacer"></div>
@@ -22,9 +21,9 @@
 
 <div class="content" role="main">
     <div class="poster">
-      <img [src]="imgPath" alt="Poster" />
+        <img src="assets/poster1_1.jpg" alt="Poster" />
         <div class="title">
-        <h2>{{name}}</h2>
+        <h2>Avatar 2</h2>
         <app-star-rating [(rating)]="rating"></app-star-rating>
     </div>
 

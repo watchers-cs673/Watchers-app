@@ -10,7 +10,7 @@ import { MovieService } from '../services/movie-service';
 })
 export class HomeComponent {
   public images: any[];
-  randomImages: { imgPath: string, link: string, name: string }[] = [];
+  randomImages: { imgPath: string, link: string }[] = [];
   public title = 'watchers';
   public profile = this.auth.user$;
   constructor(public auth: AuthService, private movieService: MovieService) {
