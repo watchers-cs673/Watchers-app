@@ -26,6 +26,7 @@ export class DiscussionComponent {
   public selectedTab = 'summary';
   public movie$: Observable<Movie | undefined>;
   name: string = "";
+  year: string = "";
   imgPath: string = "";
   description: string = "";
 
