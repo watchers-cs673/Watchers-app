@@ -25,6 +25,7 @@ const express_port = 3000;
 const angularURL = 'http://localhost:4200';
 
 // handling CORS
+// comment out this section if testing using cURL or another HTTP request program
 app.use((req, res, next) => {
   // allow from origin, the frontend port
   res.header(
