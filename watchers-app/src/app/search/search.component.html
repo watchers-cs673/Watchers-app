@@ -15,7 +15,7 @@
   <div class="content" role="main">
     <div class="image-gallery">
         <div class="image" *ngFor="let movie of filteredMovies">
-          <a [routerLink]="movie.imgPath">
+          <a [routerLink]="['/discussion', {imgPath: movie.imgPath, name: movie.name}]">
           <img [src]="movie.imgPath" [alt]="movie.name" height="300" width="200">
         </a>
           <h3 class="movie-title">{{ movie.name }}</h3>
