@@ -28,6 +28,8 @@
         <app-star-rating [rating]="movie.rating"></app-star-rating>
     </div>
 
+    <h1>{{movie.runTime}}</h1>  
+
     <div class="tabs">
         <button class="tab" [ngClass]="{'active': selectedTab === 'summary'}" (click)="selectTab('summary')">Summary</button>
         <button class="tab" [ngClass]="{'active': selectedTab === 'new'}" (click)="selectTab('new')">New</button>
