@@ -56,22 +56,22 @@ export class HomeComponent {
 
   currentIndex = 1;
 
-  // public nextImage() {
-  //   if (this.currentIndex == 2) {
-  //     this.currentIndex = 0;
-  //   } else {
-  //     this.currentIndex = (this.currentIndex + 1) % this.images.length;
-  //   }
-  // }
+  public nextImage() {
+    if (this.currentIndex == 2) {
+      this.currentIndex = 0;
+    } else {
+      this.currentIndex = (this.currentIndex + 1) % 3;
+    }
+  }
 
-  // public prevImage() {
-  //   if (this.currentIndex == 0) {
-  //     this.currentIndex = 2;
-  //   } else {
-  //     this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
-  //   }
+  public prevImage() {
+    if (this.currentIndex == 0) {
+      this.currentIndex = 2;
+    } else {
+      this.currentIndex = (this.currentIndex - 1 + 3) % 3;
+    }
     
-  // }
+  }
 
   public imageClicked(index: number) {
     this.currentIndex = index;
