@@ -16,7 +16,18 @@ Make sure you have installed MongoDB, you can follow the directions [here](https
 
 #### Setup MongoDB
 
-In your terminal, run the command `mongod` (this is the MongoDB background process). Alternatively, if you installed via Homebrew (on macOS) run `brew services start mongodb-community`.
+In your terminal, run the command `mongod` (this is the MongoDB background process). 
+<!-- Alternatively, if you installed via Homebrew (on macOS) run `brew services start mongodb-community`. -->
+Alternatively, if you installed via Homebrew (on macOS) run:
+```sh
+mongod --port 27017 --dbpath /opt/homebrew/var/mongodb/ --replSet rs0 --bind_ip localhost,HomeHost
+```
+(to run mongodb correctly with replica set when testing locally, see notes here: <https://lightrun.com/answers/prisma-prisma-make-the-mongodb-replica-set-requirement-optional-in-development>)
+
+Run `mongosh` in the terminal and paste the following:
+```
+rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'localhost:27017'}]});
+```
 
 #### Setup the .env file
 
