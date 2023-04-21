@@ -10,6 +10,7 @@ export async function createUser(
   password: string,
   displayName?: string
 ): Promise<boolean> {
+  await prisma.$connect();
   const userExists = await prisma.user
     .findFirstOrThrow({
       where: {
@@ -31,7 +32,7 @@ export async function createUser(
 
   let passwordHashResult = await createPasswordHash(password);
 
-  let userAuthKey = await createUserAuthKey();
+  let userAuthKey: string = await createUserAuthKey();
 
   const displayNameResult = displayName ?? username;
   const user = await prisma.user.create({
@@ -46,14 +47,15 @@ export async function createUser(
   // TODO: in the future interface with Auth0 and return session cookie here
   // true indicates successful creation
   // verify user created
-  const userExistsNow = await prisma.user
+  try {
+    const userExistsNow = await prisma.user
     .findFirstOrThrow({
       where: {
         username: username,
       },
     })
-    .catch(() => {
-      return false;
-    });
-  return true;
+    return true;
+  } catch {
+    return false
+  }
 }

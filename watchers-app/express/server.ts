@@ -68,9 +68,10 @@ app.post('/api/post/createuser', function (req, res) {
   }
 });
 
-app.post('/api/post/userlogin', function (req, res) {
+app.post('/api/post/userlogin', async (req, res) => {
   let data = req.body;
-  let jwt = userLogin(prisma, data['userID'], data['password']);
+  // let jwt = userLogin(prisma, data['username'], data['password']);
+  let jwt = await userLogin(prisma, data['email'], data['password']);
   if (!jwt) {
     res.status(401);
   } else {
