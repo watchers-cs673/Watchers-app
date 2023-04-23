@@ -1,25 +1,26 @@
 <div class="toolbar" role="banner">
-    <a routerLink="/" class="homeLink">W</a>
-    <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="86" height="36" fill="currentColor" class="bi bi-search" viewBox="0 0 6 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="white"></path> </svg>
-    <span><input type="text" id="search" name="search"  [(ngModel)]="searchTerm" placeholder="" (keyup)="onSearch()"></span>
-      
+  <a routerLink="/" class="homeLink">W</a>
+  <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="86" height="36" fill="currentColor" class="bi bi-search" viewBox="0 0 6 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="white"></path> </svg>
+  <span><input type="text" id="search" name="search"  [(ngModel)]="searchTerm" placeholder="" (keyup)="onSearch()"></span>
+    
+  <div class="spacer"></div>
+    <div class="toolbar-right">
+    <h1>{{genre}}</h1>
+    </div>
     <div class="spacer"></div>
-      <div class="toolbar-right">
-      <h1>{{genre}}</h1>
+    <img class="profile" src="assets/profile.png" routerLink="/profile">
+    <a class="profile-btn" routerLink="/profile"><h1> Log out</h1></a>
+</div>
+<div class="genre-buttons"></div>
+<div class="content" role="main">
+  <div *ngIf="filteredMovies$ | async as filteredMovies" class="image-gallery">
+      <div class="image" *ngFor="let movie of filteredMovies">
+        <a [routerLink]="['/discussion', {imgPath: movie.imgPath, name: movie.name}]">
+        <!-- <div [ngStyle]="{'background-image':'url('+movie.imgPath+')'}" height="300" width="200"></div> -->
+        <img [src]="movie.imgPath" [alt]="movie.name" height="300" width="200">
+      </a>
+        <h3 class="movie-title">{{ movie.name }}</h3>
       </div>
-      <div class="spacer"></div>
-      <img class="profile" src="assets/profile.png" routerLink="/profile">
-      <a class="profile-btn" routerLink="/profile"><h1> Log out</h1></a>
-  </div>
-  <div class="genre-buttons"></div>
-  <div class="content" role="main">
-    <div class="image-gallery">
-        <div class="image" *ngFor="let movie of filteredMovies">
-          <a [routerLink]="['/discussion', {imgPath: movie.imgPath, name: movie.name}]">
-          <img [src]="movie.imgPath" [alt]="movie.name" height="300" width="200">
-        </a>
-          <h3 class="movie-title">{{ movie.name }}</h3>
-        </div>
-      </div>
+    </div>
 
-  </div>
+</div>

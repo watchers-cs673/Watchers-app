@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-star-rating',
@@ -13,11 +13,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
       >
         &#9733;
       </span>
-    </div>
-  `,
-  styles: [
-    `
-      .star-rating {
+      <span>{{rating}}</span>
+      </div>
+      `,
+      styles: [
+        `
+          .star-rating {
         display: inline-block;
         font-size: 2rem;
         cursor: pointer;
@@ -31,14 +32,21 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     `,
   ],
 })
-export class StarRatingComponent {
+export class StarRatingComponent implements OnInit {
   @Input() rating = 0;
   @Output() ratingChange = new EventEmitter<number>();
 
+  public ratingWeight = 10;
   filledStars = 0;
   stars = [1, 2, 3, 4, 5];
 
-  constructor() {}
+  constructor() {
+  }
+
+  ngOnInit() {
+   this.rating = this.rating/2;
+   this.filledStars = this.rating;
+  }
 
   onMouseOver(index: number) {
     this.filledStars = index + 1;
@@ -49,7 +57,7 @@ export class StarRatingComponent {
   }
 
   onStarClicked(index: number) {
-    this.rating = index + 1;
+    this.rating = parseFloat(((this.rating * (this.ratingWeight-1) + (index + 1))/10).toFixed(2));
     this.ratingChange.emit(this.rating);
   }
 

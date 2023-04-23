@@ -13,7 +13,7 @@ import {
   getUserComments,
   viewPostsFromUser,
 } from './user-data/read-info.js';
-// import
+import { userSearchDatabase } from './user-data/user-search.js';
 
 // require('dotenv').config();
 
@@ -25,6 +25,7 @@ const express_port = 3000;
 const angularURL = 'http://localhost:4200';
 
 // handling CORS
+// comment out this section if testing using cURL or another HTTP request program
 app.use((req, res, next) => {
   // allow from origin, the frontend port
   res.header(
@@ -67,9 +68,10 @@ app.post('/api/post/createuser', function (req, res) {
   }
 });
 
-app.post('/api/post/userlogin', function (req, res) {
+app.post('/api/post/userlogin', async (req, res) => {
   let data = req.body;
-  let jwt = userLogin(prisma, data['userID'], data['password']);
+  // let jwt = userLogin(prisma, data['username'], data['password']);
+  let jwt = await userLogin(prisma, data['email'], data['password']);
   if (!jwt) {
     res.status(401);
   } else {
@@ -93,66 +95,80 @@ app.get('/api/get/viewpostsfromuser', (req, res) => {
   // res.status(401).send("fail");
   let userPosts = viewPostsFromUser(prisma, user_id);
   if (!userPosts) {
-    res.status(404).send("Not found");
+    res.status(404).send('Not found');
   } else {
     res.send(userPosts);
   }
 });
 
-app.get('/api/get/getuserfollowing', (req,res) => {
+app.get('/api/get/getuserfollowing', (req, res) => {
   let data = req.body;
   let user_id = data['user_id'];
   let userFollowing = getUserFollowing(prisma, user_id);
   if (!userFollowing) {
-    res.status(404).send("Not found");
+    res.status(404).send('Not found');
   } else {
     res.send(userFollowing);
   }
 });
 
-app.get('/api/get/getuserfollowers', (req,res) => {
+app.get('/api/get/getuserfollowers', (req, res) => {
   let data = req.body;
   let user_id = data['user_id'];
   let userFollowers = getUserFollowers(prisma, user_id);
   if (!userFollowers) {
-    res.status(404).send("Not found");
+    res.status(404).send('Not found');
   } else {
     res.send(userFollowers);
   }
 });
 
-app.get('/api/get/getuserlikes', (req,res) => {
+app.get('/api/get/getuserlikes', (req, res) => {
   let data = req.body;
   let user_id = data['user_id'];
   let userLikes = getUserLikes(prisma, user_id);
   if (!userLikes) {
-    res.status(404).send("Not found");
+    res.status(404).send('Not found');
   } else {
     res.send(userLikes);
   }
 });
 
-app.get('/api/get/getusercomments', (req,res) => {
+app.get('/api/get/getusercomments', (req, res) => {
   let data = req.body;
   let user_id = data['user_id'];
   let userComments = getUserComments(prisma, user_id);
   if (!userComments) {
-    res.status(404).send("Not found");
+    res.status(404).send('Not found');
   } else {
     res.send(userComments);
   }
 });
 
-app.get('/api/get/getuserdisplayname', (req,res) => {
+app.get('/api/get/getuserdisplayname', (req, res) => {
   let data = req.body;
   let user_id = data['user_id'];
   let userDisplayName = getUserDisplayName(prisma, user_id);
   if (!userDisplayName) {
-    res.status(404).send("Not found");
+    res.status(404).send('Not found');
   } else {
     res.send(userDisplayName);
   }
 });
+
+/**
+ * search by username
+ */
+app.get('/api/get/search/usernamesearch', (req, res) => {
+  let data = req.body;
+  let user_search_query = data['usernamequery'];
+  let users = userSearchDatabase(prisma,user_search_query);
+  if (users==null) {
+    //
+  } else {
+    res.send(users);
+  }
+})
 
 app.listen(express_port, () => {
   console.log('Server listening on port ' + express_port);

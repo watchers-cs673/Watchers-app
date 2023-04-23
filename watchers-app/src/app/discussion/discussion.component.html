@@ -20,13 +20,15 @@
 </div>
 
 
-<div class="content" role="main">
+<div *ngIf="movie$ | async as movie" class="content" role="main">
     <div class="poster">
-      <img [src]="imgPath" alt="Poster" />
+      <img [src]="movie.imgPath" alt="Poster" />
         <div class="title">
-        <h2>{{name}}</h2>
-        <app-star-rating [(rating)]="rating"></app-star-rating>
+        <h2>{{movie.name}}</h2>
+        <app-star-rating [rating]="movie.rating"></app-star-rating>
     </div>
+    <h1>Release dates: {{movie.year}}</h1> 
+    <h1>Runtime: {{movie.runTime}}</h1>  
 
     <div class="tabs">
         <button class="tab" [ngClass]="{'active': selectedTab === 'summary'}" (click)="selectTab('summary')">Summary</button>
@@ -36,10 +38,8 @@
       
       <div class="container">
         <ng-container *ngIf="selectedTab === 'summary'">
-            <p>
-            Set more than a decade after the previous episode, Avatar: The Way of Water tells the story of the Sully family, 
-            the troubles they face, the efforts they make to protect each other, the battles they fight to survive, and the 
-            tragedies they endure.
+          <p>
+            {{movie.summary}}
         </p>
         </ng-container>
         <ng-container *ngIf="selectedTab === 'new'">
