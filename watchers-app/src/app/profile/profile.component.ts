@@ -14,6 +14,7 @@ interface UserData {
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements User {
+  isFollowing = false;
   public userName = 'Test User';
   public email = '';
   public userData: UserData = {posts: 2, followers: 3, following: 2};
@@ -69,6 +70,11 @@ export class ProfileComponent implements User {
       followers: this.userData.followers,
       following: this.userData.following
     };
+  }
+  
+  followUser() {
+    // Add logic to follow the user and update the isFollowing property
+    this.isFollowing = true;
   }
 
   public showFollowing() {

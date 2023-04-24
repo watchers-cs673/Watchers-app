@@ -9,6 +9,12 @@
     <span (click)="showPosts()"class="spacer-line">Posts: {{userData.posts}}</span>
     <span (click)="showFollowing()">Following: {{userData.following}}</span>
   </h3>
+  <div class="container-btn">
+    <button class="follow-btn" (click)="followUser()" [ngClass]="{'following': isFollowing}">
+      <span *ngIf="!isFollowing">Follow</span>
+      <span *ngIf="isFollowing">Following</span>
+    </button>
+  </div>
   <div class="top-five-list">
     <h2>My Top 5</h2>
     <ul>

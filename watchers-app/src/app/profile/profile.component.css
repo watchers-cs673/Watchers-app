@@ -70,3 +70,39 @@
     list-style-type: none !important;
     padding-left: 0px;
   }
+
+  .follow-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #3897f0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .follow-btn:hover {
+    background-color: #38a1f0;
+  }
+  
+  .following {
+    background-color: #dbdbdb;
+    color: #262626;
+    border-color: #dbdbdb;
+    cursor: default;
+  }
+  
+  .following:hover {
+    background-color: #dbdbdb;
+  }
+  
+  .container-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
