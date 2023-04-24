@@ -190,7 +190,9 @@
     color: burlywood
   }
 
-
+  h3 {
+    color: burlywood
+  }
 
   .active {
     font-size: 30px;
@@ -199,6 +201,11 @@
 
   .container {
     border-top: 2px solid rgb(198, 63, 19);
+  }
+
+  textarea {
+    color: yellow;
+    font-size: 18px;
   }
 
   .comment {
@@ -211,8 +218,6 @@
 
   }
 
-
-
   .comment-left {
     flex: 1;
     text-align: left;
@@ -222,6 +227,14 @@
     flex: 1;
     text-align: right;
   }
+
+  form {
+    background-color: #0a0a0a;
+    border: 1px solid rgb(232, 15, 15);
+    padding: 20 px;
+    margin-bottom: 20px;
+  }
+  
 
   /* Responsive Styles */
   @media screen and (max-width: 767px) {
@@ -244,6 +257,8 @@
       transform: rotate(-5deg);
     }
   }
+
+  
 
   @media screen and (max-width: 575px) {
     svg#rocket-smoke {
