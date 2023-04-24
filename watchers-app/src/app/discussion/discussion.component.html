@@ -34,6 +34,7 @@
         <button class="tab" [ngClass]="{'active': selectedTab === 'summary'}" (click)="selectTab('summary')">Summary</button>
         <button class="tab" [ngClass]="{'active': selectedTab === 'new'}" (click)="selectTab('new')">New</button>
         <button class="tab" [ngClass]="{'active': selectedTab === 'hot'}" (click)="selectTab('hot')">Hot</button>
+        <button class="tab" [ngClass]="{'active': selectedTab === 'creatNew'}" (click)="selectTab('creatNew')">Creat New</button>
       </div>
       
       <div class="container">
@@ -51,8 +52,19 @@
         <ng-container *ngIf="selectedTab === 'hot'">
             <div class="comment" *ngFor="let comment of comments">
                 <div calss="comment-left">{{ comment.topic }}: {{ comment.content}}</div>  
-                <div class="comment-right">{{ comment.date }}|{{ comment.author }}</div>
-              </div>
+                <div class="comment-right">{{ comment.date }}|{{ comment.author }}</div>    
+            </div>
+        </ng-container>
+        <ng-container *ngIf="selectedTab === 'creatNew'">
+          <h2>Add a comment</h2>
+          <!-- <form (ngSubmit)="addComment(topic.value, comment.value)"> -->
+            <form>
+            <label for="topic">Topic:</label>
+            <input type="text" id="topic" name="topic" #topic required>
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" #comment required></textarea>
+            <button type="submit">Submit</button>
+          </form>
         </ng-container>
       </div>
       

@@ -3,6 +3,7 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie-service';
 import { Observable } from 'rxjs';
+// import { User } from '../user-list/user-list.component';
 
 interface Movie {
   name: string;
@@ -44,6 +45,25 @@ export class DiscussionComponent {
     {topic: 'Discussion Topic 6', content: 'Content 6...', date: 'date', author: 'author'},
     // ...
   ];
+
+  // @Input() movieId: number;
+  // comments: MovieComment[] = [];
+
+  // addComment(topic: string, comment: string) {
+  //   const newComment: MovieComment = {
+  //     movieId: this.movieId,
+  //     username: username,
+  //     comment: comment,
+  //     topic: topic,
+  //     date: new Date()
+  //   };
+
+  //   // add the new comment to the list of comments
+  //   this.comments.push(newComment);
+
+  //   // clear the input fields
+  //   topic = '';
+  //   comment = '';
 
 
   constructor(private route: ActivatedRoute, private movieService: MovieService) {  
