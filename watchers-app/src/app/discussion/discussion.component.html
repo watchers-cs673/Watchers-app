@@ -3,7 +3,7 @@
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <toolbar [showHomeLink]="true"></toolbar>
+  <toolbar  [showProfileButton]="(auth.isAuthenticated$ | async)==true" [showHomeLink]="true"></toolbar>
   <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="86" height="36" fill="currentColor" class="bi bi-search" viewBox="0 0 6 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="white"></path> </svg>
   <span><input type="text" id="search" name="search" value="" placeholder="" /></span>
   <div class="spacer"></div>
@@ -34,7 +34,7 @@
         <button class="tab" [ngClass]="{'active': selectedTab === 'summary'}" (click)="selectTab('summary')">Summary</button>
         <button class="tab" [ngClass]="{'active': selectedTab === 'new'}" (click)="selectTab('new')">New</button>
         <button class="tab" [ngClass]="{'active': selectedTab === 'hot'}" (click)="selectTab('hot')">Hot</button>
-        <button class="tab" [ngClass]="{'active': selectedTab === 'creatNew'}" (click)="selectTab('creatNew')">Creat New</button>
+        <button class="tab" [ngClass]="{'active': selectedTab === 'createNew'}" (click)="selectTab('createNew')">Create New</button>
       </div>
       
       <div class="container">
@@ -44,21 +44,28 @@
         </p>
         </ng-container>
         <ng-container *ngIf="selectedTab === 'new'">
-          <div class="comment" *ngFor="let comment of comments">
-            <div calss="comment-left">{{ comment.topic }}: {{ comment.content}}</div>  
-            <div class="comment-right">{{ comment.date }}|{{ comment.author }}</div>
+          <div class="comment" *ngFor="let comment of sortByDate()">
+            <div class="comment-left">{{ comment.topic }}: {{ comment.content}}</div>  
+            <div class="comment-right">{{ getFriendlyDate(comment.date) }}     |     {{ comment.author }}</div>
+            <div class="likes">
+              <button class="likeButton" (click)="likeComment(comment)">Like</button>
+                {{ comment.likes }}
+            </div>
           </div>
         </ng-container>
         <ng-container *ngIf="selectedTab === 'hot'">
-            <div class="comment" *ngFor="let comment of comments">
-                <div calss="comment-left">{{ comment.topic }}: {{ comment.content}}</div>  
-                <div class="comment-right">{{ comment.date }}|{{ comment.author }}</div>    
+            <div class="comment" *ngFor="let comment of sortByLikes()">
+                <div class="comment-left">{{ comment.topic }}: {{ comment.content}}</div>  
+                <div class="comment-right">{{ getFriendlyDate(comment.date) }}     |     {{ comment.author }}</div>
+                <div class="likes">
+                  <button class="likeButton" (click)="likeComment(comment)">Like</button>
+                    {{ comment.likes }}
+                </div>    
             </div>
         </ng-container>
-        <ng-container *ngIf="selectedTab === 'creatNew'">
+        <ng-container *ngIf="selectedTab === 'createNew'">
           <h2>Add a comment</h2>
-          <!-- <form (ngSubmit)="addComment(topic.value, comment.value)"> -->
-            <form>
+          <form (ngSubmit)="addComment(topic.value, comment.value)">
             <label for="topic">Topic:</label>
             <input type="text" id="topic" name="topic" #topic required>
             <label for="comment">Comment:</label>

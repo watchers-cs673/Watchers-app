@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ContentChild, OnInit } from '@angular/core';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie-service';
 import { Observable } from 'rxjs';
+import { number } from 'joi';
+import { AuthService } from '@auth0/auth0-angular';
 // import { User } from '../user-list/user-list.component';
 
 interface Movie {
@@ -15,6 +17,14 @@ interface Movie {
   summary?: string;
 }
 
+interface Comment {
+  topic: string;
+  content: string;
+  author: string;
+  date: Date;
+  likes: number;
+}
+
 @Component({
   selector: 'app-discussion',
   templateUrl: './discussion.component.html',
@@ -22,53 +32,98 @@ interface Movie {
 })
 export class DiscussionComponent {
   public title = "watchers";
+
+  // initial value for start rating
   public rating: number = 0;
-  // current tab
+
+  // array to store all comments on the movie
+  public comments: Comment[] = [];
+
+  // default selected tab is summary
   public selectedTab = 'summary';
+
+  // posts are default anonymous unless the user is logged in
+  public currentUser = 'Anonymous';
+
+  //movie data as an observable
   public movie$: Observable<Movie | undefined>;
-  name: string = "";
-  year: string = "";
-  imgPath: string = "";
-  description: string = "";
+
+  constructor(private route: ActivatedRoute, private movieService: MovieService, public auth: AuthService) {  
+    // gets movie name from the route
+    let movieName = this.route.snapshot.paramMap.get('name');
+    this.movie$ = movieService.getMovie(movieName ? movieName : "");
+
+    // checks if user is logged in and saves user name if they are
+    auth.user$.subscribe((data) => {
+      if (data && data.name) {
+        this.currentUser = data.name;
+      }
+    });
+  }
 
   // switch tab
-  selectTab(tabName: string) {
+  public selectTab(tabName: string) {
     this.selectedTab = tabName;
   }
 
-  comments = [
-    {topic: 'Discussion Topic 1', content: 'Content 1...', date: 'date', author: 'author'},
-    {topic: 'Discussion Topic 2', content: 'Content 2...', date: 'date', author: 'author'},
-    {topic: 'Discussion Topic 3', content: 'Content 3...', date: 'date', author: 'author'},
-    {topic: 'Discussion Topic 4', content: 'Content 4...', date: 'date', author: 'author'},
-    {topic: 'Discussion Topic 5', content: 'Content 5...', date: 'date', author: 'author'},
-    {topic: 'Discussion Topic 6', content: 'Content 6...', date: 'date', author: 'author'},
-    // ...
-  ];
+  // sort comments based on number of likes for 'Hot' tab
+  public sortByLikes() {
+    const sorted = [...this.comments].sort((a, b) => b.likes-a.likes);
+    return sorted;
+  }
 
-  // @Input() movieId: number;
-  // comments: MovieComment[] = [];
+  // sort comments based on when they were written for 'New' tab
+  public sortByDate() {
+    const sorted = [...this.comments].sort(function(a, b){
+      if(new Date(a.date) > new Date(b.date)) {
+        return -1;
+      }
+      else {
+        return 1
+      }
+    });
+    return sorted;
+  }
 
-  // addComment(topic: string, comment: string) {
-  //   const newComment: MovieComment = {
-  //     movieId: this.movieId,
-  //     username: username,
-  //     comment: comment,
-  //     topic: topic,
-  //     date: new Date()
-  //   };
+  // get a shorter string for the date
+  public getFriendlyDate(date: Date) {
+    return date.getMonth().toString() + '/' + date.getDay().toString() + '/' + date.getFullYear().toString()
+  }
 
-  //   // add the new comment to the list of comments
-  //   this.comments.push(newComment);
+  // create a new comment
+  public addComment(topic: string, comment: string) {
+    // create comment object to save. User is anonymous by default unless logged in
+    const newComment: Comment = {
+      author: this.currentUser,
+      content: comment,
+      topic: topic,
+      date: new Date(),
+      likes: 0
+    };
 
-  //   // clear the input fields
-  //   topic = '';
-  //   comment = '';
+    // add the new comment to the list of comments
+    this.comments.push(newComment);
 
+    // view newly added comment
+    this.selectedTab = "new"
+  }
 
-  constructor(private route: ActivatedRoute, private movieService: MovieService) {  
-    let movieName = this.route.snapshot.paramMap.get('name');
-    this.movie$ = movieService.getMovie(movieName ? movieName : "");
+  // add to comment likes when someone likes a comment
+  public likeComment(comment: Comment) {
+    // gets index of comment in list to replace the value
+    const commentIndex = this.comments.indexOf(comment);
+
+    // creates new Comment object with one additional like
+    const newComment: Comment = {
+      author: comment.author,
+      content: comment.content,
+      topic: comment.topic,
+      date: comment.date,
+      likes: comment.likes + 1
+    };
+
+    // replaces old comment in additional array
+    this.comments[commentIndex] = newComment;
   }
 
 }
