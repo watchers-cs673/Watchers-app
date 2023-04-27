@@ -1,36 +1,38 @@
-import { Injectable } from "@angular/core";
 
-interface User {
-    userId: string;
-    username: string;
-    email?: string;
-    passwordHash?: string;
-    uniqueUserAuthKey?: string;
-    displayName: string;
-    posts?: any[];
-    likes?: any[];
-    comments?: any[];
-    follower?: any[];
-    following?: any[];
-}
+//This code was commented as it is replaced by getAllUsers() function in app.component.ts
+// import { Injectable } from "@angular/core";
 
-@Injectable({
-    providedIn: 'root',
-})
-export class UserService {
-    public allUsers: User[] = [
-        {userId: 'Sophie', username: "SophieMcQ", displayName: 'sophie'},
-        {userId: 'Anish', username: "Anish", displayName: 'Anish'},
-        {userId: 'Yuhe', username: "Yuhe", displayName: 'sophie'},
-        {userId: 'Charles', username: "Charles", displayName: 'charles'},
-    ];
+// interface User {
+//     userId: string;
+//     username: string;
+//     email?: string;
+//     passwordHash?: string;
+//     uniqueUserAuthKey?: string;
+//     displayName: string;
+//     posts?: any[];
+//     likes?: any[];
+//     comments?: any[];
+//     follower?: any[];
+//     following?: any[];
+// }
 
-    public getUser(id: string) {
-        return this.allUsers.find(user => user.userId == id);
-    }
+// @Injectable({
+//     providedIn: 'root',
+// })
+// export class UserService {
+//     public allUsers: User[] = [
+//         {userId: 'Sophie', username: "SophieMcQ", displayName: 'sophie'},
+//         {userId: 'Anish', username: "Anish", displayName: 'Anish'},
+//         {userId: 'Yuhe', username: "Yuhe", displayName: 'sophie'},
+//         {userId: 'Charles', username: "Charles", displayName: 'charles'},
+//     ];
 
-    public getAllUsers() {
-        return this.allUsers;
-    }
+//     public getUser(id: string) {
+//         return this.allUsers.find(user => user.userId == id);
+//     }
 
-}
+//     public getAllUsers() {
+//         return this.allUsers;
+//     }
+
+// }

@@ -170,6 +170,16 @@ app.get('/api/get/search/usernamesearch', (req, res) => {
   }
 })
 
+app.get('/api/get/getAllUsers',async(req,res)=>{
+  try {
+    const users = await prisma.user.findMany();
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Could not retrieve users' });
+  }
+})
+
 app.listen(express_port, () => {
   console.log('Server listening on port ' + express_port);
 });

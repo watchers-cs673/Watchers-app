@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from './api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,34 @@ import { Component } from '@angular/core';
   
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'watchers-app';
 
+
+  constructor(private service: ApiService){
+  }
+
+
+ngOnInit(): void {
+    this.getALLUsers();
 }
+
+
+getALLUsers() {
+  this.service.getAllUsers().subscribe({
+    next: (response) => {
+      const users = Object.values(response);
+      users.forEach(user => {
+        console.log(`User name: ${user.username}`);
+      });
+      
+    },
+    error: (err) => {
+      console.log(err);
+    }
+  });
+}
+
+}
+
 
