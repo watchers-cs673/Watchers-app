@@ -1,13 +1,13 @@
 <toolbar [showProfileButton]="false"></toolbar>
 <div class="wrapper">
 <!-- Toolbar -->
-  <h1 class="header">{{userName}}</h1>
+  <h1 class="header">{{user.username}}</h1>
   <div class="spacer">
 <div *ngIf="!showList">
   <h3>
-    <span (click)="showFollowers()">Followers: {{userData.followers}}</span>
-    <span (click)="showPosts()"class="spacer-line">Posts: {{userData.posts}}</span>
-    <span (click)="showFollowing()">Following: {{userData.following}}</span>
+    <span (click)="showFollowers()">Followers: {{user.followers.length}}</span>
+    <span (click)="showPosts()"class="spacer-line">Posts: {{user.comments.length}}</span>
+    <span (click)="showFollowing()">Following: {{user.following.length}}</span>
   </h3>
   <div class="container-btn">
     <button class="follow-btn" (click)="followUser()" [ngClass]="{'following': isFollowing}">
@@ -30,20 +30,17 @@
         <th class="table-title">My Reviews</th>
     </tr>
     <tr>
-      <th>Movie</th>
-      <th>My Rating</th> 
-      <th>Review</th>
+      <th>Topic</th>
+      <th>Content</th> 
+      <th>Likes</th>
+      <th>Date</th>
     </tr>
-    <tr>
-      <td>The Godfather</td>
-      <td>4.2/5</td> 
-      <td>It was good</td>
-    </tr>
-    <tr>
-      <td>Texas Chainsaw Massacre</td>
-      <td>4.5/5</td> 
-      <td>Cool movie</td>
-    </tr>
+    <!-- <tr *ngFor="let comment of user.comments">
+      <td>{{comment.topic}}</td>
+      <td>{{comment.content}}}</td>
+      <td>{{comment.likes}}}</td>
+      <td>{{comment.date}}}</td>
+    </tr> -->
   </table>
 </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-export interface User {
+export interface UserList {
   name: string;
   
 }
