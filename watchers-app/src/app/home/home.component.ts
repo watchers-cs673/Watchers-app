@@ -28,48 +28,49 @@ export class HomeComponent {
     console.log(movieService.getData())
     this.images$ = movieService.getData();
     this.catogories$ = movieService.getGenres();
-    this.getRandomImages();
+    this.getHighestRating(0,1,2);
   }
 
 
-  getRandomImages() {
+  getHighestRating(left: number, mid: number, right: number) {
     this.images$.subscribe(image => {
-      const randomIndices = this.getRandomIndices(image.length, 3);
-      const randomImages = randomIndices.map(i => image[i]);
+      const sortedImages = image.sort((a, b) => b.rating - a.rating);
+      const randomIndices = [left,mid,right];
+      const randomImages = randomIndices.map(i => sortedImages[i]);
       this.randomImages = this.shuffle(randomImages);
-    })
+    });
   }
 
-  getRandomIndices(max: number, count: number): number[] {
-    const indices = Array.from({length: max}, (_, i) => i);
-    return indices.sort(() => Math.random() - 0.5).slice(0, count);
-  }
 
   shuffle(array: any[]): any[] {
     const shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-    }
     return shuffledArray;
   }
 
   currentIndex = 1;
+  imageIndex = 1;
 
   public nextImage() {
-    if (this.currentIndex == 2) {
-      this.currentIndex = 0;
-    } else {
-      this.currentIndex = (this.currentIndex + 1) % 3;
-    }
+    this.imageIndex++;
+    this.getHighestRating((this.imageIndex - 1) % 10, this.imageIndex % 10, (this.imageIndex + 1) % 10);
+    // if (this.currentIndex == 2) {
+    //   this.currentIndex = 2;
+    // } else {
+    //   this.currentIndex = (this.currentIndex + 1) % 3;
+    // }
   }
 
   public prevImage() {
-    if (this.currentIndex == 0) {
-      this.currentIndex = 2;
-    } else {
-      this.currentIndex = (this.currentIndex - 1 + 3) % 3;
+    this.imageIndex--;
+    if (this.imageIndex < 1) {
+      this.imageIndex = this.imageIndex + 10;
     }
+    this.getHighestRating((this.imageIndex - 1) % 10, this.imageIndex % 10, (this.imageIndex + 1) % 10);
+    // if (this.currentIndex == 0) {
+    //   this.currentIndex = 0;
+    // } else {
+    //   this.currentIndex = (this.currentIndex - 1 + 3) % 3;
+    // }
     
   }
 
