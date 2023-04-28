@@ -30,4 +30,9 @@ export class ApiService {
   searchForUsername(usernamequery: string) {
     return this.http.get(expressURL+'/api/get/search/usernamesearch'+'?usernamequery='+usernamequery);
   }
+
+  getUserProfile(userId: string) {
+    return this.http.get(`${expressURL}/api/users/${userId}`);
+  }
+  
 }

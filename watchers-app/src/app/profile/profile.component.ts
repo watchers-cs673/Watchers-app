@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 import { User } from '../user-list/user-list.component';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
 
 interface UserData {
   posts: number;
@@ -34,17 +37,31 @@ export class ProfileComponent implements User {
   @Output() followersData = new EventEmitter<User[]>();
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      const userId = params['id'];
+      this.http.get('/api/users/' + userId).subscribe((data: any) => {
+      //this.api.getUserProfile(userId).subscribe(userProfile => {
+        // Update the user's profile data here
+        this.userData = {
+          posts: data.posts,
+          followers: data.followers,
+          following: data.following
+        };
+      });
+    });
+  
     this.userData.posts = 3; // replace with the actual number of posts
     this.userData.followers = this.followersList.length;
     this.userData.following = this.followingList.length;
   }
 
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService, private route: ActivatedRoute, private http: HttpClient) 
+  {
     auth.user$.subscribe((data) => {
-      if (data?.email) {
-        this.userName = data.name || '';
-        this.email = data.email || '';
-      }
+    if (data?.email) {
+    this.userName = data.name || '';
+    this.email = data.email || '';
+    }
     });
   }
   name!: string;

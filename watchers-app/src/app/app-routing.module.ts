@@ -14,7 +14,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'search/:genre', component: SearchComponent},
   { path: 'search', component: SearchComponent},
-  { path: '', component: LoginComponent}
+  { path: '', component: LoginComponent},
+  { path: 'profile/:id', component: ProfileComponent }
 ];
 
 @NgModule({
