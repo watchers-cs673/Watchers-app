@@ -4,7 +4,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/",
-    "types": ["node"],
+    "types": ["jest", "node"],
     "typeRoots": ["node_modules/@types"],
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -32,6 +32,6 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
-    "types": ["node"]
+    "types": ["jest", "node"]
   }
 }
