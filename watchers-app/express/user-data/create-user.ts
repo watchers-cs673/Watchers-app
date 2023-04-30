@@ -35,15 +35,20 @@ export async function createUser(
   let userAuthKey: string = await createUserAuthKey();
 
   const displayNameResult = displayName ?? username;
-  const user = await prisma.user.create({
-    data: {
-      username: username,
-      email: email,
-      passwordHash: passwordHashResult,
-      uniqueUserAuthKey: userAuthKey,
-      displayName: displayNameResult,
-    },
-  });
+  try {
+    const user = await prisma.user.create({
+      data: {
+        username: username,
+        email: email,
+        passwordHash: passwordHashResult,
+        uniqueUserAuthKey: userAuthKey,
+        displayName: displayNameResult,
+      },
+    });
+  } catch(e) {
+    return false;
+  }
+
   // TODO: in the future interface with Auth0 and return session cookie here
   // true indicates successful creation
   // verify user created

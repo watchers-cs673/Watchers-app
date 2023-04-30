@@ -6,57 +6,59 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
-  userId            String    @id @default(auto()) @map("_id") @db.ObjectId
-  username          String    @unique
-  email             String    @unique
+  userId            String        @id @default(cuid())
+  username          String        @unique
+  email             String        @unique
   passwordHash      String
   uniqueUserAuthKey String
   displayName       String?
   posts             Post[]
   likes             Like[]
   comments          UserComment[]
-  follower          Follows[] @relation("following")
-  following         Follows[] @relation("follower")
+  follower          Follows[]     @relation("following")
+  following         Follows[]     @relation("follower")
   // activeTokens      UserTokenData[]
 }
 
 model Post {
-  postId            String @id @default(auto()) @map("_id") @db.ObjectId
-  author            User   @relation(fields: [authorId], references: [userId])
-  authorId          String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
+  postId            String   @id @default(cuid())
+  author            User     @relation(fields: [authorId], references: [userId])
+  authorId          String
   postBody          String
   referencedMovieId String
+  rating            Int
   postLikes         Like[]
+  postTime          DateTime @default(now())
 }
 
 model Like {
-  likeID         String   @id @default(auto()) @map("_id") @db.ObjectId
-  liking         User     @relation(fields: [likingUserId], references: [userId])
-  likedPostId    String   @db.ObjectId
-  liked          Post     @relation(fields: [likedPostId], references: [postId])
-  likingUserId   String   @db.ObjectId
+  likeID         String       @id @default(cuid())
+  liking         User         @relation(fields: [likingUserId], references: [userId])
+  likedPostId    String
+  liked          Post         @relation(fields: [likedPostId], references: [postId])
+  likingUserId   String
   commentLike    UserComment? @relation(fields: [likedCommentId], references: [commentId])
-  likedCommentId String?  @map("commentCommentId") @db.ObjectId
+  likedCommentId String?      @map("commentCommentId")
 }
 
 model UserComment {
-  commentId    String @id @default(auto()) @map("_id") @db.ObjectId
+  commentId    String @id @default(cuid())
   commenter    User   @relation(fields: [commenterId], references: [userId])
-  commenterId  String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
+  commenterId  String
   commentBody  String
   commentLikes Like[]
 }
 
 model Follows {
   follower         User   @relation("follower", fields: [followerId], references: [userId])
-  followerId       String @db.ObjectId
+  followerId       String
   following        User   @relation("following", fields: [followingId], references: [userId])
-  followingId      String @db.ObjectId
+  followingId      String
   // @@id([followerId, followingId])
-  followRelationId String @id @default(auto()) @map("_id") @db.ObjectId
+  followRelationId String @id @default(cuid())
 }
