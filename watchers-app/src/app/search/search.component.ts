@@ -8,6 +8,7 @@ import { map, Observable, of } from 'rxjs';
 import { ApiService } from '../api.service';
 import { EventEmitter } from 'stream';
 import { Pipe, PipeTransform } from '@angular/core';
+import { User } from '../interfaces/user'
 
 
 
@@ -21,20 +22,6 @@ interface Movie {
   runTime?: string;
   year?: number;
   summary?: string;
-}
-
-interface User {
-    userId: string;
-    username: string;
-    email?: string;
-    passwordHash?: string;
-    uniqueUserAuthKey?: string;
-    displayName: string;
-    posts?: any[];
-    likes?: any[];
-    comments?: any[];
-    follower?: any[];
-    following?: any[];
 }
 
 @Component({
@@ -71,11 +58,11 @@ export class SearchComponent {
   
 
   public onSearch() {
-if (this.searchTerm.startsWith('@')){
-  this.apiService.getAllUsers().subscribe((users) => {
-    this.AllUsers = users as User[];
-  });
-}
+    if (this.searchTerm.startsWith('@')){
+      this.apiService.getAllUsers().subscribe((users) => {
+        this.AllUsers = users as User[];
+      });
+  }
 
     
     else {
