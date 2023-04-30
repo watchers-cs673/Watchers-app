@@ -4,11 +4,12 @@ import { HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MovieService } from '../services/movie-service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { map, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { ApiService } from '../api.service';
 import { EventEmitter } from 'stream';
 import { Pipe, PipeTransform } from '@angular/core';
 import { User } from '../interfaces/user'
+import { AuthService } from '@auth0/auth0-angular';
 
 
 
@@ -35,10 +36,12 @@ export class SearchComponent {
   public filteredMovies$: Observable<Movie[]>;
   public genre;
   public AllUsers: User[] = [];
+  public showProfileButton = false;
 
 
-  constructor(private movieService: MovieService, private activatedRoute: ActivatedRoute, private apiService: ApiService) {
+  constructor(private movieService: MovieService, private activatedRoute: ActivatedRoute, private apiService: ApiService, private auth: AuthService) {
     this.movies$ = movieService.getData();
+    this.showProfileButton = auth.user$ != null;
     this.genre = activatedRoute.snapshot.params["genre"];
     if(this.genre) {
       this.filterByGenre(this.genre);

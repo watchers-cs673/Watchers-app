@@ -8,8 +8,7 @@
     <h1>{{genre}}</h1>
     </div>
     <div class="spacer"></div>
-    <img class="profile" src="assets/profile.png" routerLink="/profile">
-    <a class="profile-btn" routerLink="/profile"><h1> Log out</h1></a>
+    <a *ngIf="showProfileButton" class="profile-btn" routerLink="/profile">Profile</a>
 </div>
 
 

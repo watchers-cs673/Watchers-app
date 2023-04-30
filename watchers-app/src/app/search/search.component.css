@@ -119,6 +119,13 @@
     text-align: center;
   }
 
+  .profile-btn {
+    text-decoration: none;
+    color: white !important;
+    font-size: large;
+    margin-right: 10px;
+  }
+
   .movie-title {
     max-width: 200px;
     height: 25px;
