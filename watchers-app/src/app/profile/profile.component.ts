@@ -1,90 +1,63 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { User } from '../user-list/user-list.component';
-
-interface UserData {
-  posts: number;
-  followers: number;
-  following: number;
-}
+import { UserService } from '../services/user-service';
+import { User } from '../interfaces/user';
+import { Comment } from '../interfaces/comment';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements User {
-  isFollowing = false;
-  public userName = 'Test User';
+export class ProfileComponent {
+  public isFollowing = false;
   public email = '';
-  public userData: UserData = {posts: 2, followers: 3, following: 2};
-  public followersList: User[] = [
-    {name: 'John Doe'},
-    {name: 'Jane Smith'},
-    {name: 'Hugh Jass'}
-  ];
-  public followingList: User[] = [
-    {name: 'Bob Johnson'},
-    {name: 'Alice Brown'}
-  ];
+  public followersList: User[] = [];
+  public followingList: User[] = [];
+  public comments: Comment[] = [];
   public showList = false;
   public listTitle = '';
   public profileItems: string[] = [];
 
+  public userEmail = 'sophiemcq@live.com';
+  public user: User = {username: '', email: '', likes: [], comments: [], followers: [], following: []};
+
   @Output() followersData = new EventEmitter<User[]>();
 
   ngOnInit() {
-    this.userData.posts = 3; // replace with the actual number of posts
-    this.userData.followers = this.followersList.length;
-    this.userData.following = this.followingList.length;
+    this.followersList = this.user.followers;
+    this.followingList = this.user.following;
+    this.comments = this.user.comments;
   }
 
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService, private userService: UserService) {
     auth.user$.subscribe((data) => {
       if (data?.email) {
-        this.userName = data.name || '';
-        this.email = data.email || '';
+        this.user = this.userService.getUser(data.email? data.email : '');
       }
     });
   }
-  name!: string;
 
-  public showFollowers() {
-    this.listTitle = 'Followers';
-    this.profileItems = this.followersList.map(user => user.name);
-    this.showList = true;
-    this.followersData.emit(this.followersList);
-    this.userData = {
-      posts: this.userData.posts,
-      followers: this.followersList.length,
-      following: this.userData.following
-    };
-  }
-
-  public showPosts() {
-    this.listTitle = 'Posts';
-    this.profileItems = ['Post 1', 'Post 2', 'Post 3'];
-    this.showList = true;
-    this.userData = {
-      posts: this.profileItems.length,
-      followers: this.userData.followers,
-      following: this.userData.following
-    };
-  }
-  
-  followUser() {
+  public followUser() {
     // Add logic to follow the user and update the isFollowing property
     this.isFollowing = true;
   }
 
+  public showFollowers() {
+    this.listTitle = 'Followers';
+    this.profileItems = this.followersList.map(user => user.username);
+    this.showList = true;
+  }
+
+  public showPosts() {
+    this.listTitle = 'Posts';
+    this.profileItems = this.comments.map(comment => comment.content);
+    this.showList = true;
+  }
+
   public showFollowing() {
     this.listTitle = 'Following';
-    this.profileItems = this.followingList.map(user => user.name);
+    this.profileItems = this.user.following.map(user => user.username);
     this.showList = true;
-    this.userData = {
-      posts: this.userData.posts,
-      followers: this.userData.followers,
-      following: this.followingList.length
-    };
   }
 }

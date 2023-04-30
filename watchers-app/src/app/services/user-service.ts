@@ -1,38 +1,34 @@
+import { Injectable } from "@angular/core";
+import { User } from '../interfaces/user';
+import { Comment } from '../interfaces/comment';
 
-//This code was commented as it is replaced by getAllUsers() function in app.component.ts
-// import { Injectable } from "@angular/core";
+@Injectable({
+    providedIn: 'root',
+})
+export class UserService {
+    public allUsers: User[] = [
+        {username: "SophieMcQ", email: 'sophiemcq@live.com', likes: [], comments: [], followers: [], following: []}
+    ];
 
-// interface User {
-//     userId: string;
-//     username: string;
-//     email?: string;
-//     passwordHash?: string;
-//     uniqueUserAuthKey?: string;
-//     displayName: string;
-//     posts?: any[];
-//     likes?: any[];
-//     comments?: any[];
-//     follower?: any[];
-//     following?: any[];
-// }
+    public createUser(username: string, email: string) {
+        this.allUsers.push({username: username, email: email, likes: [], comments: [], followers: [], following: []})
+    }
 
-// @Injectable({
-//     providedIn: 'root',
-// })
-// export class UserService {
-//     public allUsers: User[] = [
-//         {userId: 'Sophie', username: "SophieMcQ", displayName: 'sophie'},
-//         {userId: 'Anish', username: "Anish", displayName: 'Anish'},
-//         {userId: 'Yuhe', username: "Yuhe", displayName: 'sophie'},
-//         {userId: 'Charles', username: "Charles", displayName: 'charles'},
-//     ];
+    public addLike(userEmail: string, like: any) {
+        this.allUsers.find(user => user.email = userEmail)?.likes.push(like);
+    }
 
-//     public getUser(id: string) {
-//         return this.allUsers.find(user => user.userId == id);
-//     }
+    public addComment(userEmail: string, comment: any) {
+        this.allUsers.find(user => user.email = userEmail)?.comments.push(comment);
+    }
 
-//     public getAllUsers() {
-//         return this.allUsers;
-//     }
+    public getUser(email: string): User{
+        let user = this.allUsers.find(user => user.email == email);
+        if(user==undefined) {
+            user= this.allUsers[0];
+        }
+        return user;
+    }
 
-// }
+
+}

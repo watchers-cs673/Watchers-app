@@ -5,6 +5,7 @@ import { MovieService } from '../services/movie-service';
 import { Observable } from 'rxjs';
 import { number } from 'joi';
 import { AuthService } from '@auth0/auth0-angular';
+import { Comment } from '../interfaces/comment'
 // import { User } from '../user-list/user-list.component';
 
 interface Movie {
@@ -15,14 +16,6 @@ interface Movie {
   runTime?: string;
   year?: number;
   summary?: string;
-}
-
-interface Comment {
-  topic: string;
-  content: string;
-  author: string;
-  date: Date;
-  likes: number;
 }
 
 @Component({
