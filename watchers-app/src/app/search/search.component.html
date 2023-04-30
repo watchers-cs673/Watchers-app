@@ -11,6 +11,25 @@
     <img class="profile" src="assets/profile.png" routerLink="/profile">
     <a class="profile-btn" routerLink="/profile"><h1> Log out</h1></a>
 </div>
+
+
+<ul class="user-list" *ngIf="searchTerm.startsWith('@') && AllUsers.length > 0">
+  <li *ngFor="let user of AllUsers | filter:searchTerm.slice(1)">
+    {{ user.username }}
+  </li>
+</ul>
+
+<div *ngIf="searchTerm.startsWith('@') && AllUsers.length === 0" class="no-results">
+  <p>No results found</p>
+</div>
+
+
+
+
+
+
+
+
 <div class="genre-buttons"></div>
 <div class="content" role="main">
   <div *ngIf="filteredMovies$ | async as filteredMovies" class="image-gallery">
@@ -22,5 +41,5 @@
         <h3 class="movie-title">{{ movie.name }}</h3>
       </div>
     </div>
-
+    
 </div>

@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserListComponent } from './user-list/user-list.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { UserListComponent } from './user-list/user-list.component';
     ToolbarComponent,
     UserListComponent,
   ],
-  imports: [
+  imports: [Ng2SearchPipeModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
