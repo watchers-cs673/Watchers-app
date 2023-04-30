@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { number } from 'joi';
 import { AuthService } from '@auth0/auth0-angular';
 import { Comment } from '../interfaces/comment'
+import { UserService } from '../services/user-service';
 // import { User } from '../user-list/user-list.component';
 
 interface Movie {
@@ -41,7 +42,9 @@ export class DiscussionComponent {
   //movie data as an observable
   public movie$: Observable<Movie | undefined>;
 
-  constructor(private route: ActivatedRoute, private movieService: MovieService, public auth: AuthService) {  
+  public favorites: string[] = [];
+
+  constructor(private route: ActivatedRoute, private movieService: MovieService, public auth: AuthService, public userService: UserService) {  
     // gets movie name from the route
     let movieName = this.route.snapshot.paramMap.get('name');
     this.movie$ = movieService.getMovie(movieName ? movieName : "");
@@ -52,6 +55,8 @@ export class DiscussionComponent {
         this.currentUser = data.name;
       }
     });
+
+    this.favorites = this.userService.getFavorites();
   }
 
   // switch tab
@@ -117,6 +122,16 @@ export class DiscussionComponent {
 
     // replaces old comment in additional array
     this.comments[commentIndex] = newComment;
+  }
+
+  public addToFavorites(movie: string) {
+    if(this.favorites.includes(movie)) {
+      this.userService.removeFavorite(movie);
+    }
+    else {
+      this.userService.addFavorite(movie);
+    }
+    this.favorites = this.userService.getFavorites();
   }
 
 }

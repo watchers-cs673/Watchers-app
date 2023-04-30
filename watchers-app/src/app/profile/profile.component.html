@@ -10,19 +10,16 @@
     <span (click)="showFollowing()">Following: {{user.following.length}}</span>
   </h3>
   <div class="container-btn">
-    <button class="follow-btn" (click)="followUser()" [ngClass]="{'following': isFollowing}">
-      <span *ngIf="!isFollowing">Follow</span>
-      <span *ngIf="isFollowing">Following</span>
+    <button *ngIf="!isMyProfile" class="follow-btn" (click)="followUser()" [ngClass]="{'following': isFollowing}">
+      <span>{{isFollowing ? 'Follow' : 'Unfollow'}}</span>
     </button>
   </div>
-  <div class="top-five-list">
-    <h2>My Top 5</h2>
-    <ul>
-        <li>The Shining</li>
-        <li>Spirited Away</li>
-        <li>Amelie</li>
-        <li>Forest Gump</li>
-        <li>Rosemary's Baby</li>
+  <div *ngIf="favoriteMovies.length > 0"class="top-five-list">
+    <h2>My Top Movies</h2>
+    <ul *ngFor="let favoriteMovie of favoriteMovies">
+        <li>
+          <a class='movieLink' [routerLink]="['/discussion', {name: favoriteMovie}]">{{favoriteMovie}}</a>
+        </li>
     </ul>
   </div>
   <table>

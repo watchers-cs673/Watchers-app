@@ -27,6 +27,7 @@
         <h2>{{movie.name}}</h2>
         <app-star-rating [rating]="movie.rating"></app-star-rating>
     </div>
+    <span *ngIf="currentUser != 'Anonymous'" [ngClass]="this.favorites.includes(movie.name) ? 'fav-button filledHeart' : 'fav-button'" (click)="addToFavorites(movie.name)">&#9829;</span>
     <h1>Release dates: {{movie.year}}</h1> 
     <h1>Runtime: {{movie.runTime}}</h1>  
 

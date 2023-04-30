@@ -100,6 +100,18 @@
     width: 168px;
   }
 
+  .fav-button {
+    font-size: 200%;
+  }
+  .fav-button:hover{
+    font-size: 200%;
+    cursor: pointer;
+  }
+
+  .filledHeart {
+    color: red;
+  }
+
   .card-container .card:not(.highlight-card) {
     cursor: pointer;
   }
