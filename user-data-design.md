@@ -4,59 +4,15 @@ The database uses MongoDB interfacing via [Prisma](https://www.prisma.io/), an O
 
 ## Usage
 
-### Prequisites
+The database utilizes SQLite, a lightweight implementation of SQL that is standalone and stored as a single generated file on disk, in `watchers-app/prisma/dev.db`.
 
-In the repository root directory (the git directory containing the entire project), make sure your repo is up to date with `git fetch`, then `git status` to check.
-
-If your git is up to date then run `npm install` in the repository root directory.
-
-Make sure you have installed MongoDB, you can follow the directions [here](https://www.mongodb.com/docs/manual/administration/install-community/).
-
-### Setup (this only needs to be done once per machine/server)
-
-#### Setup MongoDB
-
-In your terminal, run the command `mongod` (this is the MongoDB background process). 
-
-You need to add the following lines to your mongod.conf file, [see here for more info](https://github.com/prisma/prisma/issues/8266#issuecomment-1146905634):
-
-```conf
-replication:
-  replSetName: "rs0"
-```
-
-If you have an Intel Mac, this is located at `/usr/local/etc/mongod.conf`, on ARM macs it is located at `/opt/local/etc/mongod.conf`.
-
-(this is to run mongodb correctly with replica set when testing locally, [also see notes here](https://lightrun.com/answers/prisma-prisma-make-the-mongodb-replica-set-requirement-optional-in-development))
-
-Run `mongosh` in the terminal and paste the following:
-```
-rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'localhost:27017'}]});
-```
-
-Finally, run `brew services run mongodb-community`.
-
-#### Setup the .env file
-
-Create a file in the `watchers-app/` directory, named `.env`.
-
-Run `mongosh` in the terminal and note the URL it provides, which should begin with `mongodb://`.
-
-Within it, add the following text:
-
-```env
-DATABASE_URL="<mongodb url here>"
-```
-
-Where `<mongodb url here>` is replaced by the MongoDB URL you just copied.
-
-#### Initialize Prisma
+### Initialize Prisma
 
 Run `npx prisma generate` to generate the appropriate client files.
 
 Run `npx prisma db push` to generate the client and configure the database automatically in MongoDB.
 
-#### Build Express backend
+### Build Express backend
 
 Run `npm run express-build` to compile the [Express](https://expressjs.com/) typescript files to Javascript.
 
