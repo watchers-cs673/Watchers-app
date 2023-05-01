@@ -123,7 +123,7 @@ export class ProfileComponent {
   // maps followers to just username for easier viewing
   public showFollowing() {
     this.listTitle = 'Following';
-   this.profileItems = this.user.following.map(user => user.username);
+    this.profileItems = this.user.following.map(user => user.username);
     this.showList = true;
   }
 }
