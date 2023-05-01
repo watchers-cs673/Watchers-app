@@ -25,7 +25,6 @@ export class HomeComponent {
   public title = 'watchers';
   public profile = this.auth.user$;
   constructor(public auth: AuthService, private movieService: MovieService) {
-    console.log(movieService.getData())
     this.images$ = movieService.getData();
     this.catogories$ = movieService.getGenres();
     this.getHighestRating(0,1,2);
