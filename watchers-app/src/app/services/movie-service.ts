@@ -90,9 +90,4 @@ export class MovieService {
         }));
     }
 
-    private getRandomMovie(genre: string) {
-        let filteredMovies = this.allMovies.filter(movie => movie.genre == genre);
-        let randomIndex = Math.floor(Math.random() * filteredMovies.length);
-        return filteredMovies[randomIndex];
-    }
 }
