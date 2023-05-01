@@ -70,7 +70,7 @@ export class ProfileComponent {
           username:data['username'],
           email: data['email'],
           likes: [],
-          comments: [],
+          comments: data['comments'],
           followers: [],
           following: []
         }
@@ -87,7 +87,7 @@ export class ProfileComponent {
               username:data['username'],
               email: data['email'],
               likes: [],
-              comments: [],
+              comments: data['comment'],
               followers: [],
               following: []
             }

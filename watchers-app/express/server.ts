@@ -88,6 +88,16 @@ app.post('/api/post/userpost', function (req, res) {
   // TODO: implement
 });
 
+app.post('/api/post/addposttouser', function(req, res) {
+  const user_id = req.body.user_id;
+  const post = req.body.post;
+
+  // TODO: add post to user's posts list in the database
+
+  res.sendStatus(200);
+});
+
+
 app.get('/api/get/viewpostsfromuser', (req, res) => {
   let data = req.body;
   // let token = data['token'];
