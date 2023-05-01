@@ -11,10 +11,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { User } from '../interfaces/user'
 import { AuthService } from '@auth0/auth0-angular';
 
-
-
-
-
 interface Movie {
   name: string;
   rating: number;
@@ -35,11 +31,19 @@ export class SearchComponent {
   public movies$: Observable<Movie[]>;
   public filteredMovies$: Observable<Movie[]>;
   public genre;
+  public headerText = '';
   public AllUsers: User[] = [];
   public showProfileButton = false;
+  public router: Router;
 
 
-  constructor(private movieService: MovieService, private activatedRoute: ActivatedRoute, private apiService: ApiService, private auth: AuthService) {
+  constructor(
+    private movieService: MovieService, 
+    private activatedRoute: ActivatedRoute, 
+    private apiService: ApiService, 
+    private auth: AuthService,
+    router: Router) {
+    this.router = router;
     this.movies$ = movieService.getData();
     this.showProfileButton = auth.user$ != null;
     this.genre = activatedRoute.snapshot.params["genre"];
@@ -49,6 +53,7 @@ export class SearchComponent {
     else {
       this.genre = 'All Movies'
     }
+    this.headerText = this.genre;
     this.filteredMovies$ = this.movies$;
   }
 
@@ -57,22 +62,25 @@ export class SearchComponent {
       return movies = movies.filter(movie => movie.genre ==  genre);
     }));
   }
-  
-  
 
   public onSearch() {
     if (this.searchTerm.startsWith('@')){
+      this.headerText = "Users";
       this.apiService.getAllUsers().subscribe((users) => {
         this.AllUsers = users as User[];
       });
-  }
+    }
 
-    
     else {
+      this.headerText = this.genre;
       this.filteredMovies$ = this.movies$.pipe(map(movies => {
         return movies.filter(movie => movie.name.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase()))
       }));
     }
+  }
+
+  public goToProfile(email: string) {
+    this.router.navigate(['/profile', email])
   }
 
 }

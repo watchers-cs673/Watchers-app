@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'discussion', component: DiscussionComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:email', component: ProfileComponent },
   { path: 'search/:genre', component: SearchComponent},
   { path: 'search', component: SearchComponent},
   { path: '', component: LoginComponent}

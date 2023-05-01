@@ -29,10 +29,21 @@
 
 
   .user-list {
-    position: relative;
-    top: 80px; /* adjust this value as needed */
+    position: fixed;
+    top: 80px;
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    color: bisque;
+    list-style-type: none;
+    background-color: black;
+    left: 0;
   }
-  
+
+  .user-list-item:hover {
+    background-color: #1c1c1c;
+    cursor: pointer;
+  }
 
   .toolbar {
     position: absolute;
@@ -49,7 +60,7 @@
 
   .toolbar-right {
     display: flex;
-    margin-right: 5%;
+    margin-right: 15%;
   }
 
   .toolbar-right h1 {
@@ -94,11 +105,11 @@
     margin-top: 80px;
     margin-left: -10px;
     margin-right: -8px;
-    /* margin-bottom: 10px; */
     padding: 0 16px;
     flex-direction: column;
     align-items: center;
-    background-color: #000000;
+    background-color:black;
+    position:absolute;
   }
 
   .image-gallery {

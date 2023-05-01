@@ -57,14 +57,24 @@ export class ProfileComponent {
     public apiService: ApiService) {
     
     // if a url param exists, the user is viewing someone elses profile, so we get the data right from the db
-    if(activatedRoute.snapshot.params["username"]) {
+    if(activatedRoute.snapshot.params["email"]) {
       this.isMyProfile = false;
-      this.user = this.userService.getUserByUsername(activatedRoute.snapshot.params["username"]);
       // if user doesn't exist (ie. user manually adds the parameter or user was deleted for some reason)
       // we should route back to the home page
       if(!this.user) {
         router.navigate(['/']);
       }
+      this.apiService.getUser(activatedRoute.snapshot.params["email"]).subscribe(data => {
+        console.log(data);
+        this.user = {
+          username:data['username'],
+          email: data['email'],
+          likes: [],
+          comments: [],
+          followers: [],
+          following: []
+        }
+      });
     }
     // if no url param exists, the user is viewing their own profile, so we get teh data from auth0 and then call the db
     else {
