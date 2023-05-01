@@ -180,6 +180,26 @@ app.get('/api/get/getAllUsers',async(req,res)=>{
   }
 })
 
+app.post('/api/post/getUser',async(req,res)=>{
+  try {
+    let e = req.body['email'];
+    const result = await prisma.user.findUnique({
+      where: {
+        email: e,
+      },
+    });
+    if(result) {
+      res.status(200).send(result);
+    }
+    else {
+      res.status(404).send('Not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Could not retrieve user' });
+  }
+});
+
 app.listen(express_port, () => {
   console.log('Server listening on port ' + express_port);
 });

@@ -13,27 +13,27 @@ export class ApiService {
   //   return this.http.get(expressURL + '/api/message');
   // }
   // add the api calls for express backend here
-  createUser(userCreateJSON: JSON) {
+  public createUser(userCreateJSON: JSON) {
     return this.http.post(expressURL + '/api/post/createuser', userCreateJSON);
   }
 
-  userLogin(userLoginInfo: JSON) {
+  public userLogin(userLoginInfo: JSON) {
     return this.http.post(expressURL + '/api/post/userlogin', userLoginInfo);
   }
 
-  userPost() {}
+  public userPost() {}
 
-  viewPostsFromUser(user_id: string) {
+  public viewPostsFromUser(user_id: string) {
     return this.http.get(expressURL+'/api/get/viewpostsfromuser'+'?userid='+user_id);
   }
 
-  searchForUsername(usernamequery: string) {
-    return this.http.get(expressURL+'/api/get/search/usernamesearch'+'?usernamequery='+usernamequery);
+  public getUser(e: string) {
+    return this.http.post<any>(expressURL+'/api/post/getUser', { email: e});
   }
 
- getAllUsers(){
-  return this.http.get(expressURL+'/api/get/getAllUsers')
- }
+  public getAllUsers(){
+    return this.http.get(expressURL+'/api/get/getAllUsers')
+  }
 
 
 }

@@ -6,6 +6,7 @@ import { Comment } from '../interfaces/comment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../services/movie-service';
 import { Observable } from 'rxjs';
+import { ApiService } from '../api.service';
 
 interface Movie {
   name: string;
@@ -47,7 +48,14 @@ export class ProfileComponent {
     this.comments = this.user.comments;
   }
 
-  constructor(public auth: AuthService, private userService: UserService, activatedRoute: ActivatedRoute, public router: Router, public movieService: MovieService) {
+  constructor(
+    public auth: AuthService, 
+    private userService: UserService, 
+    public activatedRoute: ActivatedRoute, 
+    public router: Router, 
+    public movieService: MovieService,
+    public apiService: ApiService) {
+    
     // if a url param exists, the user is viewing someone elses profile, so we get the data right from the db
     if(activatedRoute.snapshot.params["username"]) {
       this.isMyProfile = false;
@@ -58,11 +66,22 @@ export class ProfileComponent {
         router.navigate(['/']);
       }
     }
-    // if no url param exists, the user is viewing their own profile, so we get teh data from auth0 and then call teh db
+    // if no url param exists, the user is viewing their own profile, so we get teh data from auth0 and then call the db
     else {
       auth.user$.subscribe((data) => {
-        if (data?.email) {
-          this.user = this.userService.getUserByEmail(data.email? data.email : '');
+        if (data?.email && data.email) {
+         // this.user = this.userService.getUserByEmail(data.email? data.email : '');
+          this.apiService.getUser(data.email).subscribe(data => {
+            console.log(data)
+            this.user = {
+              username:data['username'],
+              email: data['email'],
+              likes: [],
+              comments: [],
+              followers: [],
+              following: []
+            }
+          });
         }
         // if no user is logged in or specific in the params, we should route back to the homepage
         // this scenario would only happen if the user appends '/profile' manually to the url
@@ -94,7 +113,7 @@ export class ProfileComponent {
   // maps followers to just username for easier viewing
   public showFollowing() {
     this.listTitle = 'Following';
-    this.profileItems = this.user.following.map(user => user.username);
+   this.profileItems = this.user.following.map(user => user.username);
     this.showList = true;
   }
 }
