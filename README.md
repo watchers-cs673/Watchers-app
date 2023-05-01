@@ -2,16 +2,27 @@
 
 for CS673
 
-## Info to note
+Please run the following steps sequentially. 
+The database must be run before running the application to avoid errors.
+## How to run the database 
 
-You can `cd watchers-app`, as the directory `watchers-app` contains the code.
+Run the following from the 'watchers-app' directory
+1. npx prisma generate
+2. npx prisma db push
+3. npm run express-build
+4. npm run express-run
 
-The two components of the application, the Angular frontend, and the Express user data database backend, must be run together for the app to function properly.
+It should say 'Server listerining on port 3000'
+This means the database is running and you're good to go.
 
-## Angular deployment
+## How to run the application
 
-Refer to [here](watchers-app/README.md) for info about the Angular deployment.
+Run the following from the 'watchers-app' directory 
+1. npm install
+2. npm run build
+3. ng serve -o
 
-## User data deployment
+This will open a localhost window in your browser that is running the app. 
+It is automatically attached to the database.
 
-Refer to [here](user-data-design.md) for info about the user information database.
+Refer to [here](user-data-design.md) for info about the user database.

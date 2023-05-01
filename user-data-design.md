@@ -6,20 +6,6 @@ The database uses SQLite interfacing via [Prisma](https://www.prisma.io/), an OR
 
 The database utilizes SQLite, a lightweight implementation of SQL that is standalone and stored as a single generated file on disk, in `watchers-app/prisma/dev.db`.
 
-### Initialize Prisma
-
-Run `npx prisma generate` to generate the appropriate client files.
-
-Run `npx prisma db push` to generate the client and configure the database automatically in MongoDB.
-
-### Build Express backend
-
-Run `npm run express-build` to compile the [Express](https://expressjs.com/) typescript files to Javascript.
-
-Run the backend with `npm run express-run`.
-
-Express is used to be a backend to run the Prisma client, which communicates with the frontend Angular client over REST. Run the frontend with `ng serve`.
-
 ## User profile data concept
 
 MongoDB is chosen as a NoSQL database. Using the JSON model of data access, it is easy to program with and use while remaining performant at scale.
