@@ -1,6 +1,6 @@
 # User data
 
-The database uses MongoDB interfacing via [Prisma](https://www.prisma.io/), an ORM interface which generates code to interact with databases programatically. This greatly simplifies coding of database operations, and allows a relational model to be defined even though MongoDB is a NoSQL database. Hence, the benefits of MongoDB performance can be used alongside the benefits of a relational model and its ease of usage with regards to programming paradigms. MongoDB is also beneficial in that it is performant at scale.
+The database uses SQLite interfacing via [Prisma](https://www.prisma.io/), an ORM interface which generates code to interact with databases programatically. This greatly simplifies coding of database operations, and allows a relational model to be defined.
 
 ## Usage
 

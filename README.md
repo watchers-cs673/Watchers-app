@@ -6,6 +6,8 @@ for CS673
 
 You can `cd watchers-app`, as the directory `watchers-app` contains the code.
 
+The two components of the application, the Angular frontend, and the Express user data database backend, must be run together for the app to function properly.
+
 ## Angular deployment
 
 Refer to [here](watchers-app/README.md) for info about the Angular deployment.
