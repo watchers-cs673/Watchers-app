@@ -18,10 +18,26 @@ export class MovieService {
     public getGenres() {
         return this.getData().pipe(map(movies => {
             let genres: { src: string; title: string; link: string; }[] = [];
-            while(movies.length>0) {
-                genres.push({src: movies[0].imgPath, title: movies[0].genre, link: '/discussion'});
-                movies = movies.filter(movie => movie.genre !== movies[0].genre);
-            }
+            let genreNames: string[] = [];
+            movies.forEach(movie => {
+                movie.genre.split(",").forEach(genre => {
+                    if(genreNames.indexOf(genre.trim()) ==-1) {
+                        genreNames.push(genre.trim());
+                    }
+                })
+            });
+            genreNames.forEach(name => {
+                let moviesOfGenre = movies.filter(movie => {
+                    if(movie.genre.split(",").map(n => n.trim()).includes(name)) {
+                        return true;
+                    }
+                    return false;
+                });
+                console.log(moviesOfGenre)
+                let randomNum = Math.floor(Math.random() * moviesOfGenre.length);
+                let randomMovie = moviesOfGenre[randomNum];
+                genres.push({src: randomMovie.imgPath, title: name, link:'/discussion'});
+            });
             return genres;
         }));
     }
@@ -47,29 +63,29 @@ export class MovieService {
                     fullArray.push(w[1]);
                     fullArray.push(w[3]);
                 
-                if(w.length==4) {
-                    fullArray.push(n[1].split(",")[0]);
-
-                    if(n[2].split(",").length==3) {
-                        fullArray.push(n[2].split(",")[1]);
-                        fullArray.push(n[3]);
-                    }
-                    else if(n[2].split(",").length==11) {
-                        fullArray.push(n[2].split(",")[1]);
-                        fullArray.push(n[2].split(",")[2]);
-                    }
-                }
-                else {
-                    fullArray.push(w[4]);
-                    fullArray.push(w[5]);
-                    if (w.length==6){
+                    if(w.length==4) {
                         fullArray.push(n[1]);
+
+                        if(n[2].split(",").length==3) {
+                            fullArray.push(n[2].split(",")[1]);
+                            fullArray.push(n[3]);
+                        }
+                        else if(n[2].split(",").length==11) {
+                            fullArray.push(n[2].split(",")[1]);
+                            fullArray.push(n[2].split(",")[2]);
+                        }
                     }
-                    else if(w.length==14){ 
-                        fullArray.push(w[6]);
-                    }
-                }
-                newdata.push({imgPath: fullArray[0], name: fullArray[1], year: parseInt(fullArray[2]), runTime: fullArray[3], genre: fullArray[4], rating: parseInt(fullArray[5]), summary: fullArray[6]})
+                    else {
+                        fullArray.push(w[4]);
+                        fullArray.push(w[5]);
+                        if (w.length==6){
+                            fullArray.push(n[1]);
+                        }
+                        else if(w.length==14){ 
+                            fullArray.push(w[6]);
+                        }
+                    }        
+                    newdata.push({imgPath: fullArray[0], name: fullArray[1], year: parseInt(fullArray[2]), runTime: fullArray[3], genre: fullArray[4], rating: parseInt(fullArray[5]), summary: fullArray[6]})
                 }            
             });
             return newdata;

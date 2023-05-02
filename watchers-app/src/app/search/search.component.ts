@@ -50,7 +50,7 @@ export class SearchComponent {
 
   public filterByGenre(genre: string) {
     this.movies$ = this.movies$.pipe(map(movies => {
-      return movies = movies.filter(movie => movie.genre ==  genre);
+      return movies = movies.filter(movie => movie.genre.indexOf(genre)!==-1);
     }));
   }
 
