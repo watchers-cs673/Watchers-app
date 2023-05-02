@@ -22,6 +22,14 @@
         </li>
     </ul>
   </div>
+  <div *ngIf="WantToWatchMovies.length > 0"class="top-five-list">
+    <h2>Want to Watch</h2>
+    <ul *ngFor="let WantToWatchMovie of WantToWatchMovies">
+        <li>
+          <a class='movieLink' [routerLink]="['/discussion', {name: WantToWatchMovie}]">{{WantToWatchMovie}}</a>
+        </li>
+    </ul>
+  </div>
   <table>
     <tr>
         <th class="table-title">My Reviews</th>

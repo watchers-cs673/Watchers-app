@@ -241,6 +241,42 @@
     margin-right: 10px;
   }
 
+  /* Style for the "Want to Watch" button */
+#want-to-watch-button {
+  background-color: rgb(198, 63, 19);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+#want-to-watch-button:hover {
+  background-color: burlywood;;
+}
+
+/* Style for the "Want to Watch" movie list */
+#want-to-watch-section {
+  margin-top: 20px;
+}
+
+#want-to-watch-section p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#want-to-watch-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#want-to-watch-section li {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+
   /* Responsive Styles */
   @media screen and (max-width: 767px) {
     .card-container > *:not(.circle-link) ,

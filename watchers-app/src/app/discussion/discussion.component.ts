@@ -43,6 +43,7 @@ export class DiscussionComponent {
   public movie$: Observable<Movie | undefined>;
 
   public favorites: string[] = [];
+  public wantToWatch: string[] = [];
 
   constructor(private route: ActivatedRoute, private movieService: MovieService, public auth: AuthService, public userService: UserService) {  
     // gets movie name from the route
@@ -57,6 +58,7 @@ export class DiscussionComponent {
     });
 
     this.favorites = this.userService.getFavorites();
+    this.wantToWatch = this.userService.getWantToWatch();
   }
 
   // switch tab
@@ -132,6 +134,16 @@ export class DiscussionComponent {
       this.userService.addFavorite(movie);
     }
     this.favorites = this.userService.getFavorites();
+  }
+
+  public addToWantToWatch(movie: string) {
+    if(this.wantToWatch.includes(movie)) {
+      this.userService.removeWantToWatch(movie);
+    }
+    else {
+      this.userService.addWantToWatch(movie);
+    }
+    this.wantToWatch = this.userService.getWantToWatch();
   }
 
 }

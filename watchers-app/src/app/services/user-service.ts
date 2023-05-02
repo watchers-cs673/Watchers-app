@@ -75,4 +75,41 @@ export class UserService {
             localStorage.setItem('favoriteMovies', newString)
         }
     }
+
+    public getWantToWatch() {
+        let wantToWatch = localStorage.getItem('WantToWatchMovies');
+        if(wantToWatch) {
+            return wantToWatch.split(",");
+        }
+        return [];
+    }
+
+    public addWantToWatch(newWatch: string) {
+        let wantToWatch = "";
+        let tempString1 = localStorage.getItem('WantToWatchMovies');
+        if(tempString1) {
+            wantToWatch = tempString1 + ','+newWatch;
+        }
+        else {
+            wantToWatch=newWatch;
+        }
+        localStorage.setItem('WantToWatchMovies', wantToWatch)
+    }
+
+    public removeWantToWatch(movie: string) {
+        let tempString1 = localStorage.getItem('WantToWatchMovies');
+        if(tempString1) {
+            let arr1 = tempString1.split(',').filter(a => a != movie);
+            let newString1 = "";
+            for(let i=0; i<arr1.length; i++) {
+                if(i==0) {
+                    newString1 = arr1[i];
+                }
+                else {
+                    newString1 = newString1 + ","+arr1[i]
+                }
+            }
+            localStorage.setItem('WantToWatchMovies', newString1)
+        }
+    }
 }

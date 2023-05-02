@@ -40,6 +40,7 @@ export class ProfileComponent {
   //variable for the user data of the profile owner (not necessarily the current user if the user is viewing someone elses profile)
   public user: User = {username: '', email: '', likes: [], comments: [], followers: [], following: []};
   public favoriteMovies: string[] = [];
+  public WantToWatchMovies: string[] = [];
 
   ngOnInit() {
     this.followersList = this.user.followers;
@@ -72,6 +73,7 @@ export class ProfileComponent {
       });
     }
     this.favoriteMovies = this.userService.getFavorites();
+    this.WantToWatchMovies = this.userService.getWantToWatch();
   }
 
   public followUser() {
