@@ -40,6 +40,10 @@ describe('DiscussionComponent', () => {
     expect(component.favorites).toBeDefined();
   });
 
+  it('should set the want to watch movies', () => {
+    expect(component.wantToWatch).toBeDefined();
+  });
+
   it('should set the comments', () => {
     expect(component.comments).toBeDefined();
   });
@@ -125,5 +129,19 @@ describe('DiscussionComponent', () => {
     spyOn(component.favorites, 'includes').and.returnValue(true);
     component.addToFavorites(movie);
     expect(component.favorites).not.toContain(movie);
+  });
+
+  it('should add movie to want to watch movies if it is not already a want to watch movies', () => {
+    const movie = 'The Shawshank Redemption';
+    spyOn(component.wantToWatch, 'includes').and.returnValue(false);
+    component.addToFavorites(movie);
+    expect(component.wantToWatch).toContain(movie);
+  });
+
+  it('should remove movie from want to watch movies if it is already a want to watch movies', () => {
+    const movie = 'The Dark Knight';
+    spyOn(component.wantToWatch, 'includes').and.returnValue(true);
+    component.addToFavorites(movie);
+    expect(component.wantToWatch).not.toContain(movie);
   });
 });

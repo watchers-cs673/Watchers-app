@@ -42,5 +42,8 @@ export class ApiService {
   public addFavorites(e: string, f: string){
     return this.http.post(expressURL+'/api/post/addFavorites', {email: e, favorites: f});
   }
+  public addWantToWatch(e: string, w: string){
+    return this.http.post(expressURL+'/api/post/addWantToWatch', {email: e, wantToWatch: w});
+  }
 
 }

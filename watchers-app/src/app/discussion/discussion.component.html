@@ -39,6 +39,8 @@
     <h1>Release dates: {{movie.year}}</h1> 
     <h1>Runtime: {{movie.runTime}}</h1>  
 
+    <button *ngIf="thisUser" id="want-to-watch-button" [ngClass]="thisUser.wantToWatch.includes(movie.name) ? 'watch-button active' : 'watch-button'" (click)="addToWantToWatch(movie.name)">Want to Watch</button>
+
     <div class="tabs">
         <button class="tab" [ngClass]="{'active': selectedTab === 'summary'}" (click)="selectTab('summary')">Summary</button>
         <button class="tab" [ngClass]="{'active': selectedTab === 'new'}" (click)="selectTab('new')">New</button>

@@ -142,4 +142,32 @@ export class DiscussionComponent {
     }
   }
 
+  public addToWantToWatch(movie: string) {
+    if(this.thisUser && this.thisUser.email) {
+      const wantToWatch = this.thisUser.wantToWatch;
+      let newWantToWatch = "";
+      if(wantToWatch && wantToWatch.indexOf(movie)!==-1) {
+        if(wantToWatch.indexOf(","+movie)!==-1) {
+          newWantToWatch = wantToWatch.replace(","+movie, "");
+        }
+        else if(wantToWatch.indexOf(movie+",")!==-1){
+          newWantToWatch = wantToWatch.replace(movie+",", "");
+        }
+        else {
+          newWantToWatch = "";
+        }
+      }
+      else if(wantToWatch && wantToWatch.length>0){
+        newWantToWatch = wantToWatch + ","+movie;
+      }
+      else {
+        newWantToWatch = movie;
+      }
+
+      this.apiService.addWantToWatch(this.thisUser.email, newWantToWatch).subscribe(user => {
+        this.thisUser = user;
+      });
+    }
+  }
+
 }

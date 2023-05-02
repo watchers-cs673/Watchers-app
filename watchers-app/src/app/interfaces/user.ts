@@ -6,4 +6,5 @@ export interface User {
     followers: User[];
     following: User[];
     favorites?: string[];
+    wantToWatch?: string[];
 }
