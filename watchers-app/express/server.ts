@@ -210,6 +210,26 @@ app.post('/api/post/getUser',async(req,res)=>{
   }
 });
 
+app.post('/api/post/addFavorites',async(req,res)=>{
+  try {
+    let e = req.body['email'];
+    let favs = req.body['favorites'];
+    const user = await prisma.user.update({
+      where: { email: e },
+      data: { favorites: favs },
+    })
+    if(user) {
+      res.status(200).send(user);
+    }
+    else {
+      res.status(404).send('Not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Could not retrieve user'});
+  }
+});
+
 app.listen(express_port, () => {
   console.log('Server listening on port ' + express_port);
 });

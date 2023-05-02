@@ -17,6 +17,7 @@ model User {
   passwordHash      String
   uniqueUserAuthKey String
   displayName       String?
+  favorites         String?
   posts             Post[]
   likes             Like[]
   comments          UserComment[]
