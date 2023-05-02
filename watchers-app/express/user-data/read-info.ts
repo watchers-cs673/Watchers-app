@@ -1,4 +1,4 @@
-import { Follows, PrismaClient, Post, Like, UserComment } from '@prisma/client';
+import { User, PrismaClient, Post, Like, UserComment } from '@prisma/client';
 
 // const prisma = new PrismaClient();
 
@@ -40,7 +40,7 @@ export async function viewPostsFromUser(
 export async function getUserFollowing(
   prisma: PrismaClient,
   user_id: string
-): Promise<Follows[] | undefined> {
+): Promise<User[] | undefined> {
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -64,7 +64,7 @@ export async function getUserFollowing(
 export async function getUserFollowers(
   prisma: PrismaClient,
   user_id: string
-): Promise<Follows[] | undefined> {
+): Promise<User[] | undefined> {
   try {
     const user = await prisma.user.findUnique({
       where: {

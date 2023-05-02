@@ -21,8 +21,8 @@ model User {
   posts             Post[]
   likes             Like[]
   comments          UserComment[]
-  follower          Follows[]     @relation("following")
-  following         Follows[]     @relation("follower")
+  follower          User[]     @relation("follow")
+  following         User[]     @relation("follow")
   // activeTokens      UserTokenData[]
 }
 
@@ -53,13 +53,4 @@ model UserComment {
   commenterId  String
   commentBody  String
   commentLikes Like[]
-}
-
-model Follows {
-  follower         User   @relation("follower", fields: [followerId], references: [userId])
-  followerId       String
-  following        User   @relation("following", fields: [followingId], references: [userId])
-  followingId      String
-  // @@id([followerId, followingId])
-  followRelationId String @id @default(cuid())
 }
