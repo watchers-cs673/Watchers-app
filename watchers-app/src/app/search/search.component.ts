@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MovieService } from '../services/movie-service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
-import { ApiService } from '../api.service';
+import { ApiService } from '../services/api.service';
 import { EventEmitter } from 'stream';
 import { Pipe, PipeTransform } from '@angular/core';
 import { User } from '../interfaces/user'

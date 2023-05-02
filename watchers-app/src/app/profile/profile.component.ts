@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { UserService } from '../services/user-service';
 import { User } from '../interfaces/user';
 import { Comment } from '../interfaces/comment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../services/movie-service';
 import { Observable } from 'rxjs';
-import { ApiService } from '../api.service';
+import { ApiService } from '../services/api.service';
 
 interface Movie {
   name: string;
@@ -40,7 +39,6 @@ export class ProfileComponent {
 
   //variable for the user data of the profile owner (not necessarily the current user if the user is viewing someone elses profile)
   public user: User = {username: '', email: '', likes: [], comments: [], followers: [], following: []};
-  public favoriteMovies: string[] = [];
 
   ngOnInit() {
     this.followersList = this.user.followers;
@@ -50,7 +48,6 @@ export class ProfileComponent {
 
   constructor(
     public auth: AuthService, 
-    private userService: UserService, 
     public activatedRoute: ActivatedRoute, 
     public router: Router, 
     public movieService: MovieService,
@@ -80,16 +77,15 @@ export class ProfileComponent {
     else {
       auth.user$.subscribe((data) => {
         if (data?.email && data.email) {
-         // this.user = this.userService.getUserByEmail(data.email? data.email : '');
           this.apiService.getUser(data.email).subscribe(data => {
-            console.log(data)
             this.user = {
-              username:data['username'],
+              username: data['username'],
               email: data['email'],
-              likes: [],
-              comments: data['comment'],
-              followers: [],
-              following: []
+              likes: data['likes'] ? data['likes'] : [],
+              comments: data['comment'] ? data['comment'] : [],
+              followers: data['followers'] ? data['comment'] : [],
+              following: data['following'] ? data['following'] : [],
+              favorites: data['favorites'] ? data['favorites'].split(",") : []
             }
           });
         }
@@ -100,7 +96,6 @@ export class ProfileComponent {
         }
       });
     }
-    this.favoriteMovies = this.userService.getFavorites();
   }
 
   public followUser() {

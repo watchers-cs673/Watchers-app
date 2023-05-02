@@ -40,6 +40,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
       authorizationParams: {
         redirect_uri: window.location.origin,
       },
+      cacheLocation: "localstorage"
     }),
   ],
   providers: [],

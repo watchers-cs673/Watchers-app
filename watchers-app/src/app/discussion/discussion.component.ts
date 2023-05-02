@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { number } from 'joi';
 import { AuthService } from '@auth0/auth0-angular';
 import { Comment } from '../interfaces/comment'
-import { UserService } from '../services/user-service';
+import { ApiService } from '../services/api.service';
 // import { User } from '../user-list/user-list.component';
 
 interface Movie {
@@ -36,15 +36,15 @@ export class DiscussionComponent {
   // default selected tab is summary
   public selectedTab = 'summary';
 
-  // posts are default anonymous unless the user is logged in
-  public currentUser = 'Anonymous';
-
+  public thisUser: any;
   //movie data as an observable
   public movie$: Observable<Movie | undefined>;
 
-  public favorites: string[] = [];
-
-  constructor(private route: ActivatedRoute, private movieService: MovieService, public auth: AuthService, public userService: UserService) {  
+  constructor(
+    private route: ActivatedRoute, 
+    private movieService: MovieService, 
+    public auth: AuthService, 
+    public apiService: ApiService) {  
     // gets movie name from the route
     let movieName = this.route.snapshot.paramMap.get('name');
     this.movie$ = movieService.getMovie(movieName ? movieName : "");
@@ -52,11 +52,11 @@ export class DiscussionComponent {
     // checks if user is logged in and saves user name if they are
     auth.user$.subscribe((data) => {
       if (data && data.name) {
-        this.currentUser = data.name;
+        apiService.getUser(data.name).subscribe(user => {
+          this.thisUser = user;
+        });
       }
     });
-
-    this.favorites = this.userService.getFavorites();
   }
 
   // switch tab
@@ -92,7 +92,7 @@ export class DiscussionComponent {
   public addComment(topic: string, comment: string) {
     // create comment object to save. User is anonymous by default unless logged in
     const newComment: Comment = {
-      author: this.currentUser,
+      author: this.thisUser.email,
       content: comment,
       topic: topic,
       date: new Date(),
@@ -125,13 +125,31 @@ export class DiscussionComponent {
   }
 
   public addToFavorites(movie: string) {
-    if(this.favorites.includes(movie)) {
-      this.userService.removeFavorite(movie);
+    if(this.thisUser && this.thisUser.email) {
+      const favorites = this.thisUser.favorites;
+      let newFavorites = "";
+      if(favorites && favorites.indexOf(movie)!==-1) {
+        if(favorites.indexOf(","+movie)!==0) {
+          newFavorites = favorites.replace(","+movie, "");
+        }
+        else if(favorites.indexOf(movie+",")!==0){
+          newFavorites = favorites.replace(","+movie, "");
+        }
+        else {
+          newFavorites = "";
+        }
+      }
+      else if(favorites && favorites.length>0){
+        newFavorites = favorites + ","+movie;
+      }
+      else {
+        newFavorites = movie;
+      }
+
+      this.apiService.addFavorites(this.thisUser.email, newFavorites).subscribe(user => {
+        this.thisUser = user;
+      });
     }
-    else {
-      this.userService.addFavorite(movie);
-    }
-    this.favorites = this.userService.getFavorites();
   }
 
 }

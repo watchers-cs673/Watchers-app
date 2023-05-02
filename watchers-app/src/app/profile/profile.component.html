@@ -14,9 +14,9 @@
       <span>{{isFollowing ? 'Follow' : 'Unfollow'}}</span>
     </button>
   </div>
-  <div *ngIf="favoriteMovies.length > 0"class="top-five-list">
-    <h2>My Top Movies</h2>
-    <ul *ngFor="let favoriteMovie of favoriteMovies">
+  <div *ngIf="user.favorites && user.favorites.length > 0"class="top-five-list">
+    <h2>My Favorites</h2>
+    <ul *ngFor="let favoriteMovie of user.favorites">
         <li>
           <a class='movieLink' [routerLink]="['/discussion', {name: favoriteMovie}]">{{favoriteMovie}}</a>
         </li>

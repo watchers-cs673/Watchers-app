@@ -28,6 +28,9 @@ export class HomeComponent {
     this.images$ = movieService.getData();
     this.catogories$ = movieService.getGenres();
     this.getHighestRating(0,1,2);
+    auth.isAuthenticated$.subscribe(isAuth => {
+      console.log(isAuth);
+    })
   }
 
 

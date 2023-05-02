@@ -5,4 +5,5 @@ export interface User {
     comments: any[];
     followers: User[];
     following: User[];
+    favorites?: string[];
 }

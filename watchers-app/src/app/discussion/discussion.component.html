@@ -1,4 +1,4 @@
-<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
  
 <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -35,7 +35,7 @@
         <h2>{{movie.name}}</h2>
         <app-star-rating [rating]="movie.rating"></app-star-rating>
     </div>
-    <span *ngIf="currentUser != 'Anonymous'" [ngClass]="this.favorites.includes(movie.name) ? 'fav-button filledHeart' : 'fav-button'" (click)="addToFavorites(movie.name)">&#9829;</span>
+    <span *ngIf="thisUser" [ngClass]="thisUser.favorites && thisUser.favorites.includes(movie.name) ? 'fav-button filledHeart' : 'fav-button'" (click)="addToFavorites(movie.name)">&#9829;</span>
     <h1>Release dates: {{movie.year}}</h1> 
     <h1>Runtime: {{movie.runTime}}</h1>  
 
