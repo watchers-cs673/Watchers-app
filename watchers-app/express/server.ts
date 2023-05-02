@@ -88,13 +88,30 @@ app.post('/api/post/userpost', function (req, res) {
   // TODO: implement
 });
 
-app.post('/api/post/addposttouser', function(req, res) {
-  const user_id = req.body.user_id;
-  const post = req.body.post;
+app.post('/api/post/addposttouser', async(req, res) => {
+  // const user_id = req.body.user_id;
+  // const post = req.body.post;
 
   // TODO: add post to user's posts list in the database
-
-  res.sendStatus(200);
+  try {
+    const user_id = req.body.user_id;
+    const post = req.body.post;
+    const result = await prisma.post.create({
+      data: {
+        postBody: post,
+        referencedMovieId: null,
+        rating: null,
+        author: {
+          connect: { userId: user_id },
+        },
+      },
+    });
+    res.status(200).send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Could not add post to user');
+  }
+  
 });
 
 
