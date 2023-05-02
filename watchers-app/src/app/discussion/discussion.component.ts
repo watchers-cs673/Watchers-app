@@ -41,8 +41,8 @@ export class DiscussionComponent {
 
     // checks if user is logged in and saves user name if they are
     auth.user$.subscribe((data) => {
-      if (data && data.name) {
-        apiService.getUser(data.name).subscribe(user => {
+      if (data && data.email) {
+        apiService.getUser(data.email).subscribe(user => {
           this.thisUser = user;
         });
       }
