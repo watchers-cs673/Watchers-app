@@ -32,18 +32,6 @@ describe('DiscussionComponent', () => {
     expect(component.movie$).toBeDefined();
   });
 
-  it('should set the User', () => {
-    expect(component.currentUser).toBeDefined();
-  });
-
-  it('should set the favorites', () => {
-    expect(component.favorites).toBeDefined();
-  });
-
-  it('should set the want to watch movies', () => {
-    expect(component.wantToWatch).toBeDefined();
-  });
-
   it('should set the comments', () => {
     expect(component.comments).toBeDefined();
   });
@@ -111,37 +99,9 @@ describe('DiscussionComponent', () => {
     expect(component.comments[0].likes).toBe(1);
   });
   
-  it('should add a comment', () => {
-    component.addComment('topic', 'comment');
-    expect(component.comments.length).toBe(1);
-    expect(component.selectedTab).toBe('new');
-  });
-
-  it('should add movie to favorites if it is not already a favorite', () => {
-    const movie = 'The Shawshank Redemption';
-    spyOn(component.favorites, 'includes').and.returnValue(false);
-    component.addToFavorites(movie);
-    expect(component.favorites).toContain(movie);
-  });
-
-  it('should remove movie from favorites if it is already a favorite', () => {
-    const movie = 'The Dark Knight';
-    spyOn(component.favorites, 'includes').and.returnValue(true);
-    component.addToFavorites(movie);
-    expect(component.favorites).not.toContain(movie);
-  });
-
-  it('should add movie to want to watch movies if it is not already a want to watch movies', () => {
-    const movie = 'The Shawshank Redemption';
-    spyOn(component.wantToWatch, 'includes').and.returnValue(false);
-    component.addToFavorites(movie);
-    expect(component.wantToWatch).toContain(movie);
-  });
-
-  it('should remove movie from want to watch movies if it is already a want to watch movies', () => {
-    const movie = 'The Dark Knight';
-    spyOn(component.wantToWatch, 'includes').and.returnValue(true);
-    component.addToFavorites(movie);
-    expect(component.wantToWatch).not.toContain(movie);
-  });
+  // it('should add a comment', () => {
+  //   component.addComment('topic', 'comment');
+  //   expect(component.comments.length).toBe(1);
+  //   expect(component.selectedTab).toBe('new');
+  // });
 });

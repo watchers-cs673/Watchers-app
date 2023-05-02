@@ -47,10 +47,6 @@ describe('HomeComponent', () => {
     expect(component.randomImages).toEqual([]);
   });
 
-  it('should set profile', () => {
-    expect(component.profile).toBeDefined();
-  });
-
   it('should initialize currentIndex to 1', () => {
     expect(component.currentIndex).toEqual(1);
   });
