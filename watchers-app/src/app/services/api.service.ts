@@ -13,10 +13,12 @@ export class ApiService {
   //   return this.http.get(expressURL + '/api/message');
   // }
   // add the api calls for express backend here
-  public createUser(userCreateJSON: JSON) {
-    return this.http.post(expressURL + '/api/post/createuser', userCreateJSON);
+  public createUser(email: string, username: string, password: string) {
+    return this.http.post(expressURL + '/api/post/createuser', {email: email, username: username, password: password});
   }
-
+  public getOrCreateUser(email: string) {
+    return this.http.post(expressURL + '/api/post/getOrCreateUser', {email: email});
+  }
   public userLogin(userLoginInfo: JSON) {
     return this.http.post(expressURL + '/api/post/userlogin', userLoginInfo);
   }
@@ -42,6 +44,11 @@ export class ApiService {
   public addFavorites(e: string, f: string){
     return this.http.post(expressURL+'/api/post/addFavorites', {email: e, favorites: f});
   }
+
+  public addFollowing(e: string, f: string){
+    return this.http.post(expressURL+'/api/post/addUserFollowing', {email: e, followingList: f});
+  }
+
   public addWantToWatch(e: string, w: string){
     return this.http.post(expressURL+'/api/post/addWantToWatch', {email: e, wantToWatch: w});
   }

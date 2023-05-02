@@ -5,13 +5,13 @@
   <div class="spacer">
 <div *ngIf="!showList">
   <h3>
-    <span (click)="showFollowers()">Followers: {{user.followers.length}}</span>
-    <span (click)="showPosts()"class="spacer-line">Posts: {{user.comments.length}}</span>
-    <span (click)="showFollowing()">Following: {{user.following.length}}</span>
+    <span (click)="showFollowers()">Followers: {{ followersList.length}}</span>
+    <span (click)="showPosts()"class="spacer-line">Posts: {{comments.length}}</span>
+    <span (click)="showFollowing()">Following: {{ user.followingList ? user.followingList.length : 0 }}</span>
   </h3>
-  <div class="container-btn">
-    <button *ngIf="!isMyProfile" class="follow-btn" (click)="followUser()" [ngClass]="{'following': isFollowing}">
-      <span>{{isFollowing ? 'Follow' : 'Unfollow'}}</span>
+  <div *ngIf="!isMyProfile && loggedInUser.email!=user.email" class="container-btn">
+    <button class="follow-btn" (click)="followUser()" [ngClass]="{'following': isFollowing}">
+      <span>{{loggedInUser.followingList && loggedInUser.followingList.indexOf(user.email)==-1 ? 'Follow' : 'Unfollow'}}</span>
     </button>
   </div>
   <div *ngIf="user.favorites && user.favorites.length > 0"class="top-five-list">

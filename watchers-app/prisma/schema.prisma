@@ -18,6 +18,8 @@ model User {
   uniqueUserAuthKey String
   displayName       String?
   favorites         String?
+  wantToWatch       String?
+  followingList     String?
   posts             Post[]
   likes             Like[]
   comments          UserComment[]

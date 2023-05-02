@@ -3,8 +3,7 @@ export interface User {
     email: string;
     likes: any[];
     comments: any[];
-    followers: User[];
-    following: User[];
+    followingList?: string;
     favorites?: string[];
     wantToWatch?: string[];
 }

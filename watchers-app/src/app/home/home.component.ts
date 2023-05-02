@@ -51,11 +51,6 @@ export class HomeComponent {
       this.imageIndex = this.imageIndex + 10;
     }
     this.getHighestRating((this.imageIndex - 1) % 10, this.imageIndex % 10, (this.imageIndex + 1) % 10);
-    // if (this.currentIndex == 0) {
-    //   this.currentIndex = 0;
-    // } else {
-    //   this.currentIndex = (this.currentIndex - 1 + 3) % 3;
-    // }
     
   }
 

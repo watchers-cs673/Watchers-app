@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from 'express';
 // const express = require('express');
 // import { Express, Request, Response } from 'express';
 import { createUser } from './user-data/create-user.js';
-import { userLogin, validateToken } from './user-data/user-authenticate.js';
+import { createPasswordHash, createUserAuthKey, userLogin, validateToken } from './user-data/user-authenticate.js';
 import { PrismaClient } from '@prisma/client';
 import { userPost } from './user-data/user-post.js';
 import {
@@ -49,22 +49,33 @@ app.use(express.json());
 //   });
 // });
 
-app.post('/api/post/createuser', function (req, res) {
+app.post('/api/post/createuser', async (req, res) => {
   let data = req.body;
   if (!data['displayName']) {
     data['displayName'] = data['username'];
   }
-  let userCreated = createUser(
-    prisma,
-    data['username'],
-    data['email'],
-    data['password'],
-    data['displayName']
-  );
-  if (!userCreated) {
-    res.status(404).send('User not created');
-  } else {
-    res.status(201).send('User created');
+  let passwordHashResult = await createPasswordHash(data['password']);
+
+  let userAuthKey: string = await createUserAuthKey();
+
+  try {
+    const user = await prisma.user.create({
+      data: {
+        username: data['username'],
+        email: data['email'],
+        passwordHash: passwordHashResult,
+        uniqueUserAuthKey: userAuthKey,
+        displayName: data['displayName'],
+      },
+    });
+    if(user) {
+        res.status(200).send(user);
+    }
+    else {
+      res.status(404).send("Can not create user")
+    }
+  } catch(e) {
+    res.status(500).send('Internal server error');
   }
 });
 
@@ -99,8 +110,8 @@ app.post('/api/post/addposttouser', async(req, res) => {
     const result = await prisma.post.create({
       data: {
         postBody: post,
-        referencedMovieId: null,
-        rating: null,
+        referencedMovieId: "",
+        rating: 0,
         author: {
           connect: { userId: user_id },
         },
@@ -207,6 +218,39 @@ app.get('/api/get/getAllUsers',async(req,res)=>{
   }
 })
 
+app.post('/api/post/getOrCreateUser',async(req,res)=>{
+  try {
+    let result = null;
+    let e = req.body['email'];
+    result = await prisma.user.findUnique({
+      where: {
+        email: e,
+      },
+    });
+    if(!result) {
+      let userAuthKey: string = await createUserAuthKey();
+      let username: string = e.indexOf('@') != -1 ? e.split('@')[0] : e;
+      result = await prisma.user.create({
+        data: {
+          username: username,
+          email: e,
+          passwordHash: '123456',
+          uniqueUserAuthKey: userAuthKey,
+          displayName: username,
+        },
+      });
+    }
+    if(result) {
+      res.status(200).send(result);
+    }
+    else {
+      res.status(404).send("Can not create user")
+    }
+  } catch(e) {
+    res.status(500).send('Internal server error');
+  }
+});
+
 app.post('/api/post/getUser',async(req,res)=>{
   try {
     let e = req.body['email'];
@@ -264,6 +308,19 @@ app.post('/api/post/addWantToWatch',async(req,res)=>{
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Could not retrieve user'});
+  }
+});
+
+app.post('/api/post/addUserFollowing', async(req, res) => {
+  let data = req.body;
+  let user = await prisma.user.update({
+    where: { email: data['email'] },
+    data: { followingList: data['followingList'] },
+  });
+  if (!user) {
+    res.status(404).send('Not found');
+  } else {
+    res.send(user);
   }
 });
 
