@@ -75,7 +75,8 @@ export class ProfileComponent {
               comments: data['comment'] ? data['comment'] : [],
               followers: data['followers'] ? data['comment'] : [],
               following: data['following'] ? data['following'] : [],
-              favorites: data['favorites'] ? data['favorites'].split(",") : []
+              favorites: data['favorites'] ? data['favorites'].split(",") : [],
+              wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(",") : []
             }
           });
         }
