@@ -7,10 +7,7 @@ The database must be run before running the application to avoid errors.
 ## How to run the database 
 
 Run the following from the 'watchers-app' directory
-1. npx prisma generate
-2. npx prisma db push
-3. npm run express-build
-4. npm run express-run
+1. npm run full-db
 
 It should say 'Server listerining on port 3000'
 This means the database is running and you're good to go.

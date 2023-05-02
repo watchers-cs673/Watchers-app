@@ -9,7 +9,8 @@
     "test": "ng test",
     "prisma-db-push": "npx prisma db push",
     "express-build": "npx tsc --project ./express",
-    "express-run": "node dist/express/server.js"
+    "express-run": "node dist/express/server.js",
+    "full-db": "npx prisma generate && npx prisma db push && npx tsc --project ./express && node dist/express/server.js"
   },
   "prisma": {
     "schema": "prisma/schema.prisma"
