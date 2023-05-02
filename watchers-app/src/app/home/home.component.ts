@@ -15,14 +15,10 @@ export class HomeComponent {
   public catogories$: Observable<any[]>;
   randomImages: { imgPath: string, link: string, name: string }[] = [];
   public title = 'watchers';
-  public profile = this.auth.user$;
   constructor(public auth: AuthService, private movieService: MovieService) {
     this.images$ = movieService.getData();
     this.catogories$ = movieService.getGenres();
     this.getHighestRating(0,1,2);
-    auth.isAuthenticated$.subscribe(isAuth => {
-      console.log(isAuth);
-    })
   }
 
 
@@ -47,11 +43,6 @@ export class HomeComponent {
   public nextImage() {
     this.imageIndex++;
     this.getHighestRating((this.imageIndex - 1) % 10, this.imageIndex % 10, (this.imageIndex + 1) % 10);
-    // if (this.currentIndex == 2) {
-    //   this.currentIndex = 2;
-    // } else {
-    //   this.currentIndex = (this.currentIndex + 1) % 3;
-    // }
   }
 
   public prevImage() {
