@@ -119,11 +119,11 @@ export class DiscussionComponent {
       const favorites = this.thisUser.favorites;
       let newFavorites = "";
       if(favorites && favorites.indexOf(movie)!==-1) {
-        if(favorites.indexOf(","+movie)!==0) {
+        if(favorites.indexOf(","+movie)!==-1) {
           newFavorites = favorites.replace(","+movie, "");
         }
-        else if(favorites.indexOf(movie+",")!==0){
-          newFavorites = favorites.replace(","+movie, "");
+        else if(favorites.indexOf(movie+",")!==-1){
+          newFavorites = favorites.replace(movie+",", "");
         }
         else {
           newFavorites = "";
