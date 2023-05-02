@@ -4,18 +4,8 @@ import { User } from '../interfaces/user';
 import { Comment } from '../interfaces/comment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../services/movie-service';
-import { Observable } from 'rxjs';
 import { ApiService } from '../services/api.service';
-
-interface Movie {
-  name: string;
-  rating: number;
-  genre: string;
-  imgPath: string;
-  runTime?: string;
-  year?: number;
-  summary?: string;
-}
+import { Movie } from '../interfaces/movie'
 
 @Component({
   selector: 'app-profile',

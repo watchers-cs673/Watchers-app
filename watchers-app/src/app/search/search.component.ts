@@ -10,16 +10,7 @@ import { EventEmitter } from 'stream';
 import { Pipe, PipeTransform } from '@angular/core';
 import { User } from '../interfaces/user'
 import { AuthService } from '@auth0/auth0-angular';
-
-interface Movie {
-  name: string;
-  rating: number;
-  genre: string;
-  imgPath: string;
-  runTime?: string;
-  year?: number;
-  summary?: string;
-}
+import { Movie } from '../interfaces/movie';
 
 @Component({
   selector: 'app-search',

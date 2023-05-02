@@ -7,17 +7,7 @@ import { number } from 'joi';
 import { AuthService } from '@auth0/auth0-angular';
 import { Comment } from '../interfaces/comment'
 import { ApiService } from '../services/api.service';
-// import { User } from '../user-list/user-list.component';
-
-interface Movie {
-  name: string;
-  rating: number;
-  genre: string;
-  imgPath: string;
-  runTime?: string;
-  year?: number;
-  summary?: string;
-}
+import { Movie } from '../interfaces/movie';
 
 @Component({
   selector: 'app-discussion',

@@ -3,16 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { Observable } from 'rxjs';
 import { MovieService } from '../services/movie-service';
+import { Movie } from '../interfaces/movie'
 
-interface Movie {
-  name: string;
-  rating: number;
-  genre: string;
-  imgPath: string;
-  runTime?: string;
-  year?: number;
-  summary?: string;
-}
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

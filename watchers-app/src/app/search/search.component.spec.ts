@@ -7,16 +7,7 @@ import { AuthService, Auth0ClientService } from '@auth0/auth0-angular';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
-interface Movie {
-  name: string;
-  rating: number;
-  genre: string;
-  imgPath: string;
-  runTime?: string;
-  year?: number;
-  summary?: string;
-}
+import { Movie } from '../interfaces/movie';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;

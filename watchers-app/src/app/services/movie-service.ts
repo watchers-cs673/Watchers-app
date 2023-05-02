@@ -1,16 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnInit } from "@angular/core";
 import { map, Observable } from "rxjs";
+import { Movie } from '../interfaces/movie'
 
-interface Movie {
-    name: string;
-    rating: number;
-    genre: string;
-    imgPath: string;
-    runTime?: string;
-    year?: number;
-    summary?: string;
-}
 @Injectable({
     providedIn: 'root',
 })
