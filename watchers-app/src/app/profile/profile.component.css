@@ -13,6 +13,13 @@
     flex: 1;
   }
 
+  .header {
+    border-bottom: 1px white solid;
+    padding: 20px;
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+
   .toolbar {
     position: absolute;
     top: 0;
