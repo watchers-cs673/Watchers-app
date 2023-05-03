@@ -33,6 +33,10 @@ export class ApiService {
     return this.http.post(expressURL + '/api/post/addposttouser', { user_id: user_id, post: post });
   }
 
+  public getUserFollowers(e: string) {
+    return this.http.post(expressURL+'/api/post/getFollowers', {email: e});
+  }
+
   public getUser(e: string) {
     return this.http.post<any>(expressURL+'/api/post/getUser', { email: e});
   }

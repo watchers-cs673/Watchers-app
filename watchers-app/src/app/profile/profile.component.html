@@ -5,7 +5,7 @@
   <div class="spacer">
 <div *ngIf="!showList">
   <h3>
-    <span (click)="showFollowers()">Followers: {{ followersList.length}}</span>
+    <span (click)="showFollowers()">Followers: {{ user.followerList ? user.followerList.length : 0 }}</span>
     <span (click)="showPosts()"class="spacer-line">Posts: {{comments.length}}</span>
     <span (click)="showFollowing()">Following: {{ user.followingList ? user.followingList.length : 0 }}</span>
   </h3>

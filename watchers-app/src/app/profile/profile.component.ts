@@ -29,7 +29,7 @@ export class ProfileComponent {
   //variable for the user data of the profile owner (not necessarily the current user if the user is viewing someone elses profile)
   public user: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: [], wantToWatch: []};
   public loggedInUser: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: [], wantToWatch: []};
-
+  public allUsers: any[] = [];
   ngOnInit() {
     this.comments = [];
   }
@@ -46,18 +46,28 @@ export class ProfileComponent {
     auth.user$.subscribe((data) => {
       if (data?.email && data.email) {
         this.apiService.getOrCreateUser(data.email).subscribe((data: any) => {
-          this.loggedInUser = {
-            username:data['username'],
-            email: data['email'],
-            likes: [],
-            comments: data['comments'],
-            favorites: data['favorites'] ? data['favorites'].split(',') : [],
-            followingList: data['followingList'] ? data['followingList'].split(',') : [],
-            wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(',') : []
-          }
-          if(!activatedRoute.snapshot.params["email"]) {
-            this.user=this.loggedInUser;
-          }
+          this.apiService.getAllUsers().subscribe(response => {
+            const users = Object.values(response);
+            let followers:any[] = [];
+            users.forEach(user => {
+              if(user.followingList && user.followingList.split(",").includes(data['email'])) {
+                followers.push(user.email);
+              }
+            });
+            this.loggedInUser = {
+              username:data['username'],
+              email: data['email'],
+              likes: [],
+              comments: data['comments'],
+              favorites: data['favorites'] ? data['favorites'].split(',') : [],
+              followingList: data['followingList'] ? data['followingList'].split(',') : [],
+              wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(',') : [],
+              followerList: followers
+            }
+            if(!activatedRoute.snapshot.params["email"]) {
+              this.user=this.loggedInUser;
+            }
+          })
         });
       }
       else {
@@ -68,27 +78,34 @@ export class ProfileComponent {
     });
     // if a url param exists, the user is viewing someone elses profile, so we get the data right from the db
     if(activatedRoute.snapshot.params["email"]) {
-      console.log(activatedRoute.snapshot.params)
       this.isMyProfile = false;
       this.apiService.getUser(activatedRoute.snapshot.params["email"]).subscribe(data => {
-        console.log(data)
-        this.user = {
-          username:data['username'],
-          email: data['email'],
-          likes: [],
-          favorites: data['favorites'] ? data['favorites'].split(',') : [],
-          comments: data['comments'],
-          followingList: data['followingList'] ? data['followingList'].split(',') : [],
-          wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(',') : []
-        }
-        // if user doesn't exist (ie. user manually adds the parameter or user was deleted for some reason)
-        // we should route back to the home page
-        if(!this.user) {
-          router.navigate(['/']);
-        }
+        this.apiService.getAllUsers().subscribe(response => {
+          const users = Object.values(response);
+          let followers:any[] = [];
+          users.forEach(user => {
+            if(user.followingList && user.followingList.split(",").includes(data['email'])) {
+              followers.push(user.email);
+            }
+          });
+          this.user = {
+            username:data['username'],
+            email: data['email'],
+            likes: [],
+            favorites: data['favorites'] ? data['favorites'].split(',') : [],
+            comments: data['comments'],
+            followingList: data['followingList'] ? data['followingList'].split(',') : [],
+            wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(',') : [],
+            followerList: followers
+          }
+          // if user doesn't exist (ie. user manually adds the parameter or user was deleted for some reason)
+          // we should route back to the home page
+          if(!this.user) {
+            router.navigate(['/']);
+          }
+        });
       });
     }
-
   }
 
   public followUser() {
@@ -126,7 +143,7 @@ export class ProfileComponent {
   // maps followers list to just usernames for easier viewing
   public showFollowers() {
     this.listTitle = 'Followers';
-  //  this.profileItems = this.followersList;
+    this.profileItems = this.user.followerList ? this.user.followerList : [];
     this.showList = true;
   }
   // maps posts to just main content for easier viewing
@@ -141,7 +158,7 @@ export class ProfileComponent {
     this.profileItems = this.user.followingList ? this.user.followingList : [];
     this.showList = true;
   }
-
+  // If you click on the profile of the user in your follower/following list, you can view their profile
   public goToProfile(email: string) {
     this.router.navigate(['/profile', email])
   }

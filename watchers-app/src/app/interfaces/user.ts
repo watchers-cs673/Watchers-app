@@ -4,6 +4,7 @@ export interface User {
     likes: any[];
     comments: any[];
     followingList?: string[];
+    followerList?: string[];
     favorites?: string[];
     wantToWatch?: string[];
 }
