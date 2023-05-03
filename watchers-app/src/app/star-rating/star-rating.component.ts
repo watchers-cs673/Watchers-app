@@ -27,7 +27,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
         color: #ccc;
       }
       .star.filled {
-        color: yellow;
+        color: #3c75df;;
       }
     `,
   ],
@@ -49,10 +49,12 @@ export class StarRatingComponent implements OnInit {
   }
 
   onMouseOver(index: number) {
+    console.log('mouse over')
     this.filledStars = index + 1;
   }
 
   onMouseLeave() {
+    console.log('leave')
     this.filledStars = this.rating;
   }
 

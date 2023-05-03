@@ -1,4 +1,4 @@
-<toolbar [showProfileButton]="false"></toolbar>
+<toolbar [showProfileButton]="!isMyProfile"></toolbar>
 <div class="wrapper">
 <!-- Toolbar -->
   <h1 class="header">{{user.username}}</h1>
@@ -50,10 +50,10 @@
 </div>
 </div>
 
-<div *ngIf="showList">
+<div *ngIf="showList" class="data-list">
   <button (click)="showList=false">Back</button>
   <h1>{{listTitle}}</h1>
   <ul>
-    <li *ngFor="let item of profileItems">{{item}}</li>
+    <li *ngFor="let item of profileItems" (click)="goToProfile(item)" class="list-item">{{item}}</li>
   </ul>
 </div>

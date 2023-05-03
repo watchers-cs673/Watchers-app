@@ -27,12 +27,10 @@ export class ProfileComponent {
   public isMyProfile = true;
 
   //variable for the user data of the profile owner (not necessarily the current user if the user is viewing someone elses profile)
-  public user: User = {username: '', email: '', likes: [], comments: [], followingList: ''};
-  public loggedInUser: User = {username: '', email: '', likes: [], comments: [], followingList: ''};
+  public user: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: []};
+  public loggedInUser: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: []};
 
   ngOnInit() {
-    this.followersList = this.user.followingList? this.user.followingList.split(',') : [];
-    this.followingList = this.user.followingList? this.user.followingList.split(',') : [];
     this.comments = [];
   }
 
@@ -53,6 +51,7 @@ export class ProfileComponent {
             email: data['email'],
             likes: [],
             comments: data['comments'],
+            favorites: data['favorites'] ? data['favorites'].split(',') : [],
             followingList: data['followingList'] ? data['followingList'].split(',') : []
           }
           if(!activatedRoute.snapshot.params["email"]) {
@@ -76,6 +75,7 @@ export class ProfileComponent {
           username:data['username'],
           email: data['email'],
           likes: [],
+          favorites: data['favorites'] ? data['favorites'].split(',') : [],
           comments: data['comments'],
           followingList: data['followingList'] ? data['followingList'].split(',') : []
         }
@@ -92,28 +92,30 @@ export class ProfileComponent {
   public followUser() {
     // only follow use if it is not user's profile (you can't follow yourself)
     if(this.user.email !== this.loggedInUser.email) {
-      let currentFollowing = this.loggedInUser.followingList ? this.loggedInUser.followingList  : '';
+      let currentFollowing = this.loggedInUser.followingList ? this.loggedInUser.followingList  : [];
       // if they are already following this user, remove them
       if(currentFollowing && currentFollowing.indexOf(this.user.email)!==-1) {
-        if(currentFollowing.indexOf(","+this.user.email)!==-1) {
-          currentFollowing = currentFollowing.replace(","+this.user.email, "");
-        }
-        else if(currentFollowing.indexOf(this.user.email+",")!==-1){
-          currentFollowing = currentFollowing.replace(this.user.email+",", "");
-        }
-        else {
-          currentFollowing = "";
-        }
+        currentFollowing = currentFollowing.filter(c => c !== this.user.email)
+
       }
       // if they are not following this user, and they already have following users, append to following list
       else if (currentFollowing && currentFollowing.length >0) {
-        currentFollowing = currentFollowing + ","+this.user.email;
+        currentFollowing.push(this.user.email);
       }
       // if they have no following list, create the following list
       else {
-        currentFollowing = this.user.email;
+        currentFollowing = [this.user.email];
       }
-      this.apiService.addFollowing(this.loggedInUser.email, currentFollowing).subscribe(user => {
+      let str = '';
+      for(let i=0; i<currentFollowing.length; i++) {
+        if(i==0) {
+          str = str+currentFollowing[i];
+        }
+        else {
+          str = str + ","+ currentFollowing[i]
+        }
+      }
+      this.apiService.addFollowing(this.loggedInUser.email, str).subscribe(user => {
         this.isFollowing = !this.isFollowing;
       });
     }
@@ -134,15 +136,11 @@ export class ProfileComponent {
   // maps followers to just username for easier viewing
   public showFollowing() {
     this.listTitle = 'Following';
-    let list = this.user.followingList;
-    if(list) {
-      if(list.length>0 && list.indexOf(',')!=-1) {
-        this.profileItems = list.split(',');
-      }
-      else {
-        this.profileItems = [list]
-      }
-    }
+    this.profileItems = this.user.followingList ? this.user.followingList : [];
     this.showList = true;
+  }
+
+  public goToProfile(email: string) {
+    this.router.navigate(['/profile', email])
   }
 }
