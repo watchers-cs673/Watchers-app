@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StarRatingComponent } from './star-rating.component';
 import { By } from '@angular/platform-browser';
 

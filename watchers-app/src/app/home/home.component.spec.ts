@@ -6,13 +6,10 @@ import { AuthService, Auth0ClientService } from '@auth0/auth0-angular';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { LoginComponent } from '../login/login.component';
-import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let authService: AuthService;
-  let movieService: MovieService;
 
   beforeEach( () => {
     TestBed.configureTestingModule({
