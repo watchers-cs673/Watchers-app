@@ -10,7 +10,7 @@
     <span (click)="showFollowing()">Following: {{ user.followingList ? user.followingList.length : 0 }}</span>
   </h3>
   <div *ngIf="!isMyProfile && loggedInUser.email!=user.email" class="container-btn">
-    <button class="follow-btn" (click)="followUser()" [ngClass]="{'following': isFollowing}">
+    <button class="follow-btn" (click)="followUser()" [ngClass]="{'following': loggedInUser.followingList && loggedInUser.followingList.indexOf(user.email)==-1}">
       <span>{{loggedInUser.followingList && loggedInUser.followingList.indexOf(user.email)==-1 ? 'Follow' : 'Unfollow'}}</span>
     </button>
   </div>
@@ -34,11 +34,17 @@
     <tr>
         <th class="table-title">My Reviews</th>
     </tr>
-    <tr>
+    <tr  class="tbl-header">
       <th>Topic</th>
       <th>Content</th> 
       <th>Likes</th>
       <th>Date</th>
+    </tr>
+        <tr *ngFor="let post of posts">
+          <th (click)="goToMoviePage(post)" scope="row" class="movie-col">{{post.split(': ')[0]}}</th>
+          <td>{{post.split(': ')[1].split(' - ')[0]}}</td>
+          <td>0</td>
+          <td>{{post.split(': ')[1].split(' - ')[1]}}</td>
     </tr>
   </table>
 </div>

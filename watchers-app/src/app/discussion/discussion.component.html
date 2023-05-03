@@ -57,7 +57,7 @@
         </p>
         </ng-container>
         <ng-container *ngIf="selectedTab === 'new'">
-          <div class="comment" *ngFor="let comment of sortByDate()">
+          <div class="comment" *ngFor="let comment of sortByDate(movie.name)">
             <div class="comment-left">{{ comment.topic }}: {{ comment.content}}</div>  
             <div class="comment-right">{{ getFriendlyDate(comment.date) }}     |     {{ comment.author }}</div>
             <div class="likes">
@@ -67,7 +67,7 @@
           </div>
         </ng-container>
         <ng-container *ngIf="selectedTab === 'hot'">
-            <div class="comment" *ngFor="let comment of sortByLikes()">
+            <div class="comment" *ngFor="let comment of sortByLikes(movie.name)">
                 <div class="comment-left">{{ comment.topic }}: {{ comment.content}}</div>  
                 <div class="comment-right">{{ getFriendlyDate(comment.date) }}     |     {{ comment.author }}</div>
                 <div class="likes">

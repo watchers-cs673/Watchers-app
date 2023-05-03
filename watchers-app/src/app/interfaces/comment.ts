@@ -4,4 +4,5 @@ export interface Comment {
     author: string;
     date: Date;
     likes: number;
+    movie?: string;
   }

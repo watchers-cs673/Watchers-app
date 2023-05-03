@@ -29,7 +29,7 @@ export class DiscussionComponent {
   public thisUser: any;
   //movie data as an observable
   public movie$: Observable<Movie | undefined>;
-
+  public posts: any[] = [];
   constructor(
     private route: ActivatedRoute, 
     private movieService: MovieService, 
@@ -45,6 +45,25 @@ export class DiscussionComponent {
         apiService.getUser(data.email).subscribe(user => {
           this.thisUser = user;
         });
+        this.apiService.getAllUsers().subscribe(response => {
+          const users = Object.values(response);
+          users.forEach(user => {
+            this.apiService.getUserComments(user['userId']).subscribe(posts => {
+              let userPosts = Object.values(posts)[0].filter((post:any) => post.referencedMovieId && post.referencedMovieId!=="" && post.postBody);
+              console.log(userPosts)
+              userPosts.forEach((post:any)=> {
+                let postTitle = '';
+                let postBody = ''
+                if(post.postBody.indexOf("~")!=0) {
+                  postTitle = post.postBody.split("~")[0];
+                  postBody = post.postBody.split("~")[1];
+                }
+                console.log(post.postBody)
+                this.comments.push({author: user.username, topic: postTitle, content: postBody, date: post.postTime, likes: 0, movie: post.referencedMovieId});
+              });
+            });
+          });
+        });
       }
     });
   }
@@ -55,13 +74,20 @@ export class DiscussionComponent {
   }
 
   // sort comments based on number of likes for 'Hot' tab
-  public sortByLikes() {
+  public sortByLikes(movieName:string) {
+    if(movieName!=='') {
+      this.comments = this.comments.filter(c => c.movie==movieName);
+    }
     const sorted = [...this.comments].sort((a, b) => b.likes-a.likes);
     return sorted;
   }
 
   // sort comments based on when they were written for 'New' tab
-  public sortByDate() {
+  public sortByDate(movieName:string) {
+    console.log('here')
+    if(movieName!=='') {
+      this.comments = this.comments.filter(c => c.movie==movieName);
+    }
     const sorted = [...this.comments].sort(function(a, b){
       if(new Date(a.date) > new Date(b.date)) {
         return -1;
@@ -74,8 +100,14 @@ export class DiscussionComponent {
   }
 
   // get a shorter string for the date
-  public getFriendlyDate(date: Date) {
-    return date.getMonth().toString() + '/' + date.getDay().toString() + '/' + date.getFullYear().toString()
+  public getFriendlyDate(date: any) {
+    try {
+      let newdate = new Date(date);
+      return newdate.getMonth().toString() + '/' + newdate.getDay().toString() + '/' + newdate.getFullYear().toString()
+    } catch {
+      let newdate = new Date(date);
+      return newdate.getMonth().toString() + '/' + newdate.getDay().toString() + '/' + newdate.getFullYear().toString()
+    }
   }
 
   // create a new comment
@@ -86,37 +118,30 @@ export class DiscussionComponent {
       content: comment,
       topic: topic,
       date: new Date(),
-      likes: 0
+      likes: 0,
+      movie: movie
     };
 
     let postMessage = newComment.topic +"~"+newComment.content;
+     // add the new comment to the list of comments
+     this.comments.push(newComment);
+     console.log(this.comments)
     this.apiService.addPostToUser(this.thisUser.userId, postMessage, movie).subscribe(response => {
       if(response) {
-          // add the new comment to the list of comments
-        this.comments.push(newComment);
+        console.log(response)
+        this.selectedTab = "new";
       }
     });
 
-    // view newly added comment
-    this.selectedTab = "new"
   }
 
   // add to comment likes when someone likes a comment
   public likeComment(comment: Comment) {
-    // gets index of comment in list to replace the value
+    // NOT SAVING TO DATABASE YET
     const commentIndex = this.comments.indexOf(comment);
-
-    // creates new Comment object with one additional like
-    const newComment: Comment = {
-      author: comment.author,
-      content: comment.content,
-      topic: comment.topic,
-      date: comment.date,
-      likes: comment.likes + 1
-    };
-
     // replaces old comment in additional array
-    this.comments[commentIndex] = newComment;
+    this.comments[commentIndex].likes +=1;
+    console.log(this.comments)
   }
 
   public addToFavorites(movie: string) {

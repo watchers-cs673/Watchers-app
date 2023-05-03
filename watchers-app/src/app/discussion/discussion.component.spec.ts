@@ -57,7 +57,7 @@ describe('DiscussionComponent', () => {
       { author: 'Bob', content: 'Not my cup of tea', topic: 'Summary', date: new Date('2023-05-03'), likes: 1 },
     ];
     component.comments = comments;
-    const sorted = component.sortByLikes();
+    const sorted = component.sortByLikes('');
     expect(sorted).toEqual([
       { author: 'John', content: 'Great movie!', topic: 'Summary', date: new Date('2023-05-01'), likes: 5 },
       { author: 'Alice', content: 'I agree', topic: 'Summary', date: new Date('2023-05-02'), likes: 3 },
@@ -72,7 +72,7 @@ describe('DiscussionComponent', () => {
       { author: 'Bob', content: 'Not my cup of tea', topic: 'Summary', date: new Date('2023-05-03'), likes: 1 },
     ];
     component.comments = comments;
-    const sorted = component.sortByDate();
+    const sorted = component.sortByDate('');
     expect(sorted).toEqual([
       { author: 'Bob', content: 'Not my cup of tea', topic: 'Summary', date: new Date('2023-05-03'), likes: 1 },
       { author: 'Alice', content: 'I agree', topic: 'Summary', date: new Date('2023-05-02'), likes: 3 },

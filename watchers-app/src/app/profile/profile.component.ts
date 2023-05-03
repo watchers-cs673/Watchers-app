@@ -13,8 +13,6 @@ import { Movie } from '../interfaces/movie'
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  // variable to store if the current user is following the owner of the profile
-  public isFollowing = false;
   public comments: Comment[] = [];
   // shows or hides lists of followers or comments
   // profileItems stores the string value of the list we are viewing (comment titles, follower usernames, or following usernames)
@@ -143,7 +141,6 @@ export class ProfileComponent {
       // if they are already following this user, remove them
       if(currentFollowing && currentFollowing.indexOf(this.user.email)!==-1) {
         currentFollowing = currentFollowing.filter(c => c !== this.user.email)
-
       }
       // if they are not following this user, and they already have following users, append to following list
       else if (currentFollowing && currentFollowing.length >0) {
@@ -164,14 +161,17 @@ export class ProfileComponent {
       }
       // call the api with the newly created list 
       this.apiService.addFollowing(this.loggedInUser.email, str).subscribe(user => {
-        this.isFollowing = !this.isFollowing;
-        if(this.isFollowing) {
+        if(this.loggedInUser.followingList && this.loggedInUser.followingList.indexOf(this.user.email)==-1 ) {
           this.user.followerList?.push(this.loggedInUser.email);
+          this.loggedInUser.followingList.push(this.user.email);
         }
         else {
           this.user.followerList = this.user.followerList?.filter(follower => {
             follower !== this.loggedInUser.email;
-          })
+          });
+          this.loggedInUser.followingList = this.loggedInUser.followingList?.filter(item => {
+            item !== this.user.email;
+          });
         }
       });
     }
@@ -197,7 +197,7 @@ export class ProfileComponent {
   }
   // If you click on the profile of the user in your follower/following list, you can view their profile
   public goToProfile(item: string) {
-    if(this.listTitle = 'Posts') {
+    if(this.listTitle == 'Posts') {
       this.router.navigate(['/discussion', item.split(":")[0]]);
     }
     else {
@@ -205,5 +205,9 @@ export class ProfileComponent {
         window.location.reload();
       });
     }
+  }
+
+  public goToMoviePage(item: string) {
+    this.router.navigate(['/discussion', item.split(":")[0]]);
   }
 }
