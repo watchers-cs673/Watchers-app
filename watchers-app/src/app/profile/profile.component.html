@@ -15,7 +15,7 @@
     </button>
   </div>
   <div *ngIf="user.favorites && user.favorites.length > 0"class="top-five-list">
-    <h2>My Favorites</h2>
+    <h2 class="favoriteBox">My Favorites</h2>
     <ul *ngFor="let favoriteMovie of user.favorites">
         <li>
           <a class='movieLink' [routerLink]="['/discussion', {name: favoriteMovie}]">{{favoriteMovie}}</a>
@@ -23,7 +23,7 @@
     </ul>
   </div>
   <div *ngIf="user.wantToWatch && user.wantToWatch.length > 0"class="top-five-list">
-    <h2>Want to Watch</h2>
+    <h2 class="favoriteBox">Want to Watch</h2>
     <ul *ngFor="let WantToWatchMovie of user.wantToWatch">
         <li>
           <a class='movieLink' [routerLink]="['/discussion', {name: WantToWatchMovie}]">{{WantToWatchMovie}}</a>

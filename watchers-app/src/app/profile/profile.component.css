@@ -61,6 +61,10 @@
     margin-right: 80px;
   }
 
+  .favoriteBox {
+    color:  #3c75df;
+  }
+
   .top-five-list {
     width: 42.5%;
     float: left;
