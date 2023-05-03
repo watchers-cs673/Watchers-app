@@ -147,7 +147,7 @@
   .image img:hover {
     transform: scale(1.1);
     transition: 0.5s;
-    box-shadow: 0 0 18px rgb(237, 237, 237)
+    box-shadow: 0 0 18px rgb(237, 237, 237);
     cursor: pointer;
   }
 
