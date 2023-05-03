@@ -85,7 +85,6 @@ export class ProfileComponent {
                   let time = post.postTime.indexOf('T') ? post.postTime.split('T')[0] : post.postTime;
                   return post.referencedMovieId+": "+post.postBody+" - "+time;
                 });
-                console.log(this.posts)
               });
             }
           })
@@ -122,8 +121,10 @@ export class ProfileComponent {
             followerList: followers
           }
           this.apiService.getUserComments(data['userId']).subscribe(posts => {
-            this.posts = Object.values(response);
-            console.log(this.posts);
+            this.posts = Object.values(posts)[0].filter((post:any) => post.referencedMovieId && post.referencedMovieId!=='').map((post: any) => {
+              let time = post.postTime.indexOf('T') ? post.postTime.split('T')[0] : post.postTime;
+              return post.referencedMovieId+": "+post.postBody+" - "+time;
+            });
           });
           // if user doesn't exist (ie. user manually adds the parameter or user was deleted for some reason)
           // we should route back to the home page
