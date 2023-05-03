@@ -53,4 +53,8 @@ export class ApiService {
     return this.http.post(expressURL+'/api/post/addWantToWatch', {email: e, wantToWatch: w});
   }
 
+  public getUserComments(user_id: string) {
+    return this.http.get(expressURL+'/api/get/getusercomments'+'?userid='+user_id);
+  }
+
 }
