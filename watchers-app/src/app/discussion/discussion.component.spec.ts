@@ -80,12 +80,6 @@ describe('DiscussionComponent', () => {
     ]);
   });
 
-  // it('should return a friendly date string', () => {
-  //   const date = new Date('2023-05-01');
-  //   const result = component.getFriendlyDate(date);
-  //   expect(result).toEqual('5/1/2023');
-  // });
-
   it('should like a comment', () => {
     const comment = {
       author: 'Jane Doe',
@@ -98,10 +92,5 @@ describe('DiscussionComponent', () => {
     component.likeComment(comment);
     expect(component.comments[0].likes).toBe(1);
   });
-  
-  // it('should add a comment', () => {
-  //   component.addComment('topic', 'comment');
-  //   expect(component.comments.length).toBe(1);
-  //   expect(component.selectedTab).toBe('new');
-  // });
+
 });

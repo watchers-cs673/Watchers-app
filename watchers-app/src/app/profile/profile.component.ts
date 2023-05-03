@@ -40,10 +40,13 @@ export class ProfileComponent {
     public router: Router, 
     public movieService: MovieService,
     public apiService: ApiService) {
-    
-          // if no url param exists, the user is viewing their own profile, so we get teh data from auth0 and then call the db
+    this.getUserData();
+  }
+
+  public getUserData() {
+        // if no url param exists, the user is viewing their own profile, so we get teh data from auth0 and then call the db
     // If user has an Auth0 account, try and get their data from the database
-    auth.user$.subscribe((data) => {
+    this.auth.user$.subscribe((data) => {
       if (data?.email && data.email) {
         this.apiService.getOrCreateUser(data.email).subscribe((data: any) => {
           this.apiService.getAllUsers().subscribe(response => {
@@ -64,7 +67,7 @@ export class ProfileComponent {
               wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(',') : [],
               followerList: followers
             }
-            if(!activatedRoute.snapshot.params["email"]) {
+            if(!this.activatedRoute.snapshot.params["email"]) {
               this.user=this.loggedInUser;
             }
           })
@@ -73,13 +76,13 @@ export class ProfileComponent {
       else {
         // if no user is logged in or specific in the params, we should route back to the homepage
         // this scenario would only happen if the user appends '/profile' manually to the url
-        router.navigate(['/']);
+        this.router.navigate(['/']);
       }
     });
     // if a url param exists, the user is viewing someone elses profile, so we get the data right from the db
-    if(activatedRoute.snapshot.params["email"]) {
+    if(this.activatedRoute.snapshot.params["email"]) {
       this.isMyProfile = false;
-      this.apiService.getUser(activatedRoute.snapshot.params["email"]).subscribe(data => {
+      this.apiService.getUser(this.activatedRoute.snapshot.params["email"]).subscribe(data => {
         this.apiService.getAllUsers().subscribe(response => {
           const users = Object.values(response);
           let followers:any[] = [];
@@ -101,7 +104,7 @@ export class ProfileComponent {
           // if user doesn't exist (ie. user manually adds the parameter or user was deleted for some reason)
           // we should route back to the home page
           if(!this.user) {
-            router.navigate(['/']);
+            this.router.navigate(['/']);
           }
         });
       });
@@ -136,6 +139,14 @@ export class ProfileComponent {
       }
       this.apiService.addFollowing(this.loggedInUser.email, str).subscribe(user => {
         this.isFollowing = !this.isFollowing;
+        if(this.isFollowing) {
+          this.user.followerList?.push(this.loggedInUser.email);
+        }
+        else {
+          this.user.followerList = this.user.followerList?.filter(follower => {
+            follower !== this.loggedInUser.email;
+          })
+        }
       });
     }
   }
@@ -160,6 +171,9 @@ export class ProfileComponent {
   }
   // If you click on the profile of the user in your follower/following list, you can view their profile
   public goToProfile(email: string) {
-    this.router.navigate(['/profile', email])
+    console.log('go to profile')
+    this.router.navigate(['/profile', email]).then(() => {
+      window.location.reload();
+    });
   }
 }

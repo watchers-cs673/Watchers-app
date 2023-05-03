@@ -5,7 +5,6 @@ import { DiscussionComponent } from './discussion/discussion.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchComponent } from './search/search.component';
-// import { ProfileComponent } from './profile/profile.component';
 
 
 const routes: Routes = [

@@ -16,8 +16,9 @@ This means the database is running and you're good to go.
 
 Run the following from the 'watchers-app' directory 
 1. npm install
-2. npm run build
-3. ng serve -o
+2. ng serve -o
+
+** If it doesn't work, you may need to run 'npm run build', but this doesn't need to be run every time **
 
 This will open a localhost window in your browser that is running the app. 
 It is automatically attached to the database.
