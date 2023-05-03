@@ -8,8 +8,6 @@ The database utilizes SQLite, a lightweight implementation of SQL that is standa
 
 ## User profile data concept
 
-MongoDB is chosen as a NoSQL database. Using the JSON model of data access, it is easy to program with and use while remaining performant at scale.
-
 The user data contains the following components:
 
 - user unique ID
@@ -35,7 +33,7 @@ The user posts data are in another collection differentiated using the unique ID
       - comment likes:
       - user account likes (unique ID list)
 
-The full layout of the user data can be seen in the schematic file, [schema.prisma](../../prisma/schema.prisma).
+The full layout of the user data can be seen in the schematic file, [schema.prisma](watchers-app/prisma/schema.prisma).
 
 ## Valid new user creation requirements
 
