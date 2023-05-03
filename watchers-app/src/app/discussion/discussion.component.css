@@ -65,6 +65,7 @@
     align-items: center;
     height: 800px;
     background-color: rgb(18, 18, 18);
+    margin-bottom: -10px;
   }
 
   .card-container {
@@ -189,6 +190,10 @@
   button {
     border: 0;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .tabs {
+    margin-bottom: 10px;
   }
 
   .tab {

@@ -65,12 +65,12 @@
     width: 42.5%;
     float: left;
     text-align: center;
-    border-bottom: 1px solid rgb(237, 237, 237);
-    border-top: 1px solid rgb(237, 237, 237);
     height: 300px;
     margin-left: 5%;
     margin-bottom: 50px;
     margin-top: 50px;
+    overflow: scroll;
+    background-color: rgb(23, 23, 23);
   }
 
   .right-border {
@@ -125,7 +125,7 @@
 
   .list-item:hover {
     cursor: pointer;
-    background-color: #1a1a1a;
+    background-color: rgb(23, 23, 23);
   }
 
   .list-item {
