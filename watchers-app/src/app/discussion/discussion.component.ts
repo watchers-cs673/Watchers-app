@@ -113,26 +113,27 @@ export class DiscussionComponent {
   // create a new comment
   public addComment(topic: string, comment: string, movie: string) {
     // create comment object to save. User is anonymous by default unless logged in
-    const newComment: Comment = {
-      author: this.thisUser.email,
-      content: comment,
-      topic: topic,
-      date: new Date(),
-      likes: 0,
-      movie: movie
-    };
+    if(topic.length<100 && comment.length<200) {
+      const newComment: Comment = {
+        author: this.thisUser.email,
+        content: comment,
+        topic: topic,
+        date: new Date(),
+        likes: 0,
+        movie: movie
+      };
 
-    let postMessage = newComment.topic +"~"+newComment.content;
-     // add the new comment to the list of comments
-     this.comments.push(newComment);
-     console.log(this.comments)
-    this.apiService.addPostToUser(this.thisUser.userId, postMessage, movie).subscribe(response => {
-      if(response) {
-        console.log(response)
-        this.selectedTab = "new";
-      }
-    });
-
+      let postMessage = newComment.topic +"~"+newComment.content;
+      // add the new comment to the list of comments
+      this.comments.push(newComment);
+      console.log(this.comments)
+      this.apiService.addPostToUser(this.thisUser.userId, postMessage, movie).subscribe(response => {
+        if(response) {
+          console.log(response)
+          this.selectedTab = "new";
+        }
+      });
+    }
   }
 
   // add to comment likes when someone likes a comment
