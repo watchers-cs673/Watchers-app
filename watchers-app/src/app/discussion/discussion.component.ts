@@ -163,8 +163,10 @@ export class DiscussionComponent {
       else {
         newWantToWatch = movie;
       }
+      console.log(newWantToWatch);
 
       this.apiService.addWantToWatch(this.thisUser.email, newWantToWatch).subscribe(user => {
+        console.log(user)
         this.thisUser = user;
       });
     }

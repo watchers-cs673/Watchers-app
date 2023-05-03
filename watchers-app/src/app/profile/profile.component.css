@@ -62,8 +62,19 @@
   }
 
   .top-five-list {
-    width: 90%;
-    margin: auto;
+    width: 42.5%;
+    float: left;
+    text-align: center;
+    border-bottom: 1px solid rgb(237, 237, 237);
+    border-top: 1px solid rgb(237, 237, 237);
+    height: 300px;
+    margin-left: 5%;
+    margin-bottom: 50px;
+    margin-top: 50px;
+  }
+
+  .right-border {
+    border-right: 1px solid rgb(237, 237, 237);
   }
 
   ul {
@@ -121,5 +132,6 @@
     margin-bottom: 10px;
   }
   .data-list {
+    text-align: center;
     padding: 10px;
   }

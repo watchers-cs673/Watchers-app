@@ -207,13 +207,6 @@
     color: rgb(237, 237, 237)
   }
 
-
-
-  .active {
-    font-size: 30px;
-    color:  #3c75df;
-  }
-
   .container {
     border-top: 2px solid #3c75df;
   }
@@ -242,24 +235,26 @@
   }
 
     /* Style for the "Want to Watch" button */
-#want-to-watch-button {
+  .watch-button {
   border: none;
   cursor: pointer;
   font-size: 16px;
   padding: 10px 20px;
-  background-color: rgb(237, 237, 237);
+  background-color: transparent;
   color: #3c75df;
+  border: 1px solid #3c75df;
   border-radius: 5px;
   margin-bottom: 20px;
   margin-top: 20px;
 }
-
-#want-to-watch-button:hover {
+.active {
+  border: none;
   background-color: #3c75df;
   color: rgb(237, 237, 237);
 }
 
-#want-to-watch-button:active {
+.watch-button:active {
+  border: none;
   background-color: #3c75df;
   color: rgb(237, 237, 237);
 }

@@ -27,8 +27,8 @@ export class ProfileComponent {
   public isMyProfile = true;
 
   //variable for the user data of the profile owner (not necessarily the current user if the user is viewing someone elses profile)
-  public user: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: []};
-  public loggedInUser: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: []};
+  public user: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: [], wantToWatch: []};
+  public loggedInUser: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: [], wantToWatch: []};
 
   ngOnInit() {
     this.comments = [];
@@ -52,7 +52,8 @@ export class ProfileComponent {
             likes: [],
             comments: data['comments'],
             favorites: data['favorites'] ? data['favorites'].split(',') : [],
-            followingList: data['followingList'] ? data['followingList'].split(',') : []
+            followingList: data['followingList'] ? data['followingList'].split(',') : [],
+            wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(',') : []
           }
           if(!activatedRoute.snapshot.params["email"]) {
             this.user=this.loggedInUser;
@@ -77,7 +78,8 @@ export class ProfileComponent {
           likes: [],
           favorites: data['favorites'] ? data['favorites'].split(',') : [],
           comments: data['comments'],
-          followingList: data['followingList'] ? data['followingList'].split(',') : []
+          followingList: data['followingList'] ? data['followingList'].split(',') : [],
+          wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(',') : []
         }
         // if user doesn't exist (ie. user manually adds the parameter or user was deleted for some reason)
         // we should route back to the home page
