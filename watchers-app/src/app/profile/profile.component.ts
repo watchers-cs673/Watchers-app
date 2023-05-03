@@ -32,6 +32,8 @@ export class ProfileComponent {
   // we store all Users because the profile owner's followers are obtained by checking the 'followingList' of all the application users
   public allUsers: any[] = [];
 
+  public posts: any[] = [];
+
   public ngOnInit() {
     this.comments = [];
   }
@@ -78,6 +80,13 @@ export class ProfileComponent {
             // if there is no profile route, then the user is viewing their own profile, and we set the user as the logged in user
             if(!this.activatedRoute.snapshot.params["email"]) {
               this.user=this.loggedInUser;
+              this.apiService.getUserComments(data['userId']).subscribe(posts => {
+                this.posts = Object.values(posts)[0].filter((post:any) => post.referencedMovieId && post.referencedMovieId!=='').map((post: any) => {
+                  let time = post.postTime.indexOf('T') ? post.postTime.split('T')[0] : post.postTime;
+                  return post.referencedMovieId+": "+post.postBody+" - "+time;
+                });
+                console.log(this.posts)
+              });
             }
           })
         });
@@ -112,6 +121,10 @@ export class ProfileComponent {
             wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(',') : [],
             followerList: followers
           }
+          this.apiService.getUserComments(data['userId']).subscribe(posts => {
+            this.posts = Object.values(response);
+            console.log(this.posts);
+          });
           // if user doesn't exist (ie. user manually adds the parameter or user was deleted for some reason)
           // we should route back to the home page
           if(!this.user) {
@@ -172,7 +185,7 @@ export class ProfileComponent {
   // maps posts to just main content for easier viewing
   public showPosts() {
     this.listTitle = 'Posts';
-  //  we haven't finished the comment section yet
+    this.profileItems = this.posts;
     this.showList = true;
   }
   // maps followers to just username for easier viewing
@@ -182,9 +195,14 @@ export class ProfileComponent {
     this.showList = true;
   }
   // If you click on the profile of the user in your follower/following list, you can view their profile
-  public goToProfile(email: string) {
-    this.router.navigate(['/profile', email]).then(() => {
-      window.location.reload();
-    });
+  public goToProfile(item: string) {
+    if(this.listTitle = 'Posts') {
+      this.router.navigate(['/discussion', item.split(":")[0]]);
+    }
+    else {
+      this.router.navigate(['/profile', item]).then(() => {
+        window.location.reload();
+      });
+    }
   }
 }

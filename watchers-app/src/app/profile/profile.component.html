@@ -6,7 +6,7 @@
 <div *ngIf="!showList">
   <h3>
     <span (click)="showFollowers()">Followers: {{ user.followerList ? user.followerList.length : 0 }}</span>
-    <span (click)="showPosts()"class="spacer-line">Posts: {{comments.length}}</span>
+    <span (click)="showPosts()"class="spacer-line">Posts: {{posts.length}}</span>
     <span (click)="showFollowing()">Following: {{ user.followingList ? user.followingList.length : 0 }}</span>
   </h3>
   <div *ngIf="!isMyProfile && loggedInUser.email!=user.email" class="container-btn">
@@ -40,12 +40,6 @@
       <th>Likes</th>
       <th>Date</th>
     </tr>
-    <!-- <tr *ngFor="let comment of user.comments">
-      <td>{{comment.topic}}</td>
-      <td>{{comment.content}}}</td>
-      <td>{{comment.likes}}}</td>
-      <td>{{comment.date}}}</td>
-    </tr> -->
   </table>
 </div>
 </div>

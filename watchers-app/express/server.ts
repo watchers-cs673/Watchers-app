@@ -123,7 +123,7 @@ app.post('/api/post/getUser',async(req,res)=>{
 
 app.post('/api/post/findPostsFromUser',async(req,res)=>{
   try {
-    let e = req.body['email'];
+    let e = req.body['userid'];
     const user = await prisma.user.findUnique({
         where: {
           userId: e,

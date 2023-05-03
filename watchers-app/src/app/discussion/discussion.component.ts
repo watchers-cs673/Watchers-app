@@ -95,7 +95,7 @@ export class DiscussionComponent {
           // add the new comment to the list of comments
         this.comments.push(newComment);
       }
-    })
+    });
 
     // view newly added comment
     this.selectedTab = "new"

@@ -42,7 +42,7 @@ export class ApiService {
   }
 
   public getUserComments(user_id: string) {
-    return this.http.get(expressURL+'/api/get/getusercomments'+'?userid='+user_id);
+    return this.http.post(expressURL+'/api/post/findPostsFromUser',{userid: user_id});
   }
 
 }
