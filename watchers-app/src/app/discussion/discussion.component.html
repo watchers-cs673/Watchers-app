@@ -78,7 +78,7 @@
         </ng-container>
         <ng-container *ngIf="selectedTab === 'createNew'">
           <h2>Add a comment</h2>
-          <form (ngSubmit)="addComment(topic.value, comment.value)">
+          <form (ngSubmit)="addComment(topic.value, comment.value, movie.name)">
             <label for="topic">Topic:</label>
             <input type="text" id="topic" name="topic" #topic required>
             <label for="comment">Comment:</label>

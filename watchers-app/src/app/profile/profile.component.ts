@@ -183,7 +183,6 @@ export class ProfileComponent {
   }
   // If you click on the profile of the user in your follower/following list, you can view their profile
   public goToProfile(email: string) {
-    console.log('go to profile')
     this.router.navigate(['/profile', email]).then(() => {
       window.location.reload();
     });

@@ -121,6 +121,28 @@ app.post('/api/post/getUser',async(req,res)=>{
   }
 });
 
+app.post('/api/post/findPostsFromUser',async(req,res)=>{
+  try {
+    let e = req.body['email'];
+    const user = await prisma.user.findUnique({
+        where: {
+          userId: e,
+        },
+        select: {
+          posts: true,
+        },
+    })
+    if(user) {
+      res.status(200).send(user);
+    }
+    else {
+      res.status(404).send('Not found');
+    }} catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Could not retrieve user' });
+  }
+});
+
 app.post('/api/post/addFavorites',async(req,res)=>{
   try {
     let e = req.body['email'];
@@ -172,6 +194,29 @@ app.post('/api/post/addUserFollowing', async(req, res) => {
   } else {
     res.send(user);
   }
+});
+
+app.post('/api/post/addposttouser', async(req, res) => {
+  try {
+    const id = req.body['userId'];
+    const post = req.body['post'];
+    const movie = req.body['movie'];
+    const result = await prisma.post.create({
+      data: {
+        postBody: post,
+        referencedMovieId: movie,
+        rating: 5,
+        author: {
+          connect: { userId: id },
+        },
+      },
+    });
+    res.status(200).send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Could not add post to user');
+  }
+  
 });
 
 app.listen(express_port, () => {

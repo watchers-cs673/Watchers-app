@@ -33,7 +33,6 @@ export class MovieService {
                     }
                     return false;
                 });
-                console.log(moviesOfGenre)
                 let randomNum = Math.floor(Math.random() * moviesOfGenre.length);
                 let randomMovie = moviesOfGenre[randomNum];
                 genres.push({src: randomMovie.imgPath, title: name, link:'/discussion'});

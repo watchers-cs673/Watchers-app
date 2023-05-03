@@ -21,6 +21,10 @@ export class ApiService {
     return this.http.post<any>(expressURL+'/api/post/getUser', { email: e});
   }
 
+  public addPostToUser(userId: string, post: any, movie: string) {
+    return this.http.post(expressURL + '/api/post/addposttouser', { userId: userId, post: post, movie: movie });
+  }
+
   public getAllUsers(){
     return this.http.get(expressURL+'/api/get/getAllUsers')
   }

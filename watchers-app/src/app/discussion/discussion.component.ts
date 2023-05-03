@@ -79,7 +79,7 @@ export class DiscussionComponent {
   }
 
   // create a new comment
-  public addComment(topic: string, comment: string) {
+  public addComment(topic: string, comment: string, movie: string) {
     // create comment object to save. User is anonymous by default unless logged in
     const newComment: Comment = {
       author: this.thisUser.email,
@@ -89,8 +89,13 @@ export class DiscussionComponent {
       likes: 0
     };
 
-    // add the new comment to the list of comments
-    this.comments.push(newComment);
+    let postMessage = newComment.topic +"~"+newComment.content;
+    this.apiService.addPostToUser(this.thisUser.userId, postMessage, movie).subscribe(response => {
+      if(response) {
+          // add the new comment to the list of comments
+        this.comments.push(newComment);
+      }
+    })
 
     // view newly added comment
     this.selectedTab = "new"
@@ -163,10 +168,8 @@ export class DiscussionComponent {
       else {
         newWantToWatch = movie;
       }
-      console.log(newWantToWatch);
 
       this.apiService.addWantToWatch(this.thisUser.email, newWantToWatch).subscribe(user => {
-        console.log(user)
         this.thisUser = user;
       });
     }

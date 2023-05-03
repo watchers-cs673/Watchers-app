@@ -49,12 +49,10 @@ export class StarRatingComponent implements OnInit {
   }
 
   onMouseOver(index: number) {
-    console.log('mouse over')
     this.filledStars = index + 1;
   }
 
   onMouseLeave() {
-    console.log('leave')
     this.filledStars = this.rating;
   }
 
