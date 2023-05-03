@@ -15,22 +15,24 @@ import { Movie } from '../interfaces/movie'
 export class ProfileComponent {
   // variable to store if the current user is following the owner of the profile
   public isFollowing = false;
-  // stores follower, following, and comments list for easier access
-  public followersList: string[] = [];
-  public followingList: string[] = [];
   public comments: Comment[] = [];
   // shows or hides lists of followers or comments
   // profileItems stores the string value of the list we are viewing (comment titles, follower usernames, or following usernames)
   public showList = false;
   public listTitle = '';
   public profileItems: string[] = [];
+
+  // variable to store if this is the user's profile so that we can hide certain components (ie. the Follow button)
+  // since we don't want the user to follow themselves
   public isMyProfile = true;
 
   //variable for the user data of the profile owner (not necessarily the current user if the user is viewing someone elses profile)
   public user: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: [], wantToWatch: []};
   public loggedInUser: User = {username: '', email: '', likes: [], comments: [], favorites: [], followingList: [], wantToWatch: []};
+  // we store all Users because the profile owner's followers are obtained by checking the 'followingList' of all the application users
   public allUsers: any[] = [];
-  ngOnInit() {
+
+  public ngOnInit() {
     this.comments = [];
   }
 
@@ -40,16 +42,20 @@ export class ProfileComponent {
     public router: Router, 
     public movieService: MovieService,
     public apiService: ApiService) {
+    //first we get the user data so we can see whose profile we're on
     this.getUserData();
   }
 
   public getUserData() {
-        // if no url param exists, the user is viewing their own profile, so we get teh data from auth0 and then call the db
+    // if no url param exists, the user is viewing their own profile, so we get the data from auth0 and then call the db
     // If user has an Auth0 account, try and get their data from the database
     this.auth.user$.subscribe((data) => {
+      // first we check Auth0 to see if the user has created a profile
       if (data?.email && data.email) {
+        // if the user exists in Auth0, we check the database for their data
         this.apiService.getOrCreateUser(data.email).subscribe((data: any) => {
           this.apiService.getAllUsers().subscribe(response => {
+            // we have to call getAllUsers because this is how we obtain their list of followers
             const users = Object.values(response);
             let followers:any[] = [];
             users.forEach(user => {
@@ -57,6 +63,8 @@ export class ProfileComponent {
                 followers.push(user.email);
               }
             });
+            // we need to separate the loggedIn user from the user of the profile, because the user might be viewing someone
+            // else's profile
             this.loggedInUser = {
               username:data['username'],
               email: data['email'],
@@ -67,6 +75,7 @@ export class ProfileComponent {
               wantToWatch: data['wantToWatch'] ? data['wantToWatch'].split(',') : [],
               followerList: followers
             }
+            // if there is no profile route, then the user is viewing their own profile, and we set the user as the logged in user
             if(!this.activatedRoute.snapshot.params["email"]) {
               this.user=this.loggedInUser;
             }
@@ -79,11 +88,13 @@ export class ProfileComponent {
         this.router.navigate(['/']);
       }
     });
-    // if a url param exists, the user is viewing someone elses profile, so we get the data right from the db
+    // if a url param exists, the user is viewing someone elses profile, so we get the profile owner's data from the db
     if(this.activatedRoute.snapshot.params["email"]) {
       this.isMyProfile = false;
       this.apiService.getUser(this.activatedRoute.snapshot.params["email"]).subscribe(data => {
         this.apiService.getAllUsers().subscribe(response => {
+          // same concept as above, we get all the users to find the profile owner's followers
+          // then we get the data from the db and set our user
           const users = Object.values(response);
           let followers:any[] = [];
           users.forEach(user => {
@@ -112,7 +123,7 @@ export class ProfileComponent {
   }
 
   public followUser() {
-    // only follow use if it is not user's profile (you can't follow yourself)
+    // only follow if it is not user's profile (you can't follow yourself)
     if(this.user.email !== this.loggedInUser.email) {
       let currentFollowing = this.loggedInUser.followingList ? this.loggedInUser.followingList  : [];
       // if they are already following this user, remove them
@@ -137,6 +148,7 @@ export class ProfileComponent {
           str = str + ","+ currentFollowing[i]
         }
       }
+      // call the api with the newly created list 
       this.apiService.addFollowing(this.loggedInUser.email, str).subscribe(user => {
         this.isFollowing = !this.isFollowing;
         if(this.isFollowing) {
@@ -160,7 +172,7 @@ export class ProfileComponent {
   // maps posts to just main content for easier viewing
   public showPosts() {
     this.listTitle = 'Posts';
-  //  this.profileItems = this.comments.map(comment => comment.content);
+  //  we haven't finished the comment section yet
     this.showList = true;
   }
   // maps followers to just username for easier viewing
