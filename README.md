@@ -23,4 +23,9 @@ Run the following from the 'watchers-app' directory
 This will open a localhost window in your browser that is running the app. 
 It is automatically attached to the database.
 
+## How to run the unit test
+
+Run the following from the 'watchers-app' directory 
+1. ng test
+
 Refer to [here](user-data-design.md) for info about the user database.
